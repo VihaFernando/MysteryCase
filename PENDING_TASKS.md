@@ -7,8 +7,8 @@ All data access must go through `src/hooks/queries.ts` → `src/repositories/*`
 working copy via `useCaseDraft()` (`bundle`, `update`) which autosaves.
 
 ## Done
-- Architecture: `api/`, `repositories/` (localStorage mock), `websocket/` (typed client + adapters), `services/` (conditionEngine, validation, scoring, search, caseFactory), TanStack Query hooks, autosave draft provider.
-- Full CASE-001 demo data (`src/data/demo/*`).
+- Architecture: `api/`, `repositories/` (REST API via the Bun backend), `websocket/` (typed client + adapters), `services/` (conditionEngine, validation, scoring, search, caseFactory), TanStack Query hooks, autosave draft provider.
+- Demo data (`src/data/demo/*`) is exported to `backend/seed.json` (`bun scripts/export-seed.ts` in frontend/) and loaded into an empty server DB.
 - Layout: sidebar, header, Ctrl+K search, notifications popover, realtime status, theme provider.
 - Dashboard, Cases list (filter/sort/grid/table/pagination/actions), New case wizard.
 - Case editor shell + Overview, Basic info, Crime scenes (hotspot builder), Suspects, Evidence (+ inspection stages).

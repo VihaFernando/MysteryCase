@@ -1,0 +1,6709 @@
+{
+ "case": [
+  {
+   "case": {
+    "id": "case-001",
+    "code": "CASE-001",
+    "title": "The Last Call",
+    "tagline": "One phone call. Forty-three seconds. A locked door.",
+    "description": "Daniel Perera is found dead inside his Colombo apartment at 10:42 PM. The front door appears locked. Three people had contact with him that evening.",
+    "story": "Daniel Perera is found dead inside his apartment at 10:42 PM. The front door appears locked. Three people had contact with Daniel during the evening. The initial investigation finds several inconsistencies. Who killed Daniel? Why? How? What happened between 9:00 PM and 10:42 PM?",
+    "type": "Murder Mystery",
+    "difficulty": "medium",
+    "status": "published",
+    "version": "1.2",
+    "versions": [
+     {
+      "version": "1.2",
+      "createdAt": "2026-10-07T19:12:00Z",
+      "author": "Sarah K.",
+      "summary": "Rebalanced hint penalties, added parking camera evidence."
+     },
+     {
+      "version": "1.1",
+      "createdAt": "2026-09-28T10:30:00Z",
+      "author": "Admin",
+      "summary": "Added Nuwan interview branch and pharmacy location."
+     },
+     {
+      "version": "1.0",
+      "createdAt": "2026-09-15T08:00:00Z",
+      "author": "Admin",
+      "summary": "Initial release."
+     }
+    ],
+    "coverImage": "/assets/cover-last-call.jpg",
+    "estimatedMinutes": [
+     35,
+     50
+    ],
+    "location": "Colombo, Sri Lanka",
+    "incidentDate": "2026-10-05",
+    "tags": [
+     "murder",
+     "colombo",
+     "locked-room",
+     "phone",
+     "business"
+    ],
+    "victim": {
+     "name": "Daniel Perera",
+     "age": 34,
+     "occupation": "Business Owner",
+     "description": "Co-founder of Perera & Perera Logistics. Found in his living room with a head wound."
+    },
+    "objectives": [
+     "Who killed Daniel?",
+     "Why?",
+     "How?",
+     "What happened between 9:00 PM and 10:42 PM?"
+    ],
+    "createdBy": "Admin",
+    "createdAt": "2026-09-02T09:00:00Z",
+    "updatedAt": "2026-10-08T15:12:00Z",
+    "publishedAt": "2026-09-15T12:00:00Z",
+    "visibility": "public",
+    "stats": {
+     "players": 12840,
+     "completions": 8732,
+     "completionRate": 68,
+     "avgScore": 742,
+     "rating": 4.7
+    }
+   },
+   "locations": [
+    {
+     "id": "loc-apartment",
+     "name": "Daniel's Apartment",
+     "address": "7B, Green View Apartments, Colombo 03",
+     "description": "Two-bedroom apartment on the 7th floor. Front door found locked from inside; the parking stairwell door was not.",
+     "unlockedByDefault": true
+    },
+    {
+     "id": "loc-living",
+     "name": "Living Room",
+     "parentId": "loc-apartment",
+     "address": "7B — main room",
+     "description": "Where Daniel's body was found. Signs of a short struggle near the coffee table.",
+     "image": "/assets/scene-living-room.jpg",
+     "unlockedByDefault": true
+    },
+    {
+     "id": "loc-kitchen",
+     "name": "Kitchen",
+     "parentId": "loc-apartment",
+     "address": "7B — kitchen",
+     "description": "An open wine bottle is missing from the rack; a drawer was left open.",
+     "image": "/assets/scene-kitchen.jpg",
+     "unlockedByDefault": true
+    },
+    {
+     "id": "loc-bedroom",
+     "name": "Bedroom",
+     "parentId": "loc-apartment",
+     "address": "7B — master bedroom",
+     "description": "Daniel's home office desk holds a folder of company bank statements.",
+     "image": "/assets/scene-bedroom.jpg",
+     "unlockedByDefault": false,
+     "unlockCondition": {
+      "type": "group",
+      "id": "c-bed",
+      "operator": "AND",
+      "children": [
+       {
+        "type": "rule",
+        "id": "c-bed-1",
+        "kind": "evidence_discovered",
+        "targetId": "ev-001"
+       }
+      ]
+     }
+    },
+    {
+     "id": "loc-entrance",
+     "name": "Apartment Entrance",
+     "parentId": "loc-apartment",
+     "address": "7th floor corridor",
+     "description": "Corridor with a ceiling CCTV camera covering the lift lobby and door 7B.",
+     "image": "/assets/scene-entrance.jpg",
+     "unlockedByDefault": true
+    },
+    {
+     "id": "loc-pharmacy",
+     "name": "Flower Road Pharmacy",
+     "address": "112 Flower Road, Colombo 07",
+     "description": "24-hour pharmacy 400m from the building. Receipts are time-stamped.",
+     "image": "/assets/scene-pharmacy.jpg",
+     "unlockedByDefault": false,
+     "unlockCondition": {
+      "type": "group",
+      "id": "c-ph",
+      "operator": "AND",
+      "children": [
+       {
+        "type": "rule",
+        "id": "c-ph-1",
+        "kind": "evidence_discovered",
+        "targetId": "ev-004"
+       }
+      ]
+     }
+    },
+    {
+     "id": "loc-parking",
+     "name": "Parking Area",
+     "address": "Basement B1, Green View Apartments",
+     "description": "Basement car park with a camera on the exit ramp.",
+     "image": "/assets/scene-parking.jpg",
+     "unlockedByDefault": false,
+     "unlockCondition": {
+      "type": "group",
+      "id": "c-pk",
+      "operator": "AND",
+      "children": [
+       {
+        "type": "rule",
+        "id": "c-pk-1",
+        "kind": "clue_discovered",
+        "targetId": "clue-004"
+       }
+      ]
+     }
+    },
+    {
+     "id": "loc-office",
+     "name": "Michael's Office",
+     "address": "Perera & Perera Logistics, Union Place, Colombo 02",
+     "description": "Michael claims he worked here after 9:15 PM. The office door log shows no entry that night.",
+     "image": "/assets/scene-office.jpg",
+     "unlockedByDefault": false,
+     "unlockCondition": {
+      "type": "group",
+      "id": "c-of",
+      "operator": "AND",
+      "children": [
+       {
+        "type": "rule",
+        "id": "c-of-1",
+        "kind": "interview_completed",
+        "targetId": "int-michael"
+       }
+      ]
+     }
+    }
+   ],
+   "scenes": [
+    {
+     "id": "scn-living",
+     "name": "Living Room — Night of the Incident",
+     "locationId": "loc-living",
+     "image": "/assets/scene-living-room.jpg",
+     "description": "Primary crime scene. Daniel lies near the coffee table; a broken glass and his phone are nearby.",
+     "ambientAudio": "rain-city-night.ogg",
+     "order": 1,
+     "hotspots": [
+      {
+       "id": "hs-body",
+       "name": "Body",
+       "type": "body",
+       "description": "Daniel Perera, face down.",
+       "x": 72,
+       "y": 66,
+       "radius": 6,
+       "initialInfo": "Daniel Perera, 34. No pulse. Blunt-force wound to the back of the head.",
+       "detailedInfo": "Lividity suggests death between 10:20 and 10:35 PM. Fragments of green glass in the hair — from a bottle, not a wine glass.",
+       "clueId": "clue-007",
+       "discoveryState": "visible",
+       "extraImages": []
+      },
+      {
+       "id": "hs-phone",
+       "name": "Phone",
+       "type": "evidence",
+       "description": "Cracked phone near the rug edge.",
+       "x": 67,
+       "y": 37,
+       "radius": 3.5,
+       "initialInfo": "A cracked smartphone, screen still lit.",
+       "detailedInfo": "Last outgoing call at 10:17 PM to a saved contact: 'S'.",
+       "evidenceId": "ev-001",
+       "clueId": "clue-001",
+       "discoveryState": "visible",
+       "audio": "phone-buzz.ogg",
+       "extraImages": []
+      },
+      {
+       "id": "hs-glass",
+       "name": "Wine Glass",
+       "type": "evidence",
+       "description": "Shattered glass with red wine.",
+       "x": 40,
+       "y": 50,
+       "radius": 4,
+       "initialInfo": "A broken wine glass on the coffee table. Wine still wet.",
+       "detailedInfo": "Two glasses were poured — only one is here. A partial print is visible on a large shard.",
+       "evidenceId": "ev-002",
+       "clueId": "clue-006",
+       "discoveryState": "visible",
+       "extraImages": []
+      },
+      {
+       "id": "hs-table",
+       "name": "Coffee Table",
+       "type": "inspect",
+       "description": "Dark wood table, slightly displaced.",
+       "x": 52,
+       "y": 44,
+       "radius": 5,
+       "initialInfo": "The table has been shoved about 20 cm from its rug marks.",
+       "detailedInfo": "Scuff marks indicate a struggle. A coaster ring shows a second glass stood here.",
+       "discoveryState": "visible",
+       "extraImages": []
+      },
+      {
+       "id": "hs-window",
+       "name": "Window",
+       "type": "inspect",
+       "description": "Floor-to-ceiling window.",
+       "x": 88,
+       "y": 16,
+       "radius": 5,
+       "initialInfo": "Window locked from inside. 7th floor — no external access.",
+       "detailedInfo": "Rules out entry via window. Killer must have used a door.",
+       "discoveryState": "visible",
+       "extraImages": []
+      },
+      {
+       "id": "hs-carpet",
+       "name": "Carpet",
+       "type": "inspect",
+       "description": "Patterned rug.",
+       "x": 25,
+       "y": 78,
+       "radius": 4.5,
+       "initialInfo": "A damp patch near the edge of the rug.",
+       "detailedInfo": "Smells of wine and cleaning solution — someone tried to wipe it. Leads toward the kitchen.",
+       "clueId": "clue-008",
+       "discoveryState": "hidden",
+       "unlockCondition": {
+        "type": "group",
+        "id": "c-carpet",
+        "operator": "AND",
+        "children": [
+         {
+          "type": "rule",
+          "id": "c-carpet-1",
+          "kind": "evidence_discovered",
+          "targetId": "ev-002"
+         }
+        ]
+       },
+       "extraImages": []
+      },
+      {
+       "id": "hs-sofa",
+       "name": "Sofa",
+       "type": "inspect",
+       "description": "Beige three-seat sofa.",
+       "x": 30,
+       "y": 22,
+       "radius": 5,
+       "initialInfo": "A grey throw half-pulled to the floor.",
+       "detailedInfo": "Between the cushions: a business card for 'Wijesinghe & Co. Forensic Auditors' with Monday 9 AM written on it.",
+       "clueId": "clue-009",
+       "discoveryState": "visible",
+       "extraImages": []
+      }
+     ]
+    },
+    {
+     "id": "scn-kitchen",
+     "name": "Kitchen",
+     "locationId": "loc-kitchen",
+     "image": "/assets/scene-kitchen.jpg",
+     "description": "Wine rack missing one bottle. An opened drawer and a wiped counter.",
+     "order": 2,
+     "hotspots": [
+      {
+       "id": "hs-bottle",
+       "name": "Wine Rack",
+       "type": "inspect",
+       "description": "Six-slot rack, one empty.",
+       "x": 39,
+       "y": 40,
+       "radius": 4,
+       "initialInfo": "One slot is empty — the bottle on the counter is a different vintage.",
+       "detailedInfo": "The missing bottle matches green glass fragments found on the body.",
+       "clueId": "clue-007",
+       "discoveryState": "visible",
+       "extraImages": []
+      },
+      {
+       "id": "hs-drawer",
+       "name": "Open Drawer",
+       "type": "inspect",
+       "description": "Cutlery drawer pulled open.",
+       "x": 64,
+       "y": 62,
+       "radius": 5,
+       "initialInfo": "Kitchen towels missing from the drawer.",
+       "detailedInfo": "Towels were likely used to clean up the wine spill.",
+       "discoveryState": "visible",
+       "extraImages": []
+      },
+      {
+       "id": "hs-counter",
+       "name": "Counter",
+       "type": "evidence",
+       "description": "Glass of wine left on counter.",
+       "x": 45,
+       "y": 46,
+       "radius": 3.5,
+       "initialInfo": "A second glass of wine, half-finished.",
+       "detailedInfo": "Moved here from the living room. Lipstick-free rim — the guest was likely male.",
+       "evidenceId": "ev-005",
+       "discoveryState": "visible",
+       "extraImages": []
+      }
+     ]
+    },
+    {
+     "id": "scn-entrance",
+     "name": "7th Floor Corridor",
+     "locationId": "loc-entrance",
+     "image": "/assets/scene-entrance.jpg",
+     "description": "Lift lobby and apartment door. CCTV camera overhead.",
+     "order": 3,
+     "hotspots": [
+      {
+       "id": "hs-cctv",
+       "name": "CCTV Camera",
+       "type": "evidence",
+       "description": "Ceiling dome camera.",
+       "x": 21,
+       "y": 9,
+       "radius": 4,
+       "initialInfo": "A building security camera covering the corridor.",
+       "detailedInfo": "Footage can be requested from building management.",
+       "evidenceId": "ev-003",
+       "clueId": "clue-003",
+       "discoveryState": "visible",
+       "extraImages": []
+      },
+      {
+       "id": "hs-door",
+       "name": "Door 7B",
+       "type": "inspect",
+       "description": "Daniel's front door.",
+       "x": 79,
+       "y": 44,
+       "radius": 5,
+       "initialInfo": "Locked deadbolt, no signs of forced entry.",
+       "detailedInfo": "The deadbolt locks automatically when the door closes. A locked door proves nothing.",
+       "clueId": "clue-010",
+       "discoveryState": "visible",
+       "extraImages": []
+      },
+      {
+       "id": "hs-receipt",
+       "name": "Crumpled Receipt",
+       "type": "evidence",
+       "description": "Paper scrap by the door mat.",
+       "x": 60,
+       "y": 90,
+       "radius": 3.2,
+       "initialInfo": "A crumpled pharmacy receipt lies near the door mat.",
+       "detailedInfo": "Flower Road Pharmacy, 10:04 PM. Painkillers and a bandage. Someone was in this corridor after the argument.",
+       "evidenceId": "ev-004",
+       "discoveryState": "visible",
+       "extraImages": []
+      },
+      {
+       "id": "hs-noticeboard",
+       "name": "Notice Board",
+       "type": "evidence",
+       "description": "Building notice board.",
+       "x": 58,
+       "y": 42,
+       "radius": 5,
+       "initialInfo": "The building manager has pinned a signed statement to the board.",
+       "detailedInfo": "Nuwan's witness statement describing the shouting match he overheard at 10:21 PM.",
+       "evidenceId": "ev-006",
+       "unlockCondition": {
+        "type": "group",
+        "id": "uc-hs-noticeboard",
+        "operator": "AND",
+        "children": [
+         {
+          "type": "rule",
+          "id": "uc-hs-noticeboard-1",
+          "kind": "interview_completed",
+          "targetId": "int-nuwan"
+         }
+        ]
+       },
+       "discoveryState": "hidden",
+       "extraImages": []
+      },
+      {
+       "id": "hs-stairs",
+       "name": "Stairwell",
+       "type": "navigation",
+       "description": "Leads down to the parking area.",
+       "x": 36,
+       "y": 50,
+       "radius": 5,
+       "initialInfo": "Emergency stairwell to basement parking.",
+       "detailedInfo": "No camera inside the stairwell — but the parking exit is covered.",
+       "discoveryState": "locked",
+       "unlockCondition": {
+        "type": "group",
+        "id": "c-st",
+        "operator": "AND",
+        "children": [
+         {
+          "type": "rule",
+          "id": "c-st-1",
+          "kind": "clue_discovered",
+          "targetId": "clue-004"
+         }
+        ]
+       },
+       "extraImages": []
+      }
+     ]
+    },
+    {
+     "id": "scn-bedroom",
+     "name": "Bedroom",
+     "locationId": "loc-bedroom",
+     "image": "/assets/scene-bedroom.jpg",
+     "description": "Daniel's bedroom. A desk with a locked drawer, a bed and a wardrobe.",
+     "order": 4,
+     "hotspots": [
+      {
+       "id": "hs-desk-drawer",
+       "name": "Desk Drawer",
+       "type": "evidence",
+       "description": "Desk drawer with a brass handle.",
+       "x": 78,
+       "y": 56,
+       "radius": 5,
+       "initialInfo": "The drawer is stuffed with ledgers and printed statements.",
+       "detailedInfo": "Daniel's business records: payments to an account controlled by Michael, dated over eight months.",
+       "evidenceId": "ev-007",
+       "discoveryState": "visible",
+       "extraImages": []
+      },
+      {
+       "id": "hs-bed",
+       "name": "Bed",
+       "type": "inspect",
+       "description": "Unmade double bed.",
+       "x": 36,
+       "y": 55,
+       "radius": 7,
+       "initialInfo": "The bed is unmade. Daniel hadn't slept here tonight.",
+       "detailedInfo": "A phone charger is plugged in beside the bed, but no phone. It was found in the living room.",
+       "discoveryState": "visible",
+       "extraImages": []
+      },
+      {
+       "id": "hs-wardrobe",
+       "name": "Wardrobe",
+       "type": "inspect",
+       "description": "Tall wardrobe.",
+       "x": 11,
+       "y": 40,
+       "radius": 5,
+       "initialInfo": "Suits hang neatly. Nothing out of place.",
+       "detailedInfo": "A gym bag at the bottom contains a spare phone SIM and a contact list backup.",
+       "discoveryState": "visible",
+       "extraImages": []
+      },
+      {
+       "id": "hs-nightstand",
+       "name": "Nightstand",
+       "type": "inspect",
+       "description": "Small bedside table.",
+       "x": 55,
+       "y": 58,
+       "radius": 3.5,
+       "initialInfo": "A lamp, a glass of water and a paperback.",
+       "detailedInfo": "The paperback's receipt marks the page: bought last week. Nothing connected to the case.",
+       "discoveryState": "visible",
+       "extraImages": []
+      }
+     ]
+    },
+    {
+     "id": "scn-pharmacy",
+     "name": "Flower Road Pharmacy",
+     "locationId": "loc-pharmacy",
+     "image": "/assets/scene-pharmacy.jpg",
+     "description": "24-hour pharmacy on Flower Road. The night pharmacist remembers faces.",
+     "order": 5,
+     "hotspots": [
+      {
+       "id": "hs-pharm-counter",
+       "name": "Pharmacy Counter",
+       "type": "inspect",
+       "description": "Main counter.",
+       "x": 62,
+       "y": 62,
+       "radius": 7,
+       "initialInfo": "The pharmacist confirms a man bought painkillers and a bandage at 10:04 PM.",
+       "detailedInfo": "He paid cash and kept his left hand wrapped in a cloth. That matches the receipt found in the corridor.",
+       "discoveryState": "visible",
+       "extraImages": []
+      },
+      {
+       "id": "hs-pharm-printer",
+       "name": "Receipt Printer",
+       "type": "inspect",
+       "description": "Till receipt printer.",
+       "x": 72,
+       "y": 50,
+       "radius": 3,
+       "initialInfo": "The till logs every sale with a timestamp.",
+       "detailedInfo": "The log shows the 10:04 PM sale, one of only three that night.",
+       "discoveryState": "visible",
+       "extraImages": []
+      },
+      {
+       "id": "hs-pharm-shelf",
+       "name": "Medicine Shelf",
+       "type": "inspect",
+       "description": "Shelves of medicine.",
+       "x": 20,
+       "y": 30,
+       "radius": 6,
+       "initialInfo": "Rows of over-the-counter medicine.",
+       "detailedInfo": "Nothing here relates to the case.",
+       "discoveryState": "visible",
+       "extraImages": []
+      }
+     ]
+    },
+    {
+     "id": "scn-parking",
+     "name": "Basement Parking B1",
+     "locationId": "loc-parking",
+     "image": "/assets/scene-parking.jpg",
+     "description": "Basement parking of Green View Apartments. One camera covers the exit ramp.",
+     "order": 6,
+     "hotspots": [
+      {
+       "id": "hs-parking-camera",
+       "name": "Parking Camera",
+       "type": "evidence",
+       "description": "Camera covering the exit.",
+       "x": 83,
+       "y": 17,
+       "radius": 4,
+       "initialInfo": "A camera with a red recording light covers the exit ramp.",
+       "detailedInfo": "Footage shows a black saloon, plate CAB-4471, leaving at 10:33 PM.",
+       "evidenceId": "ev-008",
+       "discoveryState": "visible",
+       "extraImages": []
+      },
+      {
+       "id": "hs-parking-car",
+       "name": "Black Saloon",
+       "type": "inspect",
+       "description": "Parked black saloon.",
+       "x": 41,
+       "y": 65,
+       "radius": 6,
+       "initialInfo": "A black saloon is parked in Michael's usual bay.",
+       "detailedInfo": "The bonnet is still warm. Michael's car was driven recently.",
+       "discoveryState": "visible",
+       "extraImages": []
+      },
+      {
+       "id": "hs-parking-ramp",
+       "name": "Exit Ramp",
+       "type": "inspect",
+       "description": "Ramp to the street.",
+       "x": 92,
+       "y": 70,
+       "radius": 5,
+       "initialInfo": "The ramp leads to the street.",
+       "detailedInfo": "A barrier logs every plate. The log is held by building management.",
+       "discoveryState": "visible",
+       "extraImages": []
+      }
+     ]
+    },
+    {
+     "id": "scn-office",
+     "name": "Michael's Office",
+     "locationId": "loc-office",
+     "image": "/assets/scene-office.jpg",
+     "description": "Michael's office at Perera & Perera Logistics. He claims he worked here after 9:15 PM.",
+     "order": 7,
+     "hotspots": [
+      {
+       "id": "hs-office-log",
+       "name": "Door Access Log",
+       "type": "inspect",
+       "description": "Electronic door log reader.",
+       "x": 88,
+       "y": 38,
+       "radius": 4,
+       "initialInfo": "The access log shows every badge swipe.",
+       "detailedInfo": "No swipe for Michael after 6:40 PM that night. His alibi is not supported.",
+       "discoveryState": "visible",
+       "extraImages": []
+      },
+      {
+       "id": "hs-office-desk",
+       "name": "Desk & Monitor",
+       "type": "inspect",
+       "description": "Michael's desk.",
+       "x": 31,
+       "y": 55,
+       "radius": 6,
+       "initialInfo": "The monitor is off and the keyboard is cold.",
+       "detailedInfo": "The desk calendar has the evening of the incident circled, with no meeting listed.",
+       "discoveryState": "visible",
+       "extraImages": []
+      }
+     ]
+    }
+   ],
+   "suspects": [
+    {
+     "id": "sus-sarah",
+     "name": "Sarah Fernando",
+     "age": 31,
+     "occupation": "Marketing Manager",
+     "role": "suspect",
+     "portrait": "/assets/portrait-sarah.jpg",
+     "relationship": "Former girlfriend",
+     "publicInfo": "Relationship with Daniel ended three months ago. Remained in occasional contact.",
+     "claim": "She was home in Rajagiriya between 9:30 PM and 11:00 PM and did not speak to Daniel that night.",
+     "hiddenInfo": [
+      "She called Daniel at 10:17 PM — a 43-second call.",
+      "She initially lies about the call to avoid being implicated.",
+      "She had been helping Daniel collect proof of Michael's embezzlement.",
+      "She met Daniel briefly at 7:30 PM to hand over bank statements."
+     ],
+     "motive": "Possible jealousy over the breakup (red herring).",
+     "isKiller": false,
+     "isRedHerring": true,
+     "personality": "Guarded, articulate, becomes defensive when pressed on timing.",
+     "interviewIds": [
+      "int-sarah"
+     ]
+    },
+    {
+     "id": "sus-michael",
+     "name": "Michael Perera",
+     "age": 36,
+     "occupation": "Business Owner",
+     "role": "suspect",
+     "portrait": "/assets/portrait-michael.jpg",
+     "relationship": "Business partner (Perera & Perera Logistics)",
+     "publicInfo": "Co-owner of the logistics firm. Visited Daniel earlier in the evening to discuss quarterly accounts.",
+     "claim": "He left Daniel's apartment at 9:15 PM and drove straight to his office.",
+     "hiddenInfo": [
+      "Building CCTV shows him re-entering the lobby at 9:42 PM.",
+      "Daniel had discovered LKR 18.4M missing from company accounts.",
+      "Daniel planned to go to the auditors on Monday.",
+      "His fingerprint is on the wine bottle neck and glass shard."
+     ],
+     "motive": "Financial dispute — Daniel was about to expose his embezzlement.",
+     "isKiller": true,
+     "isRedHerring": false,
+     "personality": "Calm, confident, overly precise about times. Cracks when confronted with CCTV.",
+     "interviewIds": [
+      "int-michael"
+     ]
+    },
+    {
+     "id": "sus-nuwan",
+     "name": "Nuwan Silva",
+     "age": 29,
+     "occupation": "Delivery Driver",
+     "role": "witness",
+     "portrait": "/assets/portrait-nuwan.jpg",
+     "relationship": "Neighbor (Apartment 7C)",
+     "publicInfo": "Lives across the corridor. Works evening shifts for a food delivery app.",
+     "claim": "He was working deliveries nearby all evening.",
+     "hiddenInfo": [
+      "He heard a loud argument from 7B at about 10:21 PM.",
+      "He saw a man in a dark jacket leave via the parking stairwell around 10:31 PM.",
+      "He bought painkillers at Flower Road Pharmacy at 10:04 PM — he was briefly home."
+     ],
+     "isKiller": false,
+     "isRedHerring": false,
+     "personality": "Nervous around police, honest once reassured.",
+     "interviewIds": [
+      "int-nuwan"
+     ]
+    }
+   ],
+   "evidence": [
+    {
+     "id": "ev-001",
+     "code": "EVID-001",
+     "name": "Daniel's Mobile Phone",
+     "type": "digital",
+     "image": "/assets/evid-phone.jpg",
+     "description": "Cracked smartphone found beside the rug, partially under the sofa edge.",
+     "foundAtLocationId": "loc-living",
+     "foundInSceneId": "scn-living",
+     "discoveredBy": "Player — Living Room hotspot",
+     "relatedSuspectIds": [
+      "sus-sarah"
+     ],
+     "relatedClueIds": [
+      "clue-001",
+      "clue-002"
+     ],
+     "relatedTimelineIds": [
+      "tl-06"
+     ],
+     "isKey": true,
+     "isRedHerring": false,
+     "inspections": [
+      {
+       "id": "ins-1-1",
+       "stage": 1,
+       "title": "Initial look",
+       "description": "Cracked mobile phone found under sofa. The screen is spiderwebbed around a single impact point.",
+       "image": "/assets/evid-phone-zoom.jpg",
+       "requirements": []
+      },
+      {
+       "id": "ins-1-2",
+       "stage": 2,
+       "title": "Call log",
+       "description": "Last outgoing call: 10:17 PM.",
+       "requirements": [
+        {
+         "kind": "previous_stage",
+         "label": "Stage 1 viewed"
+        }
+       ]
+      },
+      {
+       "id": "ins-1-3",
+       "stage": 3,
+       "title": "Call duration",
+       "description": "Call lasted 43 seconds.",
+       "requirements": [
+        {
+         "kind": "previous_stage",
+         "label": "Stage 2 viewed"
+        },
+        {
+         "kind": "player_action",
+         "label": "Tap 'Details' on call entry"
+        }
+       ]
+      },
+      {
+       "id": "ins-1-4",
+       "stage": 4,
+       "title": "Contact identified",
+       "description": "Number belongs to Sarah Fernando.",
+       "requirements": [
+        {
+         "kind": "previous_stage",
+         "label": "Stage 3 viewed"
+        },
+        {
+         "kind": "location",
+         "targetId": "loc-bedroom",
+         "label": "Visited Bedroom (contact list backup)"
+        }
+       ],
+       "revealsClueId": "clue-002"
+      }
+     ]
+    },
+    {
+     "id": "ev-002",
+     "code": "EVID-002",
+     "name": "Broken Wine Glass",
+     "type": "physical",
+     "image": "/assets/evid-wineglass.jpg",
+     "description": "Shattered wine glass on the coffee table, red wine still wet.",
+     "foundAtLocationId": "loc-living",
+     "foundInSceneId": "scn-living",
+     "discoveredBy": "Player — Living Room hotspot",
+     "relatedSuspectIds": [
+      "sus-michael"
+     ],
+     "relatedClueIds": [
+      "clue-006"
+     ],
+     "relatedTimelineIds": [
+      "tl-08"
+     ],
+     "isKey": false,
+     "isRedHerring": false,
+     "inspections": [
+      {
+       "id": "ins-2-1",
+       "stage": 1,
+       "title": "Shards",
+       "description": "Glass broke on impact with the table edge.",
+       "requirements": []
+      },
+      {
+       "id": "ins-2-2",
+       "stage": 2,
+       "title": "Partial print",
+       "description": "A partial fingerprint is visible on the largest shard.",
+       "requirements": [
+        {
+         "kind": "previous_stage",
+         "label": "Stage 1 viewed"
+        }
+       ],
+       "revealsClueId": "clue-006"
+      }
+     ]
+    },
+    {
+     "id": "ev-003",
+     "code": "EVID-003",
+     "name": "Building CCTV",
+     "type": "footage",
+     "image": "/assets/evid-cctv.jpg",
+     "description": "Corridor camera footage, 8:00 PM – 11:00 PM.",
+     "foundAtLocationId": "loc-entrance",
+     "foundInSceneId": "scn-entrance",
+     "discoveredBy": "Request from building management",
+     "relatedSuspectIds": [
+      "sus-michael"
+     ],
+     "relatedClueIds": [
+      "clue-003",
+      "clue-004"
+     ],
+     "relatedTimelineIds": [
+      "tl-01",
+      "tl-03"
+     ],
+     "isKey": true,
+     "isRedHerring": false,
+     "inspections": [
+      {
+       "id": "ins-3-1",
+       "stage": 1,
+       "title": "8:45 PM",
+       "description": "Michael Perera arrives and enters 7B.",
+       "requirements": []
+      },
+      {
+       "id": "ins-3-2",
+       "stage": 2,
+       "title": "9:14 PM",
+       "description": "Michael leaves via the lift.",
+       "requirements": [
+        {
+         "kind": "previous_stage",
+         "label": "Stage 1 viewed"
+        }
+       ]
+      },
+      {
+       "id": "ins-3-3",
+       "stage": 3,
+       "title": "9:42 PM",
+       "description": "A man in a dark jacket enters from the stairwell and knocks on 7B. Face partly hidden.",
+       "requirements": [
+        {
+         "kind": "previous_stage",
+         "label": "Stage 2 viewed"
+        }
+       ],
+       "revealsClueId": "clue-003"
+      },
+      {
+       "id": "ins-3-4",
+       "stage": 4,
+       "title": "Enhanced frame",
+       "description": "Enhancement shows the same watch and jacket Michael wore at 8:45 PM.",
+       "image": "/assets/evid-cctv-zoom.jpg",
+       "requirements": [
+        {
+         "kind": "clue",
+         "targetId": "clue-005",
+         "label": "Michael's alibi recorded"
+        }
+       ],
+       "revealsClueId": "clue-004"
+      }
+     ]
+    },
+    {
+     "id": "ev-004",
+     "code": "EVID-004",
+     "name": "Pharmacy Receipt",
+     "type": "document",
+     "image": "/assets/evid-receipt.jpg",
+     "description": "Flower Road Pharmacy receipt, found in the corridor bin.",
+     "foundAtLocationId": "loc-entrance",
+     "foundInSceneId": "scn-entrance",
+     "discoveredBy": "Corridor bin search",
+     "relatedSuspectIds": [
+      "sus-nuwan"
+     ],
+     "relatedClueIds": [
+      "clue-011"
+     ],
+     "relatedTimelineIds": [
+      "tl-05"
+     ],
+     "isKey": false,
+     "isRedHerring": false,
+     "inspections": [
+      {
+       "id": "ins-4-1",
+       "stage": 1,
+       "title": "Receipt",
+       "description": "Painkillers, paid by card ending 4821.",
+       "requirements": []
+      },
+      {
+       "id": "ins-4-2",
+       "stage": 2,
+       "title": "Timestamp",
+       "description": "Printed 10:04 PM. Card belongs to Nuwan Silva.",
+       "image": "/assets/evid-receipt-zoom.jpg",
+       "requirements": [
+        {
+         "kind": "previous_stage",
+         "label": "Stage 1 viewed"
+        },
+        {
+         "kind": "location",
+         "targetId": "loc-pharmacy",
+         "label": "Visited Pharmacy"
+        }
+       ],
+       "revealsClueId": "clue-011"
+      }
+     ]
+    },
+    {
+     "id": "ev-005",
+     "code": "EVID-005",
+     "name": "Fingerprint",
+     "type": "forensic",
+     "image": "/assets/evid-fingerprint.jpg",
+     "description": "Lifted prints from the glass shard and the kitchen counter glass.",
+     "foundAtLocationId": "loc-kitchen",
+     "foundInSceneId": "scn-kitchen",
+     "discoveredBy": "Forensics lab",
+     "relatedSuspectIds": [
+      "sus-michael"
+     ],
+     "relatedClueIds": [
+      "clue-006",
+      "clue-007"
+     ],
+     "relatedTimelineIds": [
+      "tl-08"
+     ],
+     "isKey": true,
+     "isRedHerring": false,
+     "inspections": [
+      {
+       "id": "ins-5-1",
+       "stage": 1,
+       "title": "Lift",
+       "description": "Right thumb print recovered.",
+       "requirements": [
+        {
+         "kind": "evidence",
+         "targetId": "ev-002",
+         "label": "Wine Glass collected"
+        }
+       ]
+      },
+      {
+       "id": "ins-5-2",
+       "stage": 2,
+       "title": "Match",
+       "description": "Matches Michael Perera (company access-card records).",
+       "requirements": [
+        {
+         "kind": "previous_stage",
+         "label": "Stage 1 viewed"
+        }
+       ],
+       "revealsClueId": "clue-006"
+      }
+     ]
+    },
+    {
+     "id": "ev-006",
+     "code": "EVID-006",
+     "name": "Witness Statement",
+     "type": "testimony",
+     "image": "/assets/evid-statement.jpg",
+     "description": "Nuwan Silva's written statement after interview.",
+     "foundAtLocationId": "loc-entrance",
+     "foundInSceneId": "scn-entrance",
+     "discoveredBy": "Nuwan interview",
+     "relatedSuspectIds": [
+      "sus-nuwan",
+      "sus-michael"
+     ],
+     "relatedClueIds": [
+      "clue-011",
+      "clue-012"
+     ],
+     "relatedTimelineIds": [
+      "tl-07",
+      "tl-09"
+     ],
+     "isKey": true,
+     "isRedHerring": false,
+     "inspections": [
+      {
+       "id": "ins-6-1",
+       "stage": 1,
+       "title": "Argument",
+       "description": "Heard two men shouting about 'the money' at around 10:21 PM.",
+       "requirements": []
+      },
+      {
+       "id": "ins-6-2",
+       "stage": 2,
+       "title": "Departure",
+       "description": "Saw a man in a dark jacket go down the parking stairwell at 10:31 PM.",
+       "requirements": [
+        {
+         "kind": "previous_stage",
+         "label": "Stage 1 viewed"
+        }
+       ],
+       "revealsClueId": "clue-012"
+      }
+     ]
+    },
+    {
+     "id": "ev-007",
+     "code": "EVID-007",
+     "name": "Daniel's Business Records",
+     "type": "document",
+     "image": "/assets/evid-records.jpg",
+     "description": "Folder of bank statements and ledger printouts in the bedroom desk.",
+     "foundAtLocationId": "loc-bedroom",
+     "foundInSceneId": "scn-bedroom",
+     "discoveredBy": "Bedroom desk",
+     "relatedSuspectIds": [
+      "sus-michael",
+      "sus-sarah"
+     ],
+     "relatedClueIds": [
+      "clue-009",
+      "clue-005"
+     ],
+     "relatedTimelineIds": [
+      "tl-00"
+     ],
+     "isKey": true,
+     "isRedHerring": false,
+     "inspections": [
+      {
+       "id": "ins-7-1",
+       "stage": 1,
+       "title": "Statements",
+       "description": "Company account statements with highlighted transfers.",
+       "requirements": []
+      },
+      {
+       "id": "ins-7-2",
+       "stage": 2,
+       "title": "Discrepancy",
+       "description": "LKR 18.4M transferred to an account controlled by Michael over 14 months.",
+       "requirements": [
+        {
+         "kind": "previous_stage",
+         "label": "Stage 1 viewed"
+        }
+       ]
+      },
+      {
+       "id": "ins-7-3",
+       "stage": 3,
+       "title": "Sticky note",
+       "description": "Daniel's note: 'Auditors Monday. Tell M tonight?'",
+       "requirements": [
+        {
+         "kind": "previous_stage",
+         "label": "Stage 2 viewed"
+        }
+       ],
+       "revealsClueId": "clue-009"
+      }
+     ]
+    },
+    {
+     "id": "ev-008",
+     "code": "EVID-008",
+     "name": "Parking Camera Footage",
+     "type": "footage",
+     "image": "/assets/evid-parking.jpg",
+     "description": "Basement exit-ramp camera, 10:00 PM – 11:00 PM.",
+     "foundAtLocationId": "loc-parking",
+     "foundInSceneId": "scn-parking",
+     "discoveredBy": "Parking attendant",
+     "relatedSuspectIds": [
+      "sus-michael"
+     ],
+     "relatedClueIds": [
+      "clue-012"
+     ],
+     "relatedTimelineIds": [
+      "tl-09"
+     ],
+     "isKey": false,
+     "isRedHerring": false,
+     "inspections": [
+      {
+       "id": "ins-8-1",
+       "stage": 1,
+       "title": "10:33 PM",
+       "description": "Michael's black saloon (CAB-4471) exits the basement.",
+       "requirements": [
+        {
+         "kind": "location",
+         "targetId": "loc-parking",
+         "label": "Visited Parking Area"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "documents": [
+    {
+     "id": "doc-001",
+     "title": "Initial Police Report",
+     "kind": "report",
+     "body": "Officers responded to 7B Green View Apartments at 10:48 PM following a call from building security. Victim Daniel Perera found deceased in the living room. Front door locked. No forced entry."
+    },
+    {
+     "id": "doc-002",
+     "title": "Nuwan Silva — Signed Statement",
+     "kind": "statement",
+     "body": "I heard shouting at around 10:20. Two men. One said 'you'll ruin me'. Ten minutes later I saw a man in a dark jacket going down the stairs.",
+     "evidenceId": "ev-006"
+    },
+    {
+     "id": "doc-003",
+     "title": "Auditor Appointment Email",
+     "kind": "letter",
+     "body": "Dear Mr. Perera, confirming your meeting with our forensic accounting team on Monday at 9:00 AM.",
+     "evidenceId": "ev-007"
+    }
+   ],
+   "interviews": [
+    {
+     "id": "int-sarah",
+     "code": "INT-001",
+     "title": "Sarah Fernando — Ex-partner",
+     "suspectId": "sus-sarah",
+     "locationId": "loc-apartment",
+     "description": "Sarah denies contact. Phone evidence exposes the 10:17 PM call and reveals Daniel's private matter.",
+     "unlockedByDefault": true,
+     "nodes": [
+      {
+       "id": "s-start",
+       "type": "start",
+       "text": "Interview begins — Sarah Fernando, Cinnamon Gardens police station.",
+       "position": {
+        "x": 380,
+        "y": 0
+       }
+      },
+      {
+       "id": "s-open",
+       "type": "response",
+       "speaker": "Sarah",
+       "text": "I've already told the police everything. I was home that night.",
+       "position": {
+        "x": 380,
+        "y": 110
+       },
+       "reaction": {
+        "emotion": "defensive",
+        "intensity": 1
+       }
+      },
+      {
+       "id": "s-menu",
+       "type": "choice",
+       "text": "Choose a question",
+       "position": {
+        "x": 380,
+        "y": 230
+       }
+      },
+      {
+       "id": "s-q1",
+       "type": "question",
+       "speaker": "Detective",
+       "text": "Where were you at 10 PM?",
+       "position": {
+        "x": 0,
+        "y": 360
+       }
+      },
+      {
+       "id": "s-a1",
+       "type": "response",
+       "speaker": "Sarah",
+       "text": "At home in Rajagiriya. Watching a series. Alone.",
+       "position": {
+        "x": 0,
+        "y": 470
+       },
+       "reaction": {
+        "emotion": "calm",
+        "intensity": 1
+       }
+      },
+      {
+       "id": "s-q2",
+       "type": "question",
+       "speaker": "Detective",
+       "text": "What was your relationship with Daniel?",
+       "position": {
+        "x": 250,
+        "y": 360
+       }
+      },
+      {
+       "id": "s-a2",
+       "type": "response",
+       "speaker": "Sarah",
+       "text": "We dated for two years. It ended three months ago. We were still… civil.",
+       "position": {
+        "x": 250,
+        "y": 470
+       },
+       "reaction": {
+        "emotion": "sad",
+        "intensity": 2
+       },
+       "clueId": "clue-013"
+      },
+      {
+       "id": "s-q3",
+       "type": "question",
+       "speaker": "Detective",
+       "text": "When did you last speak to Daniel?",
+       "position": {
+        "x": 500,
+        "y": 360
+       },
+       "condition": {
+        "type": "group",
+        "id": "cond-s3",
+        "operator": "AND",
+        "children": [
+         {
+          "type": "rule",
+          "id": "cond-s3-1",
+          "kind": "question_answered",
+          "targetId": "s-q2"
+         }
+        ]
+       }
+      },
+      {
+       "id": "s-a3",
+       "type": "response",
+       "speaker": "Sarah",
+       "text": "Last week, maybe. I don't remember exactly.",
+       "position": {
+        "x": 500,
+        "y": 470
+       },
+       "reaction": {
+        "emotion": "nervous",
+        "intensity": 2
+       },
+       "isContradiction": true
+      },
+      {
+       "id": "s-q6",
+       "type": "question",
+       "speaker": "Detective",
+       "text": "Did Daniel mention any trouble at work?",
+       "position": {
+        "x": 1020,
+        "y": 360
+       },
+       "condition": {
+        "type": "group",
+        "id": "cond-s6",
+        "operator": "AND",
+        "children": [
+         {
+          "type": "rule",
+          "id": "cond-s6-1",
+          "kind": "clue_discovered",
+          "targetId": "clue-013"
+         }
+        ]
+       }
+      },
+      {
+       "id": "s-a6",
+       "type": "response",
+       "speaker": "Sarah",
+       "text": "He was stressed about the company accounts. He wouldn't say more — he never liked bringing work home.",
+       "position": {
+        "x": 1020,
+        "y": 470
+       },
+       "reaction": {
+        "emotion": "sad",
+        "intensity": 1
+       }
+      },
+      {
+       "id": "s-q4",
+       "type": "question",
+       "speaker": "Detective",
+       "text": "Did you call Daniel at 10:17 PM?",
+       "position": {
+        "x": 760,
+        "y": 360
+       },
+       "condition": {
+        "type": "group",
+        "id": "cond-phone",
+        "operator": "AND",
+        "children": [
+         {
+          "type": "rule",
+          "id": "cond-phone-1",
+          "kind": "evidence_discovered",
+          "targetId": "ev-001"
+         }
+        ]
+       }
+      },
+      {
+       "id": "s-a4",
+       "type": "response",
+       "speaker": "Sarah",
+       "text": "No. Why would I call him that late?",
+       "position": {
+        "x": 760,
+        "y": 470
+       },
+       "reaction": {
+        "emotion": "defensive",
+        "intensity": 2
+       }
+      },
+      {
+       "id": "s-present",
+       "type": "present_evidence",
+       "text": "Present: Daniel's Phone — call log 10:17 PM, 43 seconds",
+       "evidenceId": "ev-001",
+       "position": {
+        "x": 760,
+        "y": 590
+       },
+       "condition": {
+        "type": "group",
+        "id": "cond-phone",
+        "operator": "AND",
+        "children": [
+         {
+          "type": "rule",
+          "id": "cond-phone-1",
+          "kind": "evidence_discovered",
+          "targetId": "ev-001"
+         }
+        ]
+       }
+      },
+      {
+       "id": "s-react",
+       "type": "reaction",
+       "speaker": "Sarah",
+       "text": "...Fine. I did call him.",
+       "position": {
+        "x": 760,
+        "y": 710
+       },
+       "reaction": {
+        "emotion": "relieved",
+        "intensity": 3
+       }
+      },
+      {
+       "id": "s-clue",
+       "type": "clue",
+       "text": "Clue: Sarah lied about the 10:17 PM call",
+       "clueId": "clue-002",
+       "position": {
+        "x": 560,
+        "y": 830
+       }
+      },
+      {
+       "id": "s-q5",
+       "type": "question",
+       "speaker": "Detective",
+       "text": "Why did you call him?",
+       "position": {
+        "x": 960,
+        "y": 830
+       }
+      },
+      {
+       "id": "s-a5",
+       "type": "response",
+       "speaker": "Sarah",
+       "text": "He sounded scared at dinner. He said Michael had been taking money. I gave him the bank statements at 7:30. I called to check he was okay — he said 'Michael is here' and hung up.",
+       "position": {
+        "x": 960,
+        "y": 950
+       },
+       "reaction": {
+        "emotion": "sad",
+        "intensity": 3
+       }
+      },
+      {
+       "id": "s-unlock",
+       "type": "unlock",
+       "text": "Unlock: Sarah met Daniel earlier that evening + Michael interview Q: 'Were you there at 10:17?'",
+       "unlockTargetId": "m-q4",
+       "position": {
+        "x": 960,
+        "y": 1070
+       }
+      },
+      {
+       "id": "s-end",
+       "type": "end",
+       "text": "Interview complete",
+       "position": {
+        "x": 380,
+        "y": 1190
+       }
+      }
+     ],
+     "edges": [
+      {
+       "id": "s-start->s-open",
+       "source": "s-start",
+       "target": "s-open"
+      },
+      {
+       "id": "s-open->s-menu",
+       "source": "s-open",
+       "target": "s-menu"
+      },
+      {
+       "id": "s-menu->s-q1",
+       "source": "s-menu",
+       "target": "s-q1",
+       "label": "Alibi"
+      },
+      {
+       "id": "s-menu->s-q2",
+       "source": "s-menu",
+       "target": "s-q2",
+       "label": "Relationship"
+      },
+      {
+       "id": "s-menu->s-q3",
+       "source": "s-menu",
+       "target": "s-q3",
+       "label": "Last contact"
+      },
+      {
+       "id": "s-menu->s-q4",
+       "source": "s-menu",
+       "target": "s-q4",
+       "label": "10:17 call (needs phone)"
+      },
+      {
+       "id": "s-menu->s-q6",
+       "source": "s-menu",
+       "target": "s-q6",
+       "label": "Daniel's work"
+      },
+      {
+       "id": "s-q6->s-a6",
+       "source": "s-q6",
+       "target": "s-a6"
+      },
+      {
+       "id": "s-a6->s-menu",
+       "source": "s-a6",
+       "target": "s-menu"
+      },
+      {
+       "id": "s-q1->s-a1",
+       "source": "s-q1",
+       "target": "s-a1"
+      },
+      {
+       "id": "s-q2->s-a2",
+       "source": "s-q2",
+       "target": "s-a2"
+      },
+      {
+       "id": "s-q3->s-a3",
+       "source": "s-q3",
+       "target": "s-a3"
+      },
+      {
+       "id": "s-q4->s-a4",
+       "source": "s-q4",
+       "target": "s-a4"
+      },
+      {
+       "id": "s-menu->s-end",
+       "source": "s-menu",
+       "target": "s-end",
+       "label": "That's all for now"
+      },
+      {
+       "id": "s-a1->s-menu",
+       "source": "s-a1",
+       "target": "s-menu"
+      },
+      {
+       "id": "s-a2->s-menu",
+       "source": "s-a2",
+       "target": "s-menu"
+      },
+      {
+       "id": "s-a3->s-menu",
+       "source": "s-a3",
+       "target": "s-menu"
+      },
+      {
+       "id": "s-a4->s-present",
+       "source": "s-a4",
+       "target": "s-present",
+       "label": "Present evidence"
+      },
+      {
+       "id": "s-present->s-react",
+       "source": "s-present",
+       "target": "s-react"
+      },
+      {
+       "id": "s-react->s-clue",
+       "source": "s-react",
+       "target": "s-clue"
+      },
+      {
+       "id": "s-react->s-q5",
+       "source": "s-react",
+       "target": "s-q5"
+      },
+      {
+       "id": "s-q5->s-a5",
+       "source": "s-q5",
+       "target": "s-a5"
+      },
+      {
+       "id": "s-a5->s-unlock",
+       "source": "s-a5",
+       "target": "s-unlock"
+      },
+      {
+       "id": "s-unlock->s-menu",
+       "source": "s-unlock",
+       "target": "s-menu"
+      },
+      {
+       "id": "s-clue->s-menu",
+       "source": "s-clue",
+       "target": "s-menu"
+      }
+     ]
+    },
+    {
+     "id": "int-michael",
+     "code": "INT-002",
+     "title": "Michael Perera — Business Partner",
+     "suspectId": "sus-michael",
+     "locationId": "loc-office",
+     "description": "Michael's 9:15 PM alibi collapses against the CCTV footage.",
+     "unlockedByDefault": true,
+     "nodes": [
+      {
+       "id": "m-start",
+       "type": "start",
+       "text": "Interview begins — Michael Perera.",
+       "position": {
+        "x": 300,
+        "y": 0
+       }
+      },
+      {
+       "id": "m-open",
+       "type": "response",
+       "speaker": "Michael",
+       "text": "Terrible business. Daniel was like a brother. Ask whatever you need.",
+       "position": {
+        "x": 300,
+        "y": 110
+       },
+       "reaction": {
+        "emotion": "calm",
+        "intensity": 1
+       }
+      },
+      {
+       "id": "m-menu",
+       "type": "choice",
+       "text": "Choose a question",
+       "position": {
+        "x": 300,
+        "y": 230
+       }
+      },
+      {
+       "id": "m-q1",
+       "type": "question",
+       "speaker": "Detective",
+       "text": "When did you leave Daniel's apartment?",
+       "position": {
+        "x": 0,
+        "y": 360
+       }
+      },
+      {
+       "id": "m-a1",
+       "type": "response",
+       "speaker": "Michael",
+       "text": "9:15 sharp. I drove to the office to finish the quarterly report.",
+       "position": {
+        "x": 0,
+        "y": 470
+       },
+       "clueId": "clue-005"
+      },
+      {
+       "id": "m-q2",
+       "type": "question",
+       "speaker": "Detective",
+       "text": "How was the business doing?",
+       "position": {
+        "x": 300,
+        "y": 360
+       }
+      },
+      {
+       "id": "m-a2",
+       "type": "response",
+       "speaker": "Michael",
+       "text": "Never better. Daniel worried too much about the numbers.",
+       "position": {
+        "x": 300,
+        "y": 470
+       },
+       "reaction": {
+        "emotion": "nervous",
+        "intensity": 1
+       }
+      },
+      {
+       "id": "m-q3",
+       "type": "question",
+       "speaker": "Detective",
+       "text": "Did you and Daniel argue that evening?",
+       "position": {
+        "x": 450,
+        "y": 360
+       },
+       "condition": {
+        "type": "group",
+        "id": "cond-m3",
+        "operator": "AND",
+        "children": [
+         {
+          "type": "rule",
+          "id": "cond-m3-1",
+          "kind": "question_answered",
+          "targetId": "m-q1"
+         }
+        ]
+       }
+      },
+      {
+       "id": "m-a3",
+       "type": "response",
+       "speaker": "Michael",
+       "text": "A disagreement about the audit, nothing more. We always sorted things out over a drink.",
+       "position": {
+        "x": 450,
+        "y": 470
+       },
+       "reaction": {
+        "emotion": "defensive",
+        "intensity": 2
+       }
+      },
+      {
+       "id": "m-q4",
+       "type": "question",
+       "speaker": "Detective",
+       "text": "Were you with Daniel at 10:17 PM?",
+       "position": {
+        "x": 600,
+        "y": 360
+       },
+       "condition": {
+        "type": "group",
+        "id": "cond-sarah",
+        "operator": "AND",
+        "children": [
+         {
+          "type": "rule",
+          "id": "cond-sarah-1",
+          "kind": "clue_discovered",
+          "targetId": "clue-002"
+         }
+        ]
+       }
+      },
+      {
+       "id": "m-present",
+       "type": "present_evidence",
+       "text": "Present: Building CCTV — 9:42 PM re-entry",
+       "evidenceId": "ev-003",
+       "position": {
+        "x": 600,
+        "y": 470
+       },
+       "condition": {
+        "type": "group",
+        "id": "cond-cctv",
+        "operator": "AND",
+        "children": [
+         {
+          "type": "rule",
+          "id": "cond-cctv-1",
+          "kind": "evidence_discovered",
+          "targetId": "ev-003"
+         }
+        ]
+       }
+      },
+      {
+       "id": "m-react",
+       "type": "reaction",
+       "speaker": "Michael",
+       "text": "That could be anyone. ...Alright. I went back for my laptop charger. He was alive when I left.",
+       "position": {
+        "x": 600,
+        "y": 590
+       },
+       "reaction": {
+        "emotion": "angry",
+        "intensity": 3
+       },
+       "isContradiction": true
+      },
+      {
+       "id": "m-clue",
+       "type": "clue",
+       "text": "Clue: Michael's alibi broken",
+       "clueId": "clue-004",
+       "position": {
+        "x": 600,
+        "y": 710
+       }
+      },
+      {
+       "id": "m-unlock",
+       "type": "unlock",
+       "text": "Unlock: Parking Area",
+       "unlockTargetId": "loc-parking",
+       "position": {
+        "x": 600,
+        "y": 820
+       }
+      },
+      {
+       "id": "m-end",
+       "type": "end",
+       "text": "Interview complete",
+       "position": {
+        "x": 300,
+        "y": 940
+       }
+      }
+     ],
+     "edges": [
+      {
+       "id": "m-start->m-open",
+       "source": "m-start",
+       "target": "m-open"
+      },
+      {
+       "id": "m-open->m-menu",
+       "source": "m-open",
+       "target": "m-menu"
+      },
+      {
+       "id": "m-menu->m-q1",
+       "source": "m-menu",
+       "target": "m-q1",
+       "label": "Alibi"
+      },
+      {
+       "id": "m-menu->m-q2",
+       "source": "m-menu",
+       "target": "m-q2",
+       "label": "Business"
+      },
+      {
+       "id": "m-menu->m-q3",
+       "source": "m-menu",
+       "target": "m-q3",
+       "label": "The evening"
+      },
+      {
+       "id": "m-menu->m-q4",
+       "source": "m-menu",
+       "target": "m-q4",
+       "label": "10:17 (needs Sarah clue)"
+      },
+      {
+       "id": "m-q3->m-a3",
+       "source": "m-q3",
+       "target": "m-a3"
+      },
+      {
+       "id": "m-a3->m-menu",
+       "source": "m-a3",
+       "target": "m-menu"
+      },
+      {
+       "id": "m-q1->m-a1",
+       "source": "m-q1",
+       "target": "m-a1"
+      },
+      {
+       "id": "m-q2->m-a2",
+       "source": "m-q2",
+       "target": "m-a2"
+      },
+      {
+       "id": "m-q4->m-present",
+       "source": "m-q4",
+       "target": "m-present",
+       "label": "Present CCTV"
+      },
+      {
+       "id": "m-present->m-react",
+       "source": "m-present",
+       "target": "m-react"
+      },
+      {
+       "id": "m-react->m-clue",
+       "source": "m-react",
+       "target": "m-clue"
+      },
+      {
+       "id": "m-clue->m-unlock",
+       "source": "m-clue",
+       "target": "m-unlock"
+      },
+      {
+       "id": "m-menu->m-end",
+       "source": "m-menu",
+       "target": "m-end",
+       "label": "That's all for now"
+      },
+      {
+       "id": "m-a1->m-menu",
+       "source": "m-a1",
+       "target": "m-menu"
+      },
+      {
+       "id": "m-a2->m-menu",
+       "source": "m-a2",
+       "target": "m-menu"
+      },
+      {
+       "id": "m-unlock->m-menu",
+       "source": "m-unlock",
+       "target": "m-menu"
+      }
+     ]
+    },
+    {
+     "id": "int-nuwan",
+     "code": "INT-003",
+     "title": "Nuwan Silva — Neighbor",
+     "suspectId": "sus-nuwan",
+     "locationId": "loc-entrance",
+     "description": "Nuwan's receipt proves he was home; he heard the argument.",
+     "unlockedByDefault": false,
+     "unlockCondition": {
+      "type": "group",
+      "id": "c-nu",
+      "operator": "AND",
+      "children": [
+       {
+        "type": "rule",
+        "id": "c-nu-1",
+        "kind": "evidence_discovered",
+        "targetId": "ev-004"
+       }
+      ]
+     },
+     "nodes": [
+      {
+       "id": "n-start",
+       "type": "start",
+       "text": "Interview begins — Nuwan Silva, Apt 7C.",
+       "position": {
+        "x": 300,
+        "y": 0
+       }
+      },
+      {
+       "id": "n-open",
+       "type": "response",
+       "speaker": "Nuwan",
+       "text": "I was out working, sir. Deliveries all night.",
+       "position": {
+        "x": 300,
+        "y": 110
+       },
+       "reaction": {
+        "emotion": "nervous",
+        "intensity": 2
+       }
+      },
+      {
+       "id": "n-menu",
+       "type": "choice",
+       "text": "Choose a question",
+       "position": {
+        "x": 300,
+        "y": 230
+       }
+      },
+      {
+       "id": "n-q2",
+       "type": "question",
+       "speaker": "Detective",
+       "text": "How well did you know Daniel?",
+       "position": {
+        "x": 0,
+        "y": 360
+       }
+      },
+      {
+       "id": "n-a2",
+       "type": "response",
+       "speaker": "Nuwan",
+       "text": "Only to nod hello in the corridor. He seemed a decent man, always tipped me at Christmas.",
+       "position": {
+        "x": 0,
+        "y": 470
+       },
+       "reaction": {
+        "emotion": "calm",
+        "intensity": 1
+       }
+      },
+      {
+       "id": "n-q3",
+       "type": "question",
+       "speaker": "Detective",
+       "text": "Tell me about your night, start to finish.",
+       "position": {
+        "x": 250,
+        "y": 360
+       }
+      },
+      {
+       "id": "n-a3",
+       "type": "response",
+       "speaker": "Nuwan",
+       "text": "Shift started at six. Orders across Colombo 7. I… did not get home until late, that is all.",
+       "position": {
+        "x": 250,
+        "y": 470
+       },
+       "reaction": {
+        "emotion": "nervous",
+        "intensity": 2
+       }
+      },
+      {
+       "id": "n-present",
+       "type": "present_evidence",
+       "text": "Present: Pharmacy Receipt — 10:04 PM",
+       "evidenceId": "ev-004",
+       "position": {
+        "x": 500,
+        "y": 360
+       },
+       "condition": {
+        "type": "group",
+        "id": "cond-n-rec",
+        "operator": "AND",
+        "children": [
+         {
+          "type": "rule",
+          "id": "cond-n-rec-1",
+          "kind": "evidence_discovered",
+          "targetId": "ev-004"
+         }
+        ]
+       }
+      },
+      {
+       "id": "n-react",
+       "type": "reaction",
+       "speaker": "Nuwan",
+       "text": "Okay, okay. I came home at ten for a headache. I heard them. Shouting about money, around 10:21.",
+       "position": {
+        "x": 500,
+        "y": 480
+       },
+       "reaction": {
+        "emotion": "relieved",
+        "intensity": 2
+       }
+      },
+      {
+       "id": "n-clue",
+       "type": "clue",
+       "text": "Clue: Argument at 10:21 PM",
+       "clueId": "clue-011",
+       "position": {
+        "x": 700,
+        "y": 600
+       }
+      },
+      {
+       "id": "n-q1",
+       "type": "question",
+       "speaker": "Detective",
+       "text": "Did you see anyone leave?",
+       "position": {
+        "x": 500,
+        "y": 600
+       },
+       "condition": {
+        "type": "group",
+        "id": "cond-n1",
+        "operator": "AND",
+        "children": [
+         {
+          "type": "rule",
+          "id": "cond-n1-1",
+          "kind": "clue_discovered",
+          "targetId": "clue-011"
+         }
+        ]
+       }
+      },
+      {
+       "id": "n-a1",
+       "type": "response",
+       "speaker": "Nuwan",
+       "text": "A man in a dark jacket, down the parking stairs. Maybe 10:30.",
+       "position": {
+        "x": 500,
+        "y": 710
+       }
+      },
+      {
+       "id": "n-end",
+       "type": "end",
+       "text": "Interview complete",
+       "position": {
+        "x": 300,
+        "y": 830
+       }
+      }
+     ],
+     "edges": [
+      {
+       "id": "n-start->n-open",
+       "source": "n-start",
+       "target": "n-open"
+      },
+      {
+       "id": "n-open->n-menu",
+       "source": "n-open",
+       "target": "n-menu"
+      },
+      {
+       "id": "n-menu->n-q2",
+       "source": "n-menu",
+       "target": "n-q2",
+       "label": "Daniel"
+      },
+      {
+       "id": "n-menu->n-q3",
+       "source": "n-menu",
+       "target": "n-q3",
+       "label": "His night"
+      },
+      {
+       "id": "n-menu->n-present",
+       "source": "n-menu",
+       "target": "n-present",
+       "label": "Show the pharmacy receipt"
+      },
+      {
+       "id": "n-menu->n-q1",
+       "source": "n-menu",
+       "target": "n-q1",
+       "label": "Who left? (needs the argument clue)"
+      },
+      {
+       "id": "n-menu->n-end",
+       "source": "n-menu",
+       "target": "n-end",
+       "label": "That's all for now"
+      },
+      {
+       "id": "n-q2->n-a2",
+       "source": "n-q2",
+       "target": "n-a2"
+      },
+      {
+       "id": "n-a2->n-menu",
+       "source": "n-a2",
+       "target": "n-menu"
+      },
+      {
+       "id": "n-q3->n-a3",
+       "source": "n-q3",
+       "target": "n-a3"
+      },
+      {
+       "id": "n-a3->n-menu",
+       "source": "n-a3",
+       "target": "n-menu"
+      },
+      {
+       "id": "n-present->n-react",
+       "source": "n-present",
+       "target": "n-react"
+      },
+      {
+       "id": "n-react->n-clue",
+       "source": "n-react",
+       "target": "n-clue"
+      },
+      {
+       "id": "n-react->n-menu",
+       "source": "n-react",
+       "target": "n-menu"
+      },
+      {
+       "id": "n-q1->n-a1",
+       "source": "n-q1",
+       "target": "n-a1"
+      },
+      {
+       "id": "n-a1->n-menu",
+       "source": "n-a1",
+       "target": "n-menu"
+      }
+     ]
+    }
+   ],
+   "clues": [
+    {
+     "id": "clue-001",
+     "code": "CLU-001",
+     "title": "Last call at 10:17 PM",
+     "description": "Daniel's last outgoing call was at 10:17 PM.",
+     "category": "context",
+     "importance": "major",
+     "sourceEvidenceIds": [
+      "ev-001"
+     ],
+     "sourceInterviewIds": [],
+     "suspectIds": [
+      "sus-sarah"
+     ],
+     "isRedHerring": false
+    },
+    {
+     "id": "clue-002",
+     "code": "CLU-002",
+     "title": "Sarah lied about the call",
+     "description": "Sarah denied speaking to Daniel; the phone proves a 43-second call.",
+     "category": "contradiction",
+     "importance": "major",
+     "sourceEvidenceIds": [
+      "ev-001"
+     ],
+     "sourceInterviewIds": [
+      "int-sarah"
+     ],
+     "suspectIds": [
+      "sus-sarah"
+     ],
+     "isRedHerring": false
+    },
+    {
+     "id": "clue-003",
+     "code": "CLU-003",
+     "title": "Unknown visitor at 9:42 PM",
+     "description": "CCTV shows a man entering from the stairwell at 9:42 PM.",
+     "category": "opportunity",
+     "importance": "critical",
+     "sourceEvidenceIds": [
+      "ev-003"
+     ],
+     "sourceInterviewIds": [],
+     "suspectIds": [
+      "sus-michael"
+     ],
+     "isRedHerring": false
+    },
+    {
+     "id": "clue-004",
+     "code": "CLU-004",
+     "title": "Michael's alibi broken",
+     "description": "The 9:42 PM visitor is Michael; he admits returning.",
+     "category": "contradiction",
+     "importance": "critical",
+     "sourceEvidenceIds": [
+      "ev-003"
+     ],
+     "sourceInterviewIds": [
+      "int-michael"
+     ],
+     "suspectIds": [
+      "sus-michael"
+     ],
+     "isRedHerring": false
+    },
+    {
+     "id": "clue-005",
+     "code": "CLU-005",
+     "title": "Michael claims he left at 9:15",
+     "description": "Michael's stated alibi: office from 9:15 PM.",
+     "category": "alibi",
+     "importance": "major",
+     "sourceEvidenceIds": [],
+     "sourceInterviewIds": [
+      "int-michael"
+     ],
+     "suspectIds": [
+      "sus-michael"
+     ],
+     "isRedHerring": false
+    },
+    {
+     "id": "clue-006",
+     "code": "CLU-006",
+     "title": "Michael's print on glass",
+     "description": "Fingerprint on the broken glass matches Michael.",
+     "category": "method",
+     "importance": "critical",
+     "sourceEvidenceIds": [
+      "ev-002",
+      "ev-005"
+     ],
+     "sourceInterviewIds": [],
+     "suspectIds": [
+      "sus-michael"
+     ],
+     "isRedHerring": false
+    },
+    {
+     "id": "clue-007",
+     "code": "CLU-007",
+     "title": "Weapon was the wine bottle",
+     "description": "Green glass in the wound matches the missing kitchen bottle.",
+     "category": "method",
+     "importance": "critical",
+     "sourceEvidenceIds": [
+      "ev-005"
+     ],
+     "sourceInterviewIds": [],
+     "suspectIds": [],
+     "isRedHerring": false
+    },
+    {
+     "id": "clue-008",
+     "code": "CLU-008",
+     "title": "Scene was cleaned",
+     "description": "Wine spill wiped with kitchen towels — the killer stayed after the attack.",
+     "category": "context",
+     "importance": "minor",
+     "sourceEvidenceIds": [
+      "ev-002"
+     ],
+     "sourceInterviewIds": [],
+     "suspectIds": [],
+     "isRedHerring": false
+    },
+    {
+     "id": "clue-009",
+     "code": "CLU-009",
+     "title": "Daniel's private matter",
+     "description": "Daniel was preparing to report LKR 18.4M of embezzlement to auditors on Monday.",
+     "category": "motive",
+     "importance": "critical",
+     "sourceEvidenceIds": [
+      "ev-007"
+     ],
+     "sourceInterviewIds": [
+      "int-sarah"
+     ],
+     "suspectIds": [
+      "sus-michael",
+      "sus-sarah"
+     ],
+     "isRedHerring": false
+    },
+    {
+     "id": "clue-010",
+     "code": "CLU-010",
+     "title": "Locked door means nothing",
+     "description": "Auto-locking deadbolt; anyone leaving would lock it.",
+     "category": "context",
+     "importance": "minor",
+     "sourceEvidenceIds": [],
+     "sourceInterviewIds": [],
+     "suspectIds": [],
+     "isRedHerring": false
+    },
+    {
+     "id": "clue-011",
+     "code": "CLU-011",
+     "title": "Argument at 10:21 PM",
+     "description": "Nuwan heard two men arguing about money.",
+     "category": "opportunity",
+     "importance": "major",
+     "sourceEvidenceIds": [
+      "ev-004",
+      "ev-006"
+     ],
+     "sourceInterviewIds": [
+      "int-nuwan"
+     ],
+     "suspectIds": [
+      "sus-nuwan",
+      "sus-michael"
+     ],
+     "isRedHerring": false
+    },
+    {
+     "id": "clue-012",
+     "code": "CLU-012",
+     "title": "Man left via parking stairs",
+     "description": "A man left down the stairwell at 10:31 PM; Michael's car exits 10:33 PM.",
+     "category": "opportunity",
+     "importance": "major",
+     "sourceEvidenceIds": [
+      "ev-006",
+      "ev-008"
+     ],
+     "sourceInterviewIds": [
+      "int-nuwan"
+     ],
+     "suspectIds": [
+      "sus-michael"
+     ],
+     "isRedHerring": false
+    },
+    {
+     "id": "clue-013",
+     "code": "CLU-013",
+     "title": "Sarah's jealousy",
+     "description": "Sarah reportedly resented Daniel's new relationship. Unfounded.",
+     "category": "red_herring",
+     "importance": "minor",
+     "sourceEvidenceIds": [],
+     "sourceInterviewIds": [
+      "int-sarah"
+     ],
+     "suspectIds": [
+      "sus-sarah"
+     ],
+     "isRedHerring": true
+    }
+   ],
+   "clueConnections": [
+    {
+     "id": "cc-1",
+     "from": "clue-001",
+     "to": "clue-002",
+     "relation": "leads_to",
+     "label": "Call reveals lie"
+    },
+    {
+     "id": "cc-2",
+     "from": "clue-002",
+     "to": "clue-009",
+     "relation": "leads_to",
+     "label": "Sarah explains private matter"
+    },
+    {
+     "id": "cc-3",
+     "from": "clue-005",
+     "to": "clue-004",
+     "relation": "contradicts",
+     "label": "CCTV contradicts alibi"
+    },
+    {
+     "id": "cc-4",
+     "from": "clue-003",
+     "to": "clue-004",
+     "relation": "supports",
+     "label": "Visitor identified"
+    },
+    {
+     "id": "cc-5",
+     "from": "clue-006",
+     "to": "clue-007",
+     "relation": "supports",
+     "label": "Print + weapon"
+    },
+    {
+     "id": "cc-6",
+     "from": "clue-009",
+     "to": "clue-004",
+     "relation": "explains",
+     "label": "Motive for return"
+    },
+    {
+     "id": "cc-7",
+     "from": "clue-011",
+     "to": "clue-012",
+     "relation": "leads_to",
+     "label": "Witness timeline"
+    },
+    {
+     "id": "cc-8",
+     "from": "clue-008",
+     "to": "clue-007",
+     "relation": "supports",
+     "label": "Cleanup hides bottle"
+    },
+    {
+     "id": "cc-9",
+     "from": "clue-013",
+     "to": "clue-002",
+     "relation": "contradicts",
+     "label": "Red herring vs. real reason"
+    }
+   ],
+   "triggers": [
+    {
+     "id": "trg-1",
+     "name": "Phone discovered",
+     "description": "Finding the phone unlocks the 10:17 PM question in Sarah's interview.",
+     "enabled": true,
+     "condition": {
+      "type": "group",
+      "id": "t1",
+      "operator": "AND",
+      "children": [
+       {
+        "type": "rule",
+        "id": "t1a",
+        "kind": "evidence_discovered",
+        "targetId": "ev-001"
+       }
+      ]
+     },
+     "actions": [
+      {
+       "id": "a1",
+       "kind": "unlock_question",
+       "targetId": "s-q4",
+       "label": "Unlock Sarah Q: 'Did you call Daniel at 10:17 PM?'"
+      },
+      {
+       "id": "a1b",
+       "kind": "unlock_location",
+       "targetId": "loc-bedroom",
+       "label": "Unlock Bedroom"
+      }
+     ]
+    },
+    {
+     "id": "trg-2",
+     "name": "CCTV discovered",
+     "description": "CCTV unlocks Michael alibi contradiction.",
+     "enabled": true,
+     "condition": {
+      "type": "group",
+      "id": "t2",
+      "operator": "AND",
+      "children": [
+       {
+        "type": "rule",
+        "id": "t2a",
+        "kind": "evidence_discovered",
+        "targetId": "ev-003"
+       },
+       {
+        "type": "rule",
+        "id": "t2b",
+        "kind": "clue_discovered",
+        "targetId": "clue-005"
+       }
+      ]
+     },
+     "actions": [
+      {
+       "id": "a2",
+       "kind": "reveal_contradiction",
+       "targetId": "clue-004",
+       "label": "Unlock Michael alibi contradiction"
+      }
+     ]
+    },
+    {
+     "id": "trg-3",
+     "name": "Sarah contradiction discovered",
+     "description": "Unlocks Daniel's private matter clue.",
+     "enabled": true,
+     "condition": {
+      "type": "group",
+      "id": "t3",
+      "operator": "AND",
+      "children": [
+       {
+        "type": "rule",
+        "id": "t3a",
+        "kind": "clue_discovered",
+        "targetId": "clue-002"
+       },
+       {
+        "type": "rule",
+        "id": "t3b",
+        "kind": "interview_completed",
+        "targetId": "int-sarah"
+       }
+      ]
+     },
+     "actions": [
+      {
+       "id": "a3",
+       "kind": "unlock_clue",
+       "targetId": "clue-009",
+       "label": "Unlock 'Daniel's private matter'"
+      },
+      {
+       "id": "a3b",
+       "kind": "unlock_question",
+       "targetId": "m-q4",
+       "label": "Unlock Michael Q: 'Were you with Daniel at 10:17?'"
+      }
+     ]
+    },
+    {
+     "id": "trg-4",
+     "name": "Pharmacy receipt found",
+     "description": "Receipt unlocks the pharmacy and the neighbor's interview.",
+     "enabled": true,
+     "condition": {
+      "type": "group",
+      "id": "t4",
+      "operator": "OR",
+      "children": [
+       {
+        "type": "rule",
+        "id": "t4a",
+        "kind": "evidence_discovered",
+        "targetId": "ev-004"
+       },
+       {
+        "type": "rule",
+        "id": "t4b",
+        "kind": "location_visited",
+        "targetId": "loc-pharmacy"
+       }
+      ]
+     },
+     "actions": [
+      {
+       "id": "a4",
+       "kind": "unlock_interview",
+       "targetId": "int-nuwan",
+       "label": "Unlock Nuwan interview"
+      },
+      {
+       "id": "a4b",
+       "kind": "unlock_location",
+       "targetId": "loc-pharmacy",
+       "label": "Unlock Flower Road Pharmacy"
+      }
+     ]
+    },
+    {
+     "id": "trg-5",
+     "name": "Alibi broken",
+     "description": "Michael's contradiction opens the parking area.",
+     "enabled": true,
+     "condition": {
+      "type": "group",
+      "id": "t5",
+      "operator": "AND",
+      "children": [
+       {
+        "type": "rule",
+        "id": "t5a",
+        "kind": "clue_discovered",
+        "targetId": "clue-004"
+       },
+       {
+        "type": "group",
+        "id": "t5g",
+        "operator": "OR",
+        "negate": false,
+        "children": [
+         {
+          "type": "rule",
+          "id": "t5b",
+          "kind": "suspect_interviewed",
+          "targetId": "sus-michael"
+         },
+         {
+          "type": "rule",
+          "id": "t5c",
+          "kind": "case_progress",
+          "targetId": "60"
+         }
+        ]
+       }
+      ]
+     },
+     "actions": [
+      {
+       "id": "a5",
+       "kind": "unlock_location",
+       "targetId": "loc-parking",
+       "label": "Unlock Parking Area"
+      },
+      {
+       "id": "a5b",
+       "kind": "unlock_timeline_event",
+       "targetId": "tl-09",
+       "label": "Reveal 10:33 PM car exit"
+      }
+     ]
+    }
+   ],
+   "timeline": [
+    {
+     "id": "tl-00",
+     "time": "19:30",
+     "title": "Sarah meets Daniel",
+     "description": "Sarah hands Daniel copies of bank statements at a café on Duplication Road.",
+     "locationId": "loc-apartment",
+     "characterIds": [
+      "sus-sarah"
+     ],
+     "evidenceIds": [
+      "ev-007"
+     ],
+     "source": "Sarah interview",
+     "correctOrder": 1,
+     "visibility": "discoverable",
+     "isClaim": false,
+     "isTrue": true
+    },
+    {
+     "id": "tl-01",
+     "time": "20:45",
+     "title": "Michael arrives",
+     "description": "Michael enters 7B to 'discuss quarterly accounts'.",
+     "locationId": "loc-entrance",
+     "characterIds": [
+      "sus-michael"
+     ],
+     "evidenceIds": [
+      "ev-003"
+     ],
+     "source": "Building CCTV",
+     "correctOrder": 2,
+     "visibility": "visible",
+     "isClaim": false,
+     "isTrue": true
+    },
+    {
+     "id": "tl-02",
+     "time": "21:15",
+     "title": "Michael claims he leaves",
+     "description": "Michael says he drove to his office.",
+     "locationId": "loc-office",
+     "characterIds": [
+      "sus-michael"
+     ],
+     "evidenceIds": [],
+     "source": "Michael interview",
+     "correctOrder": 3,
+     "visibility": "visible",
+     "isClaim": true,
+     "isTrue": false
+    },
+    {
+     "id": "tl-03",
+     "time": "21:42",
+     "title": "CCTV shows unknown person entering",
+     "description": "Man in dark jacket enters corridor from stairwell.",
+     "locationId": "loc-entrance",
+     "characterIds": [
+      "sus-michael"
+     ],
+     "evidenceIds": [
+      "ev-003"
+     ],
+     "source": "Building CCTV",
+     "correctOrder": 4,
+     "visibility": "discoverable",
+     "isClaim": false,
+     "isTrue": true
+    },
+    {
+     "id": "tl-04",
+     "time": "21:30",
+     "title": "Sarah claims she's home",
+     "description": "Sarah's stated alibi begins.",
+     "characterIds": [
+      "sus-sarah"
+     ],
+     "evidenceIds": [],
+     "source": "Sarah interview",
+     "correctOrder": 5,
+     "visibility": "visible",
+     "isClaim": true,
+     "isTrue": true
+    },
+    {
+     "id": "tl-05",
+     "time": "22:04",
+     "title": "Pharmacy receipt",
+     "description": "Nuwan buys painkillers at Flower Road Pharmacy.",
+     "locationId": "loc-pharmacy",
+     "characterIds": [
+      "sus-nuwan"
+     ],
+     "evidenceIds": [
+      "ev-004"
+     ],
+     "source": "Receipt",
+     "correctOrder": 6,
+     "visibility": "discoverable",
+     "isClaim": false,
+     "isTrue": true
+    },
+    {
+     "id": "tl-06",
+     "time": "22:17",
+     "title": "Daniel calls Sarah",
+     "description": "43-second call. Daniel says 'Michael is here'.",
+     "locationId": "loc-living",
+     "characterIds": [
+      "sus-sarah"
+     ],
+     "evidenceIds": [
+      "ev-001"
+     ],
+     "source": "Phone log",
+     "correctOrder": 7,
+     "visibility": "discoverable",
+     "isClaim": false,
+     "isTrue": true
+    },
+    {
+     "id": "tl-07",
+     "time": "22:21",
+     "title": "Nuwan hears argument",
+     "description": "Two men shouting about money.",
+     "locationId": "loc-entrance",
+     "characterIds": [
+      "sus-nuwan",
+      "sus-michael"
+     ],
+     "evidenceIds": [
+      "ev-006"
+     ],
+     "source": "Witness statement",
+     "correctOrder": 8,
+     "visibility": "discoverable",
+     "isClaim": false,
+     "isTrue": true
+    },
+    {
+     "id": "tl-08",
+     "time": "22:27",
+     "title": "Estimated murder",
+     "description": "Daniel struck with the wine bottle.",
+     "locationId": "loc-living",
+     "characterIds": [
+      "sus-michael"
+     ],
+     "evidenceIds": [
+      "ev-002",
+      "ev-005"
+     ],
+     "source": "Forensic estimate",
+     "correctOrder": 9,
+     "visibility": "hidden",
+     "isClaim": false,
+     "isTrue": true
+    },
+    {
+     "id": "tl-09",
+     "time": "22:33",
+     "title": "Michael's car exits parking",
+     "description": "Black saloon CAB-4471 leaves the basement.",
+     "locationId": "loc-parking",
+     "characterIds": [
+      "sus-michael"
+     ],
+     "evidenceIds": [
+      "ev-008"
+     ],
+     "source": "Parking camera",
+     "correctOrder": 10,
+     "visibility": "discoverable",
+     "isClaim": false,
+     "isTrue": true
+    },
+    {
+     "id": "tl-10",
+     "time": "22:42",
+     "title": "Body discovered",
+     "description": "Security guard checks 7B after a noise complaint.",
+     "locationId": "loc-living",
+     "characterIds": [],
+     "evidenceIds": [],
+     "source": "Police report",
+     "correctOrder": 11,
+     "visibility": "visible",
+     "isClaim": false,
+     "isTrue": true
+    }
+   ],
+   "flowNodes": [
+    {
+     "id": "f-start",
+     "kind": "start",
+     "label": "START",
+     "position": {
+      "x": 320,
+      "y": 0
+     },
+     "required": true
+    },
+    {
+     "id": "f-brief",
+     "kind": "briefing",
+     "label": "Initial Briefing",
+     "position": {
+      "x": 320,
+      "y": 90
+     },
+     "required": true
+    },
+    {
+     "id": "f-living",
+     "kind": "scene",
+     "label": "Living Room",
+     "position": {
+      "x": 320,
+      "y": 180
+     },
+     "required": true,
+     "refId": "scn-living"
+    },
+    {
+     "id": "f-phone",
+     "kind": "evidence",
+     "label": "Phone discovered",
+     "position": {
+      "x": 120,
+      "y": 280
+     },
+     "required": true,
+     "refId": "ev-001"
+    },
+    {
+     "id": "f-kitchen",
+     "kind": "scene",
+     "label": "Kitchen",
+     "position": {
+      "x": 520,
+      "y": 280
+     },
+     "required": false,
+     "refId": "scn-kitchen"
+    },
+    {
+     "id": "f-sarah",
+     "kind": "interview",
+     "label": "Sarah Interview unlocked",
+     "position": {
+      "x": 120,
+      "y": 380
+     },
+     "required": true,
+     "refId": "int-sarah"
+    },
+    {
+     "id": "f-bedroom",
+     "kind": "location",
+     "label": "Bedroom — Business Records",
+     "position": {
+      "x": 120,
+      "y": 480
+     },
+     "required": true,
+     "refId": "loc-bedroom"
+    },
+    {
+     "id": "f-cctv",
+     "kind": "evidence",
+     "label": "CCTV discovered",
+     "position": {
+      "x": 520,
+      "y": 380
+     },
+     "required": true,
+     "refId": "ev-003"
+    },
+    {
+     "id": "f-michael",
+     "kind": "contradiction",
+     "label": "Michael contradiction",
+     "position": {
+      "x": 520,
+      "y": 480
+     },
+     "required": true,
+     "refId": "clue-004"
+    },
+    {
+     "id": "f-pharmacy",
+     "kind": "location",
+     "label": "Pharmacy unlocked",
+     "position": {
+      "x": 760,
+      "y": 380
+     },
+     "required": false,
+     "refId": "loc-pharmacy"
+    },
+    {
+     "id": "f-witness",
+     "kind": "interview",
+     "label": "Witness interview",
+     "position": {
+      "x": 760,
+      "y": 480
+     },
+     "required": true,
+     "refId": "int-nuwan"
+    },
+    {
+     "id": "f-parking",
+     "kind": "location",
+     "label": "Parking Area",
+     "position": {
+      "x": 760,
+      "y": 580
+     },
+     "required": false,
+     "refId": "loc-parking"
+    },
+    {
+     "id": "f-timeline",
+     "kind": "timeline",
+     "label": "Timeline reconstruction",
+     "position": {
+      "x": 320,
+      "y": 640
+     },
+     "required": true
+    },
+    {
+     "id": "f-theory",
+     "kind": "theory",
+     "label": "Theory creation",
+     "position": {
+      "x": 320,
+      "y": 730
+     },
+     "required": true
+    },
+    {
+     "id": "f-accuse",
+     "kind": "accusation",
+     "label": "Final accusation",
+     "position": {
+      "x": 320,
+      "y": 820
+     },
+     "required": true
+    },
+    {
+     "id": "f-reveal",
+     "kind": "reveal",
+     "label": "Reveal",
+     "position": {
+      "x": 320,
+      "y": 910
+     },
+     "required": true
+    },
+    {
+     "id": "f-dead",
+     "kind": "location",
+     "label": "Michael's Office (dead end)",
+     "position": {
+      "x": 900,
+      "y": 680
+     },
+     "required": false,
+     "refId": "loc-office"
+    }
+   ],
+   "flowEdges": [
+    {
+     "id": "f-start-f-brief",
+     "source": "f-start",
+     "target": "f-brief"
+    },
+    {
+     "id": "f-brief-f-living",
+     "source": "f-brief",
+     "target": "f-living"
+    },
+    {
+     "id": "f-living-f-phone",
+     "source": "f-living",
+     "target": "f-phone"
+    },
+    {
+     "id": "f-living-f-kitchen",
+     "source": "f-living",
+     "target": "f-kitchen"
+    },
+    {
+     "id": "f-phone-f-sarah",
+     "source": "f-phone",
+     "target": "f-sarah",
+     "label": "trg-1"
+    },
+    {
+     "id": "f-sarah-f-bedroom",
+     "source": "f-sarah",
+     "target": "f-bedroom",
+     "label": "trg-3"
+    },
+    {
+     "id": "f-living-f-cctv",
+     "source": "f-living",
+     "target": "f-cctv"
+    },
+    {
+     "id": "f-cctv-f-michael",
+     "source": "f-cctv",
+     "target": "f-michael",
+     "label": "trg-2"
+    },
+    {
+     "id": "f-cctv-f-pharmacy",
+     "source": "f-cctv",
+     "target": "f-pharmacy"
+    },
+    {
+     "id": "f-pharmacy-f-witness",
+     "source": "f-pharmacy",
+     "target": "f-witness",
+     "label": "trg-4"
+    },
+    {
+     "id": "f-michael-f-parking",
+     "source": "f-michael",
+     "target": "f-parking",
+     "label": "trg-5"
+    },
+    {
+     "id": "f-witness-f-timeline",
+     "source": "f-witness",
+     "target": "f-timeline"
+    },
+    {
+     "id": "f-bedroom-f-timeline",
+     "source": "f-bedroom",
+     "target": "f-timeline"
+    },
+    {
+     "id": "f-michael-f-timeline",
+     "source": "f-michael",
+     "target": "f-timeline"
+    },
+    {
+     "id": "f-timeline-f-theory",
+     "source": "f-timeline",
+     "target": "f-theory"
+    },
+    {
+     "id": "f-theory-f-accuse",
+     "source": "f-theory",
+     "target": "f-accuse"
+    },
+    {
+     "id": "f-accuse-f-reveal",
+     "source": "f-accuse",
+     "target": "f-reveal"
+    },
+    {
+     "id": "f-michael-f-dead",
+     "source": "f-michael",
+     "target": "f-dead"
+    }
+   ],
+   "theories": [
+    {
+     "id": "th-1",
+     "name": "Michael — financial cover-up",
+     "killerId": "sus-michael",
+     "motive": "Financial dispute",
+     "method": "Wine bottle",
+     "supportingEvidenceIds": [
+      "ev-005",
+      "ev-003",
+      "ev-006",
+      "ev-007"
+     ],
+     "contradictingEvidenceIds": [],
+     "requiredClueIds": [
+      "clue-004",
+      "clue-006",
+      "clue-009"
+     ],
+     "isCorrect": true
+    },
+    {
+     "id": "th-2",
+     "name": "Sarah — jealousy",
+     "killerId": "sus-sarah",
+     "motive": "Jealousy after breakup",
+     "method": "Wine glass",
+     "supportingEvidenceIds": [
+      "ev-001"
+     ],
+     "contradictingEvidenceIds": [
+      "ev-003",
+      "ev-005"
+     ],
+     "requiredClueIds": [
+      "clue-013"
+     ],
+     "isCorrect": false
+    },
+    {
+     "id": "th-3",
+     "name": "Nuwan — burglary gone wrong",
+     "killerId": "sus-nuwan",
+     "motive": "Robbery",
+     "method": "Blunt object",
+     "supportingEvidenceIds": [
+      "ev-004"
+     ],
+     "contradictingEvidenceIds": [
+      "ev-006",
+      "ev-008"
+     ],
+     "requiredClueIds": [],
+     "isCorrect": false
+    }
+   ],
+   "hints": [
+    {
+     "id": "hint-1",
+     "order": 1,
+     "text": "Take another look at Daniel's phone.",
+     "cost": 1,
+     "scorePenalty": 50
+    },
+    {
+     "id": "hint-2",
+     "order": 2,
+     "text": "Who did Daniel contact shortly before his death?",
+     "cost": 2,
+     "scorePenalty": 100,
+     "unlockCondition": {
+      "type": "group",
+      "id": "h2",
+      "operator": "AND",
+      "children": [
+       {
+        "type": "rule",
+        "id": "h2a",
+        "kind": "evidence_discovered",
+        "targetId": "ev-001"
+       }
+      ]
+     }
+    },
+    {
+     "id": "hint-3",
+     "order": 3,
+     "text": "Check the 10:17 PM call.",
+     "cost": 3,
+     "scorePenalty": 150,
+     "unlockCondition": {
+      "type": "group",
+      "id": "h3",
+      "operator": "AND",
+      "children": [
+       {
+        "type": "rule",
+        "id": "h3a",
+        "kind": "interview_completed",
+        "targetId": "int-sarah",
+        "negate": true
+       }
+      ]
+     }
+    }
+   ],
+   "solution": {
+    "killerId": "sus-michael",
+    "motive": "Financial dispute",
+    "method": "Struck with a wine bottle during an argument",
+    "weapon": "Wine bottle",
+    "correctTimelineIds": [
+     "tl-00",
+     "tl-01",
+     "tl-03",
+     "tl-05",
+     "tl-06",
+     "tl-07",
+     "tl-08",
+     "tl-09",
+     "tl-10"
+    ],
+    "requiredEvidenceIds": [
+     "ev-003",
+     "ev-005",
+     "ev-007",
+     "ev-006",
+     "ev-001"
+    ],
+    "supportingEvidenceIds": [
+     "ev-002",
+     "ev-008",
+     "ev-004"
+    ],
+    "acceptableAlternatives": [
+     "Embezzlement cover-up",
+     "Silencing the whistleblower"
+    ],
+    "partialCredit": [
+     {
+      "label": "Correct killer, wrong motive",
+      "points": 500
+     },
+     {
+      "label": "Correct killer + motive, wrong weapon",
+      "points": 750
+     },
+     {
+      "label": "Correct timeline ≥ 80%",
+      "points": 150
+     }
+    ],
+    "scoring": {
+     "maxScore": 1000,
+     "correctKiller": 400,
+     "correctMotive": 200,
+     "correctMethod": 150,
+     "timelineAccuracy": 150,
+     "perRequiredEvidence": 20,
+     "timeBonusUnderMinutes": 40,
+     "timeBonus": 100,
+     "wrongAccusationPenalty": 300
+    },
+    "explanation": "Michael returned at 9:42 PM after Daniel threatened to go to the auditors. When Daniel's call to Sarah revealed he was not alone, the argument escalated. Michael struck him with the wine bottle, cleaned the spill, and left via the parking stairwell at 10:31 PM."
+   },
+   "reveal": [
+    {
+     "id": "rv-1",
+     "order": 1,
+     "time": "10:21 PM",
+     "title": "Confrontation",
+     "text": "Michael confronts Daniel.",
+     "image": "/assets/scene-living-room.jpg",
+     "characterId": "sus-michael",
+     "durationSec": 6,
+     "transition": "fade",
+     "evidenceId": "ev-006",
+     "audio": "tension-low.ogg"
+    },
+    {
+     "id": "rv-2",
+     "order": 2,
+     "time": "10:24 PM",
+     "title": "Escalation",
+     "text": "Argument escalates.",
+     "image": "/assets/scene-kitchen.jpg",
+     "characterId": "sus-michael",
+     "durationSec": 5,
+     "transition": "cut",
+     "evidenceId": "ev-007"
+    },
+    {
+     "id": "rv-3",
+     "order": 3,
+     "time": "10:27 PM",
+     "title": "The blow",
+     "text": "Michael attacks Daniel with the wine bottle.",
+     "image": "/assets/evid-wineglass.jpg",
+     "characterId": "sus-michael",
+     "durationSec": 4,
+     "transition": "cut",
+     "evidenceId": "ev-005",
+     "audio": "glass-shatter.ogg"
+    },
+    {
+     "id": "rv-4",
+     "order": 4,
+     "time": "10:29 PM",
+     "title": "Cover-up",
+     "text": "Michael attempts to remove evidence.",
+     "image": "/assets/scene-kitchen.jpg",
+     "characterId": "sus-michael",
+     "durationSec": 6,
+     "transition": "dissolve",
+     "evidenceId": "ev-002"
+    },
+    {
+     "id": "rv-5",
+     "order": 5,
+     "time": "10:42 PM",
+     "title": "Discovery",
+     "text": "Body is discovered.",
+     "image": "/assets/scene-entrance.jpg",
+     "durationSec": 7,
+     "transition": "fade"
+    }
+   ]
+  },
+  {
+   "case": {
+    "id": "case-002",
+    "code": "CASE-002",
+    "title": "Mist over Haputale",
+    "tagline": "A planter vanishes from his own bungalow.",
+    "description": "A tea estate owner disappears during a monsoon night. His study is ransacked, his car still in the drive.",
+    "story": "Daniel Perera is found dead inside his apartment at 10:42 PM. The front door appears locked. Three people had contact with Daniel during the evening. The initial investigation finds several inconsistencies. Who killed Daniel? Why? How? What happened between 9:00 PM and 10:42 PM?",
+    "type": "Missing Person",
+    "difficulty": "hard",
+    "status": "review",
+    "version": "0.9",
+    "versions": [
+     {
+      "version": "0.9",
+      "createdAt": "2026-08-12T09:00:00Z",
+      "author": "Sarah K.",
+      "summary": "Initial draft."
+     }
+    ],
+    "coverImage": "/assets/cover-2.jpg",
+    "estimatedMinutes": [
+     35,
+     50
+    ],
+    "location": "Haputale, Sri Lanka",
+    "incidentDate": "2026-07-14",
+    "tags": [
+     "hills",
+     "estate",
+     "missing"
+    ],
+    "victim": {
+     "name": "Daniel Perera",
+     "age": 34,
+     "occupation": "Business Owner",
+     "description": "Co-founder of Perera & Perera Logistics. Found in his living room with a head wound."
+    },
+    "objectives": [
+     "Who killed Daniel?",
+     "Why?",
+     "How?",
+     "What happened between 9:00 PM and 10:42 PM?"
+    ],
+    "createdBy": "Sarah K.",
+    "createdAt": "2026-08-12T09:00:00Z",
+    "updatedAt": "2026-10-08T11:40:00Z",
+    "visibility": "public",
+    "stats": {
+     "players": 0,
+     "completions": 0,
+     "completionRate": 0,
+     "avgScore": 0,
+     "rating": 0
+    }
+   },
+   "locations": [],
+   "scenes": [],
+   "suspects": [],
+   "evidence": [],
+   "documents": [],
+   "interviews": [],
+   "clues": [],
+   "clueConnections": [],
+   "triggers": [],
+   "timeline": [],
+   "flowNodes": [],
+   "flowEdges": [],
+   "theories": [],
+   "hints": [],
+   "solution": {
+    "killerId": "",
+    "motive": "",
+    "method": "",
+    "weapon": "",
+    "correctTimelineIds": [],
+    "requiredEvidenceIds": [],
+    "supportingEvidenceIds": [],
+    "acceptableAlternatives": [],
+    "partialCredit": [],
+    "scoring": {
+     "maxScore": 1000,
+     "correctKiller": 400,
+     "correctMotive": 200,
+     "correctMethod": 150,
+     "timelineAccuracy": 150,
+     "perRequiredEvidence": 20,
+     "timeBonusUnderMinutes": 40,
+     "timeBonus": 100,
+     "wrongAccusationPenalty": 300
+    },
+    "explanation": ""
+   },
+   "reveal": []
+  },
+  {
+   "case": {
+    "id": "case-003",
+    "code": "CASE-003",
+    "title": "Night Mail to Badulla",
+    "tagline": "A passenger boards. Her luggage arrives alone.",
+    "description": "A journalist disappears from a sleeper carriage between Nanu Oya and Ella.",
+    "story": "Daniel Perera is found dead inside his apartment at 10:42 PM. The front door appears locked. Three people had contact with Daniel during the evening. The initial investigation finds several inconsistencies. Who killed Daniel? Why? How? What happened between 9:00 PM and 10:42 PM?",
+    "type": "Missing Person",
+    "difficulty": "expert",
+    "status": "scheduled",
+    "version": "1.0",
+    "versions": [
+     {
+      "version": "1.0",
+      "createdAt": "2026-07-01T09:00:00Z",
+      "author": "Ravi D.",
+      "summary": "Initial draft."
+     }
+    ],
+    "coverImage": "/assets/cover-3.jpg",
+    "estimatedMinutes": [
+     35,
+     50
+    ],
+    "location": "Uva Province",
+    "incidentDate": "2026-03-02",
+    "tags": [
+     "train",
+     "journalist"
+    ],
+    "victim": {
+     "name": "Daniel Perera",
+     "age": 34,
+     "occupation": "Business Owner",
+     "description": "Co-founder of Perera & Perera Logistics. Found in his living room with a head wound."
+    },
+    "objectives": [
+     "Who killed Daniel?",
+     "Why?",
+     "How?",
+     "What happened between 9:00 PM and 10:42 PM?"
+    ],
+    "createdBy": "Ravi D.",
+    "createdAt": "2026-07-01T09:00:00Z",
+    "updatedAt": "2026-10-06T16:20:00Z",
+    "visibility": "public",
+    "stats": {
+     "players": 0,
+     "completions": 0,
+     "completionRate": 0,
+     "avgScore": 0,
+     "rating": 0
+    },
+    "scheduledFor": "2026-10-20T12:00:00Z"
+   },
+   "locations": [],
+   "scenes": [],
+   "suspects": [],
+   "evidence": [],
+   "documents": [],
+   "interviews": [],
+   "clues": [],
+   "clueConnections": [],
+   "triggers": [],
+   "timeline": [],
+   "flowNodes": [],
+   "flowEdges": [],
+   "theories": [],
+   "hints": [],
+   "solution": {
+    "killerId": "",
+    "motive": "",
+    "method": "",
+    "weapon": "",
+    "correctTimelineIds": [],
+    "requiredEvidenceIds": [],
+    "supportingEvidenceIds": [],
+    "acceptableAlternatives": [],
+    "partialCredit": [],
+    "scoring": {
+     "maxScore": 1000,
+     "correctKiller": 400,
+     "correctMotive": 200,
+     "correctMethod": 150,
+     "timelineAccuracy": 150,
+     "perRequiredEvidence": 20,
+     "timeBonusUnderMinutes": 40,
+     "timeBonus": 100,
+     "wrongAccusationPenalty": 300
+    },
+    "explanation": ""
+   },
+   "reveal": []
+  },
+  {
+   "case": {
+    "id": "case-004",
+    "code": "CASE-004",
+    "title": "The Galle Fort Ledger",
+    "tagline": "A forged deed. A dead notary.",
+    "description": "A notary is found in the archive room the morning before a property hearing.",
+    "story": "Daniel Perera is found dead inside his apartment at 10:42 PM. The front door appears locked. Three people had contact with Daniel during the evening. The initial investigation finds several inconsistencies. Who killed Daniel? Why? How? What happened between 9:00 PM and 10:42 PM?",
+    "type": "Fraud",
+    "difficulty": "medium",
+    "status": "published",
+    "version": "2.0",
+    "versions": [
+     {
+      "version": "2.0",
+      "createdAt": "2026-04-01T09:00:00Z",
+      "author": "Admin",
+      "summary": "Initial draft."
+     }
+    ],
+    "coverImage": "/assets/scene-entrance.jpg",
+    "estimatedMinutes": [
+     35,
+     50
+    ],
+    "location": "Galle, Sri Lanka",
+    "incidentDate": "2026-05-10",
+    "tags": [
+     "fraud",
+     "heritage"
+    ],
+    "victim": {
+     "name": "Daniel Perera",
+     "age": 34,
+     "occupation": "Business Owner",
+     "description": "Co-founder of Perera & Perera Logistics. Found in his living room with a head wound."
+    },
+    "objectives": [
+     "Who killed Daniel?",
+     "Why?",
+     "How?",
+     "What happened between 9:00 PM and 10:42 PM?"
+    ],
+    "createdBy": "Admin",
+    "createdAt": "2026-04-01T09:00:00Z",
+    "updatedAt": "2026-10-04T09:10:00Z",
+    "publishedAt": "2026-06-01T09:00:00Z",
+    "visibility": "public",
+    "stats": {
+     "players": 9410,
+     "completions": 5270,
+     "completionRate": 56,
+     "avgScore": 688,
+     "rating": 4.4
+    }
+   },
+   "locations": [],
+   "scenes": [],
+   "suspects": [],
+   "evidence": [],
+   "documents": [],
+   "interviews": [],
+   "clues": [],
+   "clueConnections": [],
+   "triggers": [],
+   "timeline": [],
+   "flowNodes": [],
+   "flowEdges": [],
+   "theories": [],
+   "hints": [],
+   "solution": {
+    "killerId": "",
+    "motive": "",
+    "method": "",
+    "weapon": "",
+    "correctTimelineIds": [],
+    "requiredEvidenceIds": [],
+    "supportingEvidenceIds": [],
+    "acceptableAlternatives": [],
+    "partialCredit": [],
+    "scoring": {
+     "maxScore": 1000,
+     "correctKiller": 400,
+     "correctMotive": 200,
+     "correctMethod": 150,
+     "timelineAccuracy": 150,
+     "perRequiredEvidence": 20,
+     "timeBonusUnderMinutes": 40,
+     "timeBonus": 100,
+     "wrongAccusationPenalty": 300
+    },
+    "explanation": ""
+   },
+   "reveal": []
+  },
+  {
+   "case": {
+    "id": "case-005",
+    "code": "CASE-005",
+    "title": "Kitchen Fire at No. 9",
+    "tagline": "An accident — or a perfect alibi?",
+    "description": "A restaurant owner dies in a kitchen fire hours before selling the business.",
+    "story": "Daniel Perera is found dead inside his apartment at 10:42 PM. The front door appears locked. Three people had contact with Daniel during the evening. The initial investigation finds several inconsistencies. Who killed Daniel? Why? How? What happened between 9:00 PM and 10:42 PM?",
+    "type": "Murder Mystery",
+    "difficulty": "easy",
+    "status": "draft",
+    "version": "0.3",
+    "versions": [
+     {
+      "version": "0.3",
+      "createdAt": "2026-09-25T09:00:00Z",
+      "author": "Ravi D.",
+      "summary": "Initial draft."
+     }
+    ],
+    "coverImage": "/assets/scene-kitchen.jpg",
+    "estimatedMinutes": [
+     35,
+     50
+    ],
+    "location": "Kandy, Sri Lanka",
+    "incidentDate": "2026-08-21",
+    "tags": [
+     "fire",
+     "restaurant"
+    ],
+    "victim": {
+     "name": "Daniel Perera",
+     "age": 34,
+     "occupation": "Business Owner",
+     "description": "Co-founder of Perera & Perera Logistics. Found in his living room with a head wound."
+    },
+    "objectives": [
+     "Who killed Daniel?",
+     "Why?",
+     "How?",
+     "What happened between 9:00 PM and 10:42 PM?"
+    ],
+    "createdBy": "Ravi D.",
+    "createdAt": "2026-09-25T09:00:00Z",
+    "updatedAt": "2026-10-07T13:55:00Z",
+    "visibility": "public",
+    "stats": {
+     "players": 0,
+     "completions": 0,
+     "completionRate": 0,
+     "avgScore": 0,
+     "rating": 0
+    }
+   },
+   "locations": [],
+   "scenes": [],
+   "suspects": [],
+   "evidence": [],
+   "documents": [],
+   "interviews": [],
+   "clues": [],
+   "clueConnections": [],
+   "triggers": [],
+   "timeline": [],
+   "flowNodes": [],
+   "flowEdges": [],
+   "theories": [],
+   "hints": [],
+   "solution": {
+    "killerId": "",
+    "motive": "",
+    "method": "",
+    "weapon": "",
+    "correctTimelineIds": [],
+    "requiredEvidenceIds": [],
+    "supportingEvidenceIds": [],
+    "acceptableAlternatives": [],
+    "partialCredit": [],
+    "scoring": {
+     "maxScore": 1000,
+     "correctKiller": 400,
+     "correctMotive": 200,
+     "correctMethod": 150,
+     "timelineAccuracy": 150,
+     "perRequiredEvidence": 20,
+     "timeBonusUnderMinutes": 40,
+     "timeBonus": 100,
+     "wrongAccusationPenalty": 300
+    },
+    "explanation": ""
+   },
+   "reveal": []
+  },
+  {
+   "case": {
+    "id": "case-006",
+    "code": "CASE-006",
+    "title": "The Pettah Exchange",
+    "tagline": "Missing gems. Three brothers. One key.",
+    "description": "A gem shop vault is emptied overnight with no signs of entry.",
+    "story": "Daniel Perera is found dead inside his apartment at 10:42 PM. The front door appears locked. Three people had contact with Daniel during the evening. The initial investigation finds several inconsistencies. Who killed Daniel? Why? How? What happened between 9:00 PM and 10:42 PM?",
+    "type": "Theft",
+    "difficulty": "medium",
+    "status": "archived",
+    "version": "1.4",
+    "versions": [
+     {
+      "version": "1.4",
+      "createdAt": "2025-11-01T09:00:00Z",
+      "author": "Admin",
+      "summary": "Initial draft."
+     }
+    ],
+    "coverImage": "/assets/evid-records.jpg",
+    "estimatedMinutes": [
+     35,
+     50
+    ],
+    "location": "Colombo, Sri Lanka",
+    "incidentDate": "2025-12-02",
+    "tags": [
+     "heist"
+    ],
+    "victim": {
+     "name": "Daniel Perera",
+     "age": 34,
+     "occupation": "Business Owner",
+     "description": "Co-founder of Perera & Perera Logistics. Found in his living room with a head wound."
+    },
+    "objectives": [
+     "Who killed Daniel?",
+     "Why?",
+     "How?",
+     "What happened between 9:00 PM and 10:42 PM?"
+    ],
+    "createdBy": "Admin",
+    "createdAt": "2025-11-01T09:00:00Z",
+    "updatedAt": "2026-06-30T09:00:00Z",
+    "publishedAt": "2026-01-10T09:00:00Z",
+    "visibility": "public",
+    "stats": {
+     "players": 6120,
+     "completions": 4410,
+     "completionRate": 72,
+     "avgScore": 801,
+     "rating": 4.2
+    }
+   },
+   "locations": [],
+   "scenes": [],
+   "suspects": [],
+   "evidence": [],
+   "documents": [],
+   "interviews": [],
+   "clues": [],
+   "clueConnections": [],
+   "triggers": [],
+   "timeline": [],
+   "flowNodes": [],
+   "flowEdges": [],
+   "theories": [],
+   "hints": [],
+   "solution": {
+    "killerId": "",
+    "motive": "",
+    "method": "",
+    "weapon": "",
+    "correctTimelineIds": [],
+    "requiredEvidenceIds": [],
+    "supportingEvidenceIds": [],
+    "acceptableAlternatives": [],
+    "partialCredit": [],
+    "scoring": {
+     "maxScore": 1000,
+     "correctKiller": 400,
+     "correctMotive": 200,
+     "correctMethod": 150,
+     "timelineAccuracy": 150,
+     "perRequiredEvidence": 20,
+     "timeBonusUnderMinutes": 40,
+     "timeBonus": 100,
+     "wrongAccusationPenalty": 300
+    },
+    "explanation": ""
+   },
+   "reveal": []
+  }
+ ],
+ "media": [
+  {
+   "id": "m-01",
+   "name": "living-room-night.jpg",
+   "kind": "crime_scene",
+   "url": "/assets/scene-living-room.jpg",
+   "sizeKb": 842,
+   "dimensions": "1536×864",
+   "uploadedBy": "Sarah K.",
+   "uploadedAt": "2026-09-05T10:00:00Z",
+   "tags": [
+    "scene"
+   ],
+   "usage": [
+    {
+     "caseId": "case-001",
+     "entity": "Scene",
+     "entityId": "scn-living",
+     "label": "Living Room scene"
+    },
+    {
+     "caseId": "case-001",
+     "entity": "Reveal",
+     "entityId": "rv-1",
+     "label": "Reveal #1"
+    }
+   ]
+  },
+  {
+   "id": "m-02",
+   "name": "kitchen-night.jpg",
+   "kind": "crime_scene",
+   "url": "/assets/scene-kitchen.jpg",
+   "sizeKb": 610,
+   "dimensions": "1536×864",
+   "uploadedBy": "Sarah K.",
+   "uploadedAt": "2026-09-05T10:05:00Z",
+   "tags": [
+    "scene"
+   ],
+   "usage": [
+    {
+     "caseId": "case-001",
+     "entity": "Scene",
+     "entityId": "scn-kitchen",
+     "label": "Kitchen scene"
+    },
+    {
+     "caseId": "case-001",
+     "entity": "Reveal",
+     "entityId": "rv-2",
+     "label": "Reveal #2"
+    },
+    {
+     "caseId": "case-001",
+     "entity": "Reveal",
+     "entityId": "rv-4",
+     "label": "Reveal #4"
+    }
+   ]
+  },
+  {
+   "id": "m-03",
+   "name": "corridor-7f.jpg",
+   "kind": "crime_scene",
+   "url": "/assets/scene-entrance.jpg",
+   "sizeKb": 701,
+   "dimensions": "1536×864",
+   "uploadedBy": "Ravi D.",
+   "uploadedAt": "2026-09-06T09:00:00Z",
+   "tags": [
+    "scene"
+   ],
+   "usage": [
+    {
+     "caseId": "case-001",
+     "entity": "Scene",
+     "entityId": "scn-entrance",
+     "label": "Corridor scene"
+    }
+   ]
+  },
+  {
+   "id": "m-04",
+   "name": "cover-last-call.jpg",
+   "kind": "image",
+   "url": "/assets/cover-last-call.jpg",
+   "sizeKb": 920,
+   "dimensions": "1024×1280",
+   "uploadedBy": "Admin",
+   "uploadedAt": "2026-09-02T09:00:00Z",
+   "tags": [
+    "cover"
+   ],
+   "usage": [
+    {
+     "caseId": "case-001",
+     "entity": "Case",
+     "entityId": "case-001",
+     "label": "Case cover"
+    }
+   ]
+  },
+  {
+   "id": "m-05",
+   "name": "sarah-portrait.jpg",
+   "kind": "portrait",
+   "url": "/assets/portrait-sarah.jpg",
+   "sizeKb": 188,
+   "dimensions": "500×490",
+   "uploadedBy": "Media Team",
+   "uploadedAt": "2026-09-04T09:00:00Z",
+   "tags": [
+    "suspect"
+   ],
+   "usage": [
+    {
+     "caseId": "case-001",
+     "entity": "Suspect",
+     "entityId": "sus-sarah",
+     "label": "Sarah Fernando"
+    }
+   ]
+  },
+  {
+   "id": "m-06",
+   "name": "michael-portrait.jpg",
+   "kind": "portrait",
+   "url": "/assets/portrait-michael.jpg",
+   "sizeKb": 192,
+   "dimensions": "500×490",
+   "uploadedBy": "Media Team",
+   "uploadedAt": "2026-09-04T09:00:00Z",
+   "tags": [
+    "suspect"
+   ],
+   "usage": [
+    {
+     "caseId": "case-001",
+     "entity": "Suspect",
+     "entityId": "sus-michael",
+     "label": "Michael Perera"
+    }
+   ]
+  },
+  {
+   "id": "m-07",
+   "name": "nuwan-portrait.jpg",
+   "kind": "portrait",
+   "url": "/assets/portrait-nuwan.jpg",
+   "sizeKb": 176,
+   "dimensions": "500×490",
+   "uploadedBy": "Media Team",
+   "uploadedAt": "2026-09-04T09:00:00Z",
+   "tags": [
+    "suspect"
+   ],
+   "usage": [
+    {
+     "caseId": "case-001",
+     "entity": "Suspect",
+     "entityId": "sus-nuwan",
+     "label": "Nuwan Silva"
+    }
+   ]
+  },
+  {
+   "id": "m-08",
+   "name": "evid-phone.jpg",
+   "kind": "evidence",
+   "url": "/assets/evid-phone.jpg",
+   "sizeKb": 120,
+   "dimensions": "392×392",
+   "uploadedBy": "Media Team",
+   "uploadedAt": "2026-09-07T09:00:00Z",
+   "tags": [
+    "evidence"
+   ],
+   "usage": [
+    {
+     "caseId": "case-001",
+     "entity": "Evidence",
+     "entityId": "ev-001",
+     "label": "EVID-001 Phone"
+    }
+   ]
+  },
+  {
+   "id": "m-09",
+   "name": "evid-wineglass.jpg",
+   "kind": "evidence",
+   "url": "/assets/evid-wineglass.jpg",
+   "sizeKb": 110,
+   "dimensions": "392×392",
+   "uploadedBy": "Media Team",
+   "uploadedAt": "2026-09-07T09:00:00Z",
+   "tags": [
+    "evidence"
+   ],
+   "usage": [
+    {
+     "caseId": "case-001",
+     "entity": "Evidence",
+     "entityId": "ev-002",
+     "label": "EVID-002 Wine Glass"
+    },
+    {
+     "caseId": "case-001",
+     "entity": "Reveal",
+     "entityId": "rv-3",
+     "label": "Reveal #3"
+    }
+   ]
+  },
+  {
+   "id": "m-10",
+   "name": "evid-cctv.jpg",
+   "kind": "evidence",
+   "url": "/assets/evid-cctv.jpg",
+   "sizeKb": 132,
+   "dimensions": "392×392",
+   "uploadedBy": "Media Team",
+   "uploadedAt": "2026-09-07T09:00:00Z",
+   "tags": [
+    "evidence"
+   ],
+   "usage": [
+    {
+     "caseId": "case-001",
+     "entity": "Evidence",
+     "entityId": "ev-003",
+     "label": "EVID-003 CCTV"
+    }
+   ]
+  },
+  {
+   "id": "m-11",
+   "name": "evid-receipt.jpg",
+   "kind": "evidence",
+   "url": "/assets/evid-receipt.jpg",
+   "sizeKb": 98,
+   "dimensions": "392×392",
+   "uploadedBy": "Media Team",
+   "uploadedAt": "2026-09-07T09:00:00Z",
+   "tags": [
+    "evidence"
+   ],
+   "usage": [
+    {
+     "caseId": "case-001",
+     "entity": "Evidence",
+     "entityId": "ev-004",
+     "label": "EVID-004 Receipt"
+    }
+   ]
+  },
+  {
+   "id": "m-12",
+   "name": "evid-fingerprint.jpg",
+   "kind": "evidence",
+   "url": "/assets/evid-fingerprint.jpg",
+   "sizeKb": 105,
+   "dimensions": "392×392",
+   "uploadedBy": "Media Team",
+   "uploadedAt": "2026-09-07T09:00:00Z",
+   "tags": [
+    "evidence"
+   ],
+   "usage": [
+    {
+     "caseId": "case-001",
+     "entity": "Evidence",
+     "entityId": "ev-005",
+     "label": "EVID-005 Fingerprint"
+    }
+   ]
+  },
+  {
+   "id": "m-13",
+   "name": "evid-statement.jpg",
+   "kind": "document",
+   "url": "/assets/evid-statement.jpg",
+   "sizeKb": 140,
+   "dimensions": "392×392",
+   "uploadedBy": "Media Team",
+   "uploadedAt": "2026-09-07T09:00:00Z",
+   "tags": [
+    "evidence"
+   ],
+   "usage": [
+    {
+     "caseId": "case-001",
+     "entity": "Evidence",
+     "entityId": "ev-006",
+     "label": "EVID-006 Statement"
+    }
+   ]
+  },
+  {
+   "id": "m-14",
+   "name": "evid-records.jpg",
+   "kind": "document",
+   "url": "/assets/evid-records.jpg",
+   "sizeKb": 118,
+   "dimensions": "392×392",
+   "uploadedBy": "Media Team",
+   "uploadedAt": "2026-09-07T09:00:00Z",
+   "tags": [
+    "evidence"
+   ],
+   "usage": [
+    {
+     "caseId": "case-001",
+     "entity": "Evidence",
+     "entityId": "ev-007",
+     "label": "EVID-007 Records"
+    }
+   ]
+  },
+  {
+   "id": "m-15",
+   "name": "evid-parking.jpg",
+   "kind": "evidence",
+   "url": "/assets/evid-parking.jpg",
+   "sizeKb": 126,
+   "dimensions": "392×392",
+   "uploadedBy": "Media Team",
+   "uploadedAt": "2026-09-07T09:00:00Z",
+   "tags": [
+    "evidence"
+   ],
+   "usage": [
+    {
+     "caseId": "case-001",
+     "entity": "Evidence",
+     "entityId": "ev-008",
+     "label": "EVID-008 Parking"
+    }
+   ]
+  },
+  {
+   "id": "m-16",
+   "name": "rain-city-night.ogg",
+   "kind": "music",
+   "url": "",
+   "sizeKb": 3120,
+   "durationSec": 184,
+   "uploadedBy": "Audio Team",
+   "uploadedAt": "2026-09-10T09:00:00Z",
+   "tags": [
+    "ambient"
+   ],
+   "usage": [
+    {
+     "caseId": "case-001",
+     "entity": "Scene",
+     "entityId": "scn-living",
+     "label": "Living Room ambience"
+    }
+   ]
+  },
+  {
+   "id": "m-17",
+   "name": "phone-buzz.ogg",
+   "kind": "sfx",
+   "url": "",
+   "sizeKb": 42,
+   "durationSec": 2,
+   "uploadedBy": "Audio Team",
+   "uploadedAt": "2026-09-10T09:00:00Z",
+   "tags": [
+    "sfx"
+   ],
+   "usage": [
+    {
+     "caseId": "case-001",
+     "entity": "Hotspot",
+     "entityId": "hs-phone",
+     "label": "Phone hotspot"
+    }
+   ]
+  },
+  {
+   "id": "m-18",
+   "name": "glass-shatter.ogg",
+   "kind": "sfx",
+   "url": "",
+   "sizeKb": 58,
+   "durationSec": 3,
+   "uploadedBy": "Audio Team",
+   "uploadedAt": "2026-09-10T09:00:00Z",
+   "tags": [
+    "sfx"
+   ],
+   "usage": [
+    {
+     "caseId": "case-001",
+     "entity": "Reveal",
+     "entityId": "rv-3",
+     "label": "Reveal #3"
+    }
+   ]
+  },
+  {
+   "id": "m-19",
+   "name": "tension-low.ogg",
+   "kind": "music",
+   "url": "",
+   "sizeKb": 2400,
+   "durationSec": 142,
+   "uploadedBy": "Audio Team",
+   "uploadedAt": "2026-09-11T09:00:00Z",
+   "tags": [
+    "music"
+   ],
+   "usage": [
+    {
+     "caseId": "case-001",
+     "entity": "Reveal",
+     "entityId": "rv-1",
+     "label": "Reveal #1"
+    }
+   ]
+  },
+  {
+   "id": "m-20",
+   "name": "sarah-interview-vo.mp3",
+   "kind": "audio",
+   "url": "",
+   "sizeKb": 5400,
+   "durationSec": 312,
+   "uploadedBy": "Audio Team",
+   "uploadedAt": "2026-09-12T09:00:00Z",
+   "tags": [
+    "voice"
+   ],
+   "usage": [
+    {
+     "caseId": "case-001",
+     "entity": "Interview",
+     "entityId": "int-sarah",
+     "label": "Sarah voice-over"
+    }
+   ]
+  },
+  {
+   "id": "m-21",
+   "name": "cctv-clip-2142.mp4",
+   "kind": "video",
+   "url": "",
+   "sizeKb": 18200,
+   "durationSec": 24,
+   "uploadedBy": "Media Team",
+   "uploadedAt": "2026-09-12T09:00:00Z",
+   "tags": [
+    "footage"
+   ],
+   "usage": [
+    {
+     "caseId": "case-001",
+     "entity": "Evidence",
+     "entityId": "ev-003",
+     "label": "CCTV inspection stage 3"
+    }
+   ]
+  },
+  {
+   "id": "m-22",
+   "name": "unused-alley-night.jpg",
+   "kind": "image",
+   "url": "/assets/cover-3.jpg",
+   "sizeKb": 780,
+   "dimensions": "1024×1280",
+   "uploadedBy": "Ravi D.",
+   "uploadedAt": "2026-09-30T09:00:00Z",
+   "tags": [
+    "draft"
+   ],
+   "usage": []
+  },
+  {
+   "id": "m-23",
+   "name": "bedroom-night.jpg",
+   "kind": "crime_scene",
+   "url": "/assets/scene-bedroom.jpg",
+   "sizeKb": 320,
+   "dimensions": "1536×864",
+   "uploadedBy": "Admin",
+   "uploadedAt": "2026-10-08T12:00:00Z",
+   "tags": [
+    "scene",
+    "placeholder"
+   ],
+   "usage": [
+    {
+     "caseId": "case-001",
+     "entity": "Scene",
+     "entityId": "scn-bedroom",
+     "label": "Bedroom scene"
+    }
+   ]
+  },
+  {
+   "id": "m-24",
+   "name": "pharmacy-night.jpg",
+   "kind": "crime_scene",
+   "url": "/assets/scene-pharmacy.jpg",
+   "sizeKb": 320,
+   "dimensions": "1536×864",
+   "uploadedBy": "Admin",
+   "uploadedAt": "2026-10-08T12:00:00Z",
+   "tags": [
+    "scene",
+    "placeholder"
+   ],
+   "usage": [
+    {
+     "caseId": "case-001",
+     "entity": "Scene",
+     "entityId": "scn-pharmacy",
+     "label": "Pharmacy scene"
+    }
+   ]
+  },
+  {
+   "id": "m-25",
+   "name": "parking-b1.jpg",
+   "kind": "crime_scene",
+   "url": "/assets/scene-parking.jpg",
+   "sizeKb": 320,
+   "dimensions": "1536×864",
+   "uploadedBy": "Admin",
+   "uploadedAt": "2026-10-08T12:00:00Z",
+   "tags": [
+    "scene",
+    "placeholder"
+   ],
+   "usage": [
+    {
+     "caseId": "case-001",
+     "entity": "Scene",
+     "entityId": "scn-parking",
+     "label": "Parking scene"
+    }
+   ]
+  },
+  {
+   "id": "m-26",
+   "name": "office-night.jpg",
+   "kind": "crime_scene",
+   "url": "/assets/scene-office.jpg",
+   "sizeKb": 320,
+   "dimensions": "1536×864",
+   "uploadedBy": "Admin",
+   "uploadedAt": "2026-10-08T12:00:00Z",
+   "tags": [
+    "scene",
+    "placeholder"
+   ],
+   "usage": [
+    {
+     "caseId": "case-001",
+     "entity": "Scene",
+     "entityId": "scn-office",
+     "label": "Office scene"
+    }
+   ]
+  }
+ ],
+ "user": [
+  {
+   "id": "u-admin",
+   "name": "Admin",
+   "email": "admin@mysterycase.studio",
+   "roleId": "role-super",
+   "avatarColor": "oklch(0.55 0.15 25)",
+   "status": "online",
+   "lastActive": "2026-10-08T16:20:00Z"
+  },
+  {
+   "id": "u-sarah",
+   "name": "Sarah K.",
+   "email": "sarah@mysterycase.studio",
+   "roleId": "role-creator",
+   "avatarColor": "oklch(0.6 0.12 250)",
+   "status": "online",
+   "lastActive": "2026-10-08T15:12:00Z"
+  },
+  {
+   "id": "u-ravi",
+   "name": "Ravi D.",
+   "email": "ravi@mysterycase.studio",
+   "roleId": "role-writer",
+   "avatarColor": "oklch(0.65 0.13 80)",
+   "status": "away",
+   "lastActive": "2026-10-08T12:00:00Z"
+  },
+  {
+   "id": "u-media",
+   "name": "Media Team",
+   "email": "media@mysterycase.studio",
+   "roleId": "role-media",
+   "avatarColor": "oklch(0.6 0.12 160)",
+   "status": "offline",
+   "lastActive": "2026-10-08T11:48:00Z"
+  },
+  {
+   "id": "u-ishara",
+   "name": "Ishara W.",
+   "email": "ishara@mysterycase.studio",
+   "roleId": "role-reviewer",
+   "avatarColor": "oklch(0.6 0.1 300)",
+   "status": "online",
+   "lastActive": "2026-10-08T14:30:00Z"
+  },
+  {
+   "id": "u-dilan",
+   "name": "Dilan P.",
+   "email": "dilan@mysterycase.studio",
+   "roleId": "role-publisher",
+   "avatarColor": "oklch(0.55 0.1 200)",
+   "status": "offline",
+   "lastActive": "2026-10-07T18:00:00Z"
+  },
+  {
+   "id": "u-mala",
+   "name": "Mala R.",
+   "email": "mala@mysterycase.studio",
+   "roleId": "role-analyst",
+   "avatarColor": "oklch(0.65 0.1 120)",
+   "status": "away",
+   "lastActive": "2026-10-08T09:00:00Z"
+  }
+ ],
+ "role": [
+  {
+   "id": "role-super",
+   "name": "Super Admin",
+   "description": "Full access to the workspace.",
+   "permissions": [
+    "cases.create",
+    "cases.edit",
+    "cases.delete",
+    "cases.publish",
+    "cases.review",
+    "media.upload",
+    "media.delete",
+    "analytics.view",
+    "users.manage",
+    "settings.manage"
+   ]
+  },
+  {
+   "id": "role-creator",
+   "name": "Case Creator",
+   "description": "Builds full cases end-to-end.",
+   "permissions": [
+    "cases.create",
+    "cases.edit",
+    "media.upload",
+    "analytics.view"
+   ]
+  },
+  {
+   "id": "role-writer",
+   "name": "Writer",
+   "description": "Writes story, dialogue and clues.",
+   "permissions": [
+    "cases.edit"
+   ]
+  },
+  {
+   "id": "role-media",
+   "name": "Media Manager",
+   "description": "Manages the media library.",
+   "permissions": [
+    "media.upload",
+    "media.delete"
+   ]
+  },
+  {
+   "id": "role-reviewer",
+   "name": "Reviewer",
+   "description": "Reviews cases before release.",
+   "permissions": [
+    "cases.review",
+    "analytics.view"
+   ]
+  },
+  {
+   "id": "role-publisher",
+   "name": "Publisher",
+   "description": "Schedules and publishes cases.",
+   "permissions": [
+    "cases.publish",
+    "cases.review"
+   ]
+  },
+  {
+   "id": "role-analyst",
+   "name": "Analyst",
+   "description": "Read-only analytics access.",
+   "permissions": [
+    "analytics.view"
+   ]
+  }
+ ],
+ "audit": [
+  {
+   "id": "al-1",
+   "userId": "u-admin",
+   "action": "Updated",
+   "resource": "Evidence EVID-005",
+   "timestamp": "2026-10-08T15:12:00Z",
+   "oldValue": "isKey: false",
+   "newValue": "isKey: true"
+  },
+  {
+   "id": "al-2",
+   "userId": "u-sarah",
+   "action": "Updated",
+   "resource": "Hint hint-3 (CASE-001)",
+   "timestamp": "2026-10-08T14:58:00Z",
+   "oldValue": "scorePenalty: 100",
+   "newValue": "scorePenalty: 150"
+  },
+  {
+   "id": "al-3",
+   "userId": "u-admin",
+   "action": "Published",
+   "resource": "CASE-004",
+   "timestamp": "2026-10-08T13:02:00Z",
+   "oldValue": "status: scheduled",
+   "newValue": "status: published"
+  },
+  {
+   "id": "al-4",
+   "userId": "u-media",
+   "action": "Uploaded",
+   "resource": "Media evid-parking.jpg",
+   "timestamp": "2026-10-08T11:48:00Z",
+   "newValue": "126 KB"
+  },
+  {
+   "id": "al-5",
+   "userId": "u-sarah",
+   "action": "Status change",
+   "resource": "CASE-002",
+   "timestamp": "2026-10-08T11:40:00Z",
+   "oldValue": "draft",
+   "newValue": "review"
+  },
+  {
+   "id": "al-6",
+   "userId": "u-ravi",
+   "action": "Created",
+   "resource": "CASE-005",
+   "timestamp": "2026-10-07T13:55:00Z"
+  },
+  {
+   "id": "al-7",
+   "userId": "u-ishara",
+   "action": "Commented",
+   "resource": "Interview INT-002",
+   "timestamp": "2026-10-07T10:20:00Z",
+   "newValue": "Michael breaks too early?"
+  }
+ ],
+ "notification": [
+  {
+   "id": "n-1",
+   "kind": "review_requested",
+   "title": "Review requested",
+   "body": "Sarah K. requested review for CASE-002 Mist over Haputale.",
+   "createdAt": "2026-10-08T11:40:00Z",
+   "read": false,
+   "caseId": "case-002"
+  },
+  {
+   "id": "n-2",
+   "kind": "case_published",
+   "title": "Case published",
+   "body": "CASE-004 The Galle Fort Ledger v2.0 is live.",
+   "createdAt": "2026-10-08T13:02:00Z",
+   "read": false,
+   "caseId": "case-004"
+  },
+  {
+   "id": "n-3",
+   "kind": "validation_failed",
+   "title": "Validation failed",
+   "body": "CASE-005 has 4 errors: missing solution, no scenes.",
+   "createdAt": "2026-10-07T14:00:00Z",
+   "read": false,
+   "caseId": "case-005"
+  },
+  {
+   "id": "n-4",
+   "kind": "player_activity",
+   "title": "Milestone",
+   "body": "CASE-001 passed 12,000 players.",
+   "createdAt": "2026-10-07T09:00:00Z",
+   "read": true,
+   "caseId": "case-001"
+  },
+  {
+   "id": "n-5",
+   "kind": "scheduled_release",
+   "title": "Scheduled release",
+   "body": "CASE-003 releases Oct 20, 2026 at 5:30 PM.",
+   "createdAt": "2026-10-06T16:20:00Z",
+   "read": true,
+   "caseId": "case-003"
+  },
+  {
+   "id": "n-6",
+   "kind": "system",
+   "title": "Maintenance window",
+   "body": "Media CDN maintenance Oct 12, 02:00–03:00 UTC.",
+   "createdAt": "2026-10-05T08:00:00Z",
+   "read": true
+  }
+ ],
+ "player": [
+  {
+   "playerId": "p-1",
+   "name": "inspector_kavi",
+   "rank": "Chief Inspector",
+   "casesCompleted": 6,
+   "avgScore": 912,
+   "totalMinutes": 304,
+   "lastActive": "2026-10-08T15:40:00Z",
+   "platform": "android",
+   "id": "p-1"
+  },
+  {
+   "playerId": "p-2",
+   "name": "nadee.reads",
+   "rank": "Inspector",
+   "casesCompleted": 5,
+   "avgScore": 861,
+   "totalMinutes": 251,
+   "lastActive": "2026-10-08T14:12:00Z",
+   "platform": "ios",
+   "id": "p-2"
+  },
+  {
+   "playerId": "p-3",
+   "name": "colombo_sleuth",
+   "rank": "Sergeant",
+   "casesCompleted": 4,
+   "avgScore": 790,
+   "totalMinutes": 220,
+   "lastActive": "2026-10-08T12:00:00Z",
+   "platform": "android",
+   "id": "p-3"
+  },
+  {
+   "playerId": "p-4",
+   "name": "hiru_m",
+   "rank": "Sergeant",
+   "casesCompleted": 3,
+   "avgScore": 744,
+   "totalMinutes": 160,
+   "lastActive": "2026-10-07T21:30:00Z",
+   "platform": "ios",
+   "id": "p-4"
+  },
+  {
+   "playerId": "p-5",
+   "name": "tharindu.p",
+   "rank": "Constable",
+   "casesCompleted": 2,
+   "avgScore": 612,
+   "totalMinutes": 140,
+   "lastActive": "2026-10-07T18:22:00Z",
+   "platform": "android",
+   "id": "p-5"
+  },
+  {
+   "playerId": "p-6",
+   "name": "amaya_writes",
+   "rank": "Constable",
+   "casesCompleted": 1,
+   "avgScore": 488,
+   "totalMinutes": 61,
+   "lastActive": "2026-10-06T09:15:00Z",
+   "platform": "ios",
+   "id": "p-6"
+  },
+  {
+   "playerId": "p-7",
+   "name": "rookie_dee",
+   "rank": "Cadet",
+   "casesCompleted": 1,
+   "avgScore": 312,
+   "totalMinutes": 74,
+   "lastActive": "2026-10-05T20:02:00Z",
+   "platform": "android",
+   "id": "p-7"
+  }
+ ],
+ "achievement": [
+  {
+   "id": "ach-1",
+   "name": "First Call",
+   "description": "Discover the 10:17 PM call",
+   "unlockedBy": 12450,
+   "rarity": "common"
+  },
+  {
+   "id": "ach-2",
+   "name": "Broken Alibi",
+   "description": "Expose Michael's lie with CCTV",
+   "unlockedBy": 7820,
+   "rarity": "rare"
+  },
+  {
+   "id": "ach-3",
+   "name": "Perfect Timeline",
+   "description": "Order every event correctly",
+   "unlockedBy": 1210,
+   "rarity": "epic"
+  },
+  {
+   "id": "ach-4",
+   "name": "No Hints Needed",
+   "description": "Solve without hints over 900 points",
+   "unlockedBy": 402,
+   "rarity": "legendary"
+  }
+ ],
+ "activity": [
+  {
+   "id": "a-1",
+   "actor": "Sarah K.",
+   "text": "updated CASE-001 · Hint penalties",
+   "at": "2026-10-08T15:12:00Z",
+   "kind": "edit"
+  },
+  {
+   "id": "a-2",
+   "actor": "Admin",
+   "text": "published CASE-004 v2.0",
+   "at": "2026-10-08T13:02:00Z",
+   "kind": "publish"
+  },
+  {
+   "id": "a-3",
+   "actor": "Media Team",
+   "text": "uploaded 6 evidence images",
+   "at": "2026-10-08T11:48:00Z",
+   "kind": "media"
+  },
+  {
+   "id": "a-4",
+   "actor": "Sarah K.",
+   "text": "moved CASE-002 to review",
+   "at": "2026-10-08T11:40:00Z",
+   "kind": "review"
+  },
+  {
+   "id": "a-5",
+   "actor": "Ravi D.",
+   "text": "created CASE-005 Kitchen Fire at No. 9",
+   "at": "2026-10-07T13:55:00Z",
+   "kind": "create"
+  },
+  {
+   "id": "a-6",
+   "actor": "Ravi D.",
+   "text": "scheduled CASE-003 for Oct 20",
+   "at": "2026-10-06T16:20:00Z",
+   "kind": "publish"
+  }
+ ],
+ "analytics": [
+  {
+   "caseId": "case-001",
+   "starts": 12840,
+   "completions": 8732,
+   "completionRate": 68,
+   "avgScore": 742,
+   "avgPlayMinutes": 43,
+   "evidenceDiscovery": [
+    {
+     "id": "ev-001",
+     "name": "Phone",
+     "rate": 97
+    },
+    {
+     "id": "ev-002",
+     "name": "Wine Glass",
+     "rate": 94
+    },
+    {
+     "id": "ev-003",
+     "name": "CCTV",
+     "rate": 81
+    },
+    {
+     "id": "ev-004",
+     "name": "Receipt",
+     "rate": 54
+    },
+    {
+     "id": "ev-005",
+     "name": "Fingerprint",
+     "rate": 76
+    },
+    {
+     "id": "ev-006",
+     "name": "Statement",
+     "rate": 61
+    },
+    {
+     "id": "ev-007",
+     "name": "Records",
+     "rate": 69
+    },
+    {
+     "id": "ev-008",
+     "name": "Parking",
+     "rate": 38
+    }
+   ],
+   "mostMissedClue": "CLU-012 — Man left via parking stairs",
+   "mostFailedInterview": "INT-002 — Michael Perera (CCTV not presented)",
+   "wrongSuspects": [
+    {
+     "name": "Sarah Fernando",
+     "count": 2210
+    },
+    {
+     "name": "Nuwan Silva",
+     "count": 640
+    }
+   ],
+   "dropOff": [
+    {
+     "step": "Briefing",
+     "players": 12840
+    },
+    {
+     "step": "Living Room",
+     "players": 12510
+    },
+    {
+     "step": "Sarah Interview",
+     "players": 11300
+    },
+    {
+     "step": "CCTV",
+     "players": 10420
+    },
+    {
+     "step": "Witness",
+     "players": 9380
+    },
+    {
+     "step": "Timeline",
+     "players": 9010
+    },
+    {
+     "step": "Accusation",
+     "players": 8732
+    }
+   ],
+   "hintUsage": [
+    {
+     "hint": "Hint 1",
+     "uses": 4120
+    },
+    {
+     "hint": "Hint 2",
+     "uses": 2380
+    },
+    {
+     "hint": "Hint 3",
+     "uses": 1270
+    }
+   ],
+   "timelineMistakes": [
+    {
+     "event": "22:04 Pharmacy",
+     "mistakes": 3120
+    },
+    {
+     "event": "21:42 CCTV",
+     "mistakes": 2140
+    },
+    {
+     "event": "22:21 Argument",
+     "mistakes": 1880
+    },
+    {
+     "event": "22:33 Car exit",
+     "mistakes": 1460
+    }
+   ],
+   "daily": [
+    {
+     "date": "2026-09-09",
+     "starts": 380,
+     "completions": 236,
+     "avgScore": 750
+    },
+    {
+     "date": "2026-09-10",
+     "starts": 406,
+     "completions": 258,
+     "avgScore": 749
+    },
+    {
+     "date": "2026-09-11",
+     "starts": 429,
+     "completions": 279,
+     "avgScore": 746
+    },
+    {
+     "date": "2026-09-12",
+     "starts": 448,
+     "completions": 298,
+     "avgScore": 742
+    },
+    {
+     "date": "2026-09-13",
+     "starts": 462,
+     "completions": 314,
+     "avgScore": 736
+    },
+    {
+     "date": "2026-09-14",
+     "starts": 590,
+     "completions": 366,
+     "avgScore": 729
+    },
+    {
+     "date": "2026-09-15",
+     "starts": 591,
+     "completions": 375,
+     "avgScore": 722
+    },
+    {
+     "date": "2026-09-16",
+     "starts": 465,
+     "completions": 302,
+     "avgScore": 715
+    },
+    {
+     "date": "2026-09-17",
+     "starts": 455,
+     "completions": 303,
+     "avgScore": 708
+    },
+    {
+     "date": "2026-09-18",
+     "starts": 442,
+     "completions": 301,
+     "avgScore": 701
+    },
+    {
+     "date": "2026-09-19",
+     "starts": 429,
+     "completions": 266,
+     "avgScore": 696
+    },
+    {
+     "date": "2026-09-20",
+     "starts": 416,
+     "completions": 264,
+     "avgScore": 692
+    },
+    {
+     "date": "2026-09-21",
+     "starts": 527,
+     "completions": 343,
+     "avgScore": 690
+    },
+    {
+     "date": "2026-09-22",
+     "starts": 522,
+     "completions": 347,
+     "avgScore": 690
+    },
+    {
+     "date": "2026-09-23",
+     "starts": 404,
+     "completions": 275,
+     "avgScore": 692
+    },
+    {
+     "date": "2026-09-24",
+     "starts": 412,
+     "completions": 255,
+     "avgScore": 695
+    },
+    {
+     "date": "2026-09-25",
+     "starts": 427,
+     "completions": 271,
+     "avgScore": 700
+    },
+    {
+     "date": "2026-09-26",
+     "starts": 447,
+     "completions": 291,
+     "avgScore": 707
+    },
+    {
+     "date": "2026-09-27",
+     "starts": 471,
+     "completions": 313,
+     "avgScore": 714
+    },
+    {
+     "date": "2026-09-28",
+     "starts": 617,
+     "completions": 420,
+     "avgScore": 721
+    },
+    {
+     "date": "2026-09-29",
+     "starts": 642,
+     "completions": 398,
+     "avgScore": 729
+    },
+    {
+     "date": "2026-09-30",
+     "starts": 545,
+     "completions": 346,
+     "avgScore": 735
+    },
+    {
+     "date": "2026-10-01",
+     "starts": 564,
+     "completions": 367,
+     "avgScore": 741
+    },
+    {
+     "date": "2026-10-02",
+     "starts": 577,
+     "completions": 384,
+     "avgScore": 746
+    },
+    {
+     "date": "2026-10-03",
+     "starts": 583,
+     "completions": 396,
+     "avgScore": 749
+    },
+    {
+     "date": "2026-10-04",
+     "starts": 583,
+     "completions": 361,
+     "avgScore": 750
+    },
+    {
+     "date": "2026-10-05",
+     "starts": 697,
+     "completions": 443,
+     "avgScore": 749
+    },
+    {
+     "date": "2026-10-06",
+     "starts": 687,
+     "completions": 447,
+     "avgScore": 747
+    },
+    {
+     "date": "2026-10-07",
+     "starts": 553,
+     "completions": 368,
+     "avgScore": 743
+    },
+    {
+     "date": "2026-10-08",
+     "starts": 540,
+     "completions": 367,
+     "avgScore": 737
+    }
+   ],
+   "id": "case-001"
+  },
+  {
+   "caseId": "case-001",
+   "starts": 12840,
+   "completions": 8732,
+   "completionRate": 68,
+   "avgScore": 742,
+   "avgPlayMinutes": 43,
+   "evidenceDiscovery": [
+    {
+     "id": "ev-001",
+     "name": "Phone",
+     "rate": 97
+    },
+    {
+     "id": "ev-002",
+     "name": "Wine Glass",
+     "rate": 94
+    },
+    {
+     "id": "ev-003",
+     "name": "CCTV",
+     "rate": 81
+    },
+    {
+     "id": "ev-004",
+     "name": "Receipt",
+     "rate": 54
+    },
+    {
+     "id": "ev-005",
+     "name": "Fingerprint",
+     "rate": 76
+    },
+    {
+     "id": "ev-006",
+     "name": "Statement",
+     "rate": 61
+    },
+    {
+     "id": "ev-007",
+     "name": "Records",
+     "rate": 69
+    },
+    {
+     "id": "ev-008",
+     "name": "Parking",
+     "rate": 38
+    }
+   ],
+   "mostMissedClue": "CLU-012 — Man left via parking stairs",
+   "mostFailedInterview": "INT-002 — Michael Perera (CCTV not presented)",
+   "wrongSuspects": [
+    {
+     "name": "Sarah Fernando",
+     "count": 2210
+    },
+    {
+     "name": "Nuwan Silva",
+     "count": 640
+    }
+   ],
+   "dropOff": [
+    {
+     "step": "Briefing",
+     "players": 12840
+    },
+    {
+     "step": "Living Room",
+     "players": 12510
+    },
+    {
+     "step": "Sarah Interview",
+     "players": 11300
+    },
+    {
+     "step": "CCTV",
+     "players": 10420
+    },
+    {
+     "step": "Witness",
+     "players": 9380
+    },
+    {
+     "step": "Timeline",
+     "players": 9010
+    },
+    {
+     "step": "Accusation",
+     "players": 8732
+    }
+   ],
+   "hintUsage": [
+    {
+     "hint": "Hint 1",
+     "uses": 4120
+    },
+    {
+     "hint": "Hint 2",
+     "uses": 2380
+    },
+    {
+     "hint": "Hint 3",
+     "uses": 1270
+    }
+   ],
+   "timelineMistakes": [
+    {
+     "event": "22:04 Pharmacy",
+     "mistakes": 3120
+    },
+    {
+     "event": "21:42 CCTV",
+     "mistakes": 2140
+    },
+    {
+     "event": "22:21 Argument",
+     "mistakes": 1880
+    },
+    {
+     "event": "22:33 Car exit",
+     "mistakes": 1460
+    }
+   ],
+   "daily": [
+    {
+     "date": "2026-09-09",
+     "starts": 380,
+     "completions": 236,
+     "avgScore": 750
+    },
+    {
+     "date": "2026-09-10",
+     "starts": 406,
+     "completions": 258,
+     "avgScore": 749
+    },
+    {
+     "date": "2026-09-11",
+     "starts": 429,
+     "completions": 279,
+     "avgScore": 746
+    },
+    {
+     "date": "2026-09-12",
+     "starts": 448,
+     "completions": 298,
+     "avgScore": 742
+    },
+    {
+     "date": "2026-09-13",
+     "starts": 462,
+     "completions": 314,
+     "avgScore": 736
+    },
+    {
+     "date": "2026-09-14",
+     "starts": 590,
+     "completions": 366,
+     "avgScore": 729
+    },
+    {
+     "date": "2026-09-15",
+     "starts": 591,
+     "completions": 375,
+     "avgScore": 722
+    },
+    {
+     "date": "2026-09-16",
+     "starts": 465,
+     "completions": 302,
+     "avgScore": 715
+    },
+    {
+     "date": "2026-09-17",
+     "starts": 455,
+     "completions": 303,
+     "avgScore": 708
+    },
+    {
+     "date": "2026-09-18",
+     "starts": 442,
+     "completions": 301,
+     "avgScore": 701
+    },
+    {
+     "date": "2026-09-19",
+     "starts": 429,
+     "completions": 266,
+     "avgScore": 696
+    },
+    {
+     "date": "2026-09-20",
+     "starts": 416,
+     "completions": 264,
+     "avgScore": 692
+    },
+    {
+     "date": "2026-09-21",
+     "starts": 527,
+     "completions": 343,
+     "avgScore": 690
+    },
+    {
+     "date": "2026-09-22",
+     "starts": 522,
+     "completions": 347,
+     "avgScore": 690
+    },
+    {
+     "date": "2026-09-23",
+     "starts": 404,
+     "completions": 275,
+     "avgScore": 692
+    },
+    {
+     "date": "2026-09-24",
+     "starts": 412,
+     "completions": 255,
+     "avgScore": 695
+    },
+    {
+     "date": "2026-09-25",
+     "starts": 427,
+     "completions": 271,
+     "avgScore": 700
+    },
+    {
+     "date": "2026-09-26",
+     "starts": 447,
+     "completions": 291,
+     "avgScore": 707
+    },
+    {
+     "date": "2026-09-27",
+     "starts": 471,
+     "completions": 313,
+     "avgScore": 714
+    },
+    {
+     "date": "2026-09-28",
+     "starts": 617,
+     "completions": 420,
+     "avgScore": 721
+    },
+    {
+     "date": "2026-09-29",
+     "starts": 642,
+     "completions": 398,
+     "avgScore": 729
+    },
+    {
+     "date": "2026-09-30",
+     "starts": 545,
+     "completions": 346,
+     "avgScore": 735
+    },
+    {
+     "date": "2026-10-01",
+     "starts": 564,
+     "completions": 367,
+     "avgScore": 741
+    },
+    {
+     "date": "2026-10-02",
+     "starts": 577,
+     "completions": 384,
+     "avgScore": 746
+    },
+    {
+     "date": "2026-10-03",
+     "starts": 583,
+     "completions": 396,
+     "avgScore": 749
+    },
+    {
+     "date": "2026-10-04",
+     "starts": 583,
+     "completions": 361,
+     "avgScore": 750
+    },
+    {
+     "date": "2026-10-05",
+     "starts": 697,
+     "completions": 443,
+     "avgScore": 749
+    },
+    {
+     "date": "2026-10-06",
+     "starts": 687,
+     "completions": 447,
+     "avgScore": 747
+    },
+    {
+     "date": "2026-10-07",
+     "starts": 553,
+     "completions": 368,
+     "avgScore": 743
+    },
+    {
+     "date": "2026-10-08",
+     "starts": 540,
+     "completions": 367,
+     "avgScore": 737
+    }
+   ],
+   "id": "case-002"
+  },
+  {
+   "caseId": "case-001",
+   "starts": 12840,
+   "completions": 8732,
+   "completionRate": 68,
+   "avgScore": 742,
+   "avgPlayMinutes": 43,
+   "evidenceDiscovery": [
+    {
+     "id": "ev-001",
+     "name": "Phone",
+     "rate": 97
+    },
+    {
+     "id": "ev-002",
+     "name": "Wine Glass",
+     "rate": 94
+    },
+    {
+     "id": "ev-003",
+     "name": "CCTV",
+     "rate": 81
+    },
+    {
+     "id": "ev-004",
+     "name": "Receipt",
+     "rate": 54
+    },
+    {
+     "id": "ev-005",
+     "name": "Fingerprint",
+     "rate": 76
+    },
+    {
+     "id": "ev-006",
+     "name": "Statement",
+     "rate": 61
+    },
+    {
+     "id": "ev-007",
+     "name": "Records",
+     "rate": 69
+    },
+    {
+     "id": "ev-008",
+     "name": "Parking",
+     "rate": 38
+    }
+   ],
+   "mostMissedClue": "CLU-012 — Man left via parking stairs",
+   "mostFailedInterview": "INT-002 — Michael Perera (CCTV not presented)",
+   "wrongSuspects": [
+    {
+     "name": "Sarah Fernando",
+     "count": 2210
+    },
+    {
+     "name": "Nuwan Silva",
+     "count": 640
+    }
+   ],
+   "dropOff": [
+    {
+     "step": "Briefing",
+     "players": 12840
+    },
+    {
+     "step": "Living Room",
+     "players": 12510
+    },
+    {
+     "step": "Sarah Interview",
+     "players": 11300
+    },
+    {
+     "step": "CCTV",
+     "players": 10420
+    },
+    {
+     "step": "Witness",
+     "players": 9380
+    },
+    {
+     "step": "Timeline",
+     "players": 9010
+    },
+    {
+     "step": "Accusation",
+     "players": 8732
+    }
+   ],
+   "hintUsage": [
+    {
+     "hint": "Hint 1",
+     "uses": 4120
+    },
+    {
+     "hint": "Hint 2",
+     "uses": 2380
+    },
+    {
+     "hint": "Hint 3",
+     "uses": 1270
+    }
+   ],
+   "timelineMistakes": [
+    {
+     "event": "22:04 Pharmacy",
+     "mistakes": 3120
+    },
+    {
+     "event": "21:42 CCTV",
+     "mistakes": 2140
+    },
+    {
+     "event": "22:21 Argument",
+     "mistakes": 1880
+    },
+    {
+     "event": "22:33 Car exit",
+     "mistakes": 1460
+    }
+   ],
+   "daily": [
+    {
+     "date": "2026-09-09",
+     "starts": 380,
+     "completions": 236,
+     "avgScore": 750
+    },
+    {
+     "date": "2026-09-10",
+     "starts": 406,
+     "completions": 258,
+     "avgScore": 749
+    },
+    {
+     "date": "2026-09-11",
+     "starts": 429,
+     "completions": 279,
+     "avgScore": 746
+    },
+    {
+     "date": "2026-09-12",
+     "starts": 448,
+     "completions": 298,
+     "avgScore": 742
+    },
+    {
+     "date": "2026-09-13",
+     "starts": 462,
+     "completions": 314,
+     "avgScore": 736
+    },
+    {
+     "date": "2026-09-14",
+     "starts": 590,
+     "completions": 366,
+     "avgScore": 729
+    },
+    {
+     "date": "2026-09-15",
+     "starts": 591,
+     "completions": 375,
+     "avgScore": 722
+    },
+    {
+     "date": "2026-09-16",
+     "starts": 465,
+     "completions": 302,
+     "avgScore": 715
+    },
+    {
+     "date": "2026-09-17",
+     "starts": 455,
+     "completions": 303,
+     "avgScore": 708
+    },
+    {
+     "date": "2026-09-18",
+     "starts": 442,
+     "completions": 301,
+     "avgScore": 701
+    },
+    {
+     "date": "2026-09-19",
+     "starts": 429,
+     "completions": 266,
+     "avgScore": 696
+    },
+    {
+     "date": "2026-09-20",
+     "starts": 416,
+     "completions": 264,
+     "avgScore": 692
+    },
+    {
+     "date": "2026-09-21",
+     "starts": 527,
+     "completions": 343,
+     "avgScore": 690
+    },
+    {
+     "date": "2026-09-22",
+     "starts": 522,
+     "completions": 347,
+     "avgScore": 690
+    },
+    {
+     "date": "2026-09-23",
+     "starts": 404,
+     "completions": 275,
+     "avgScore": 692
+    },
+    {
+     "date": "2026-09-24",
+     "starts": 412,
+     "completions": 255,
+     "avgScore": 695
+    },
+    {
+     "date": "2026-09-25",
+     "starts": 427,
+     "completions": 271,
+     "avgScore": 700
+    },
+    {
+     "date": "2026-09-26",
+     "starts": 447,
+     "completions": 291,
+     "avgScore": 707
+    },
+    {
+     "date": "2026-09-27",
+     "starts": 471,
+     "completions": 313,
+     "avgScore": 714
+    },
+    {
+     "date": "2026-09-28",
+     "starts": 617,
+     "completions": 420,
+     "avgScore": 721
+    },
+    {
+     "date": "2026-09-29",
+     "starts": 642,
+     "completions": 398,
+     "avgScore": 729
+    },
+    {
+     "date": "2026-09-30",
+     "starts": 545,
+     "completions": 346,
+     "avgScore": 735
+    },
+    {
+     "date": "2026-10-01",
+     "starts": 564,
+     "completions": 367,
+     "avgScore": 741
+    },
+    {
+     "date": "2026-10-02",
+     "starts": 577,
+     "completions": 384,
+     "avgScore": 746
+    },
+    {
+     "date": "2026-10-03",
+     "starts": 583,
+     "completions": 396,
+     "avgScore": 749
+    },
+    {
+     "date": "2026-10-04",
+     "starts": 583,
+     "completions": 361,
+     "avgScore": 750
+    },
+    {
+     "date": "2026-10-05",
+     "starts": 697,
+     "completions": 443,
+     "avgScore": 749
+    },
+    {
+     "date": "2026-10-06",
+     "starts": 687,
+     "completions": 447,
+     "avgScore": 747
+    },
+    {
+     "date": "2026-10-07",
+     "starts": 553,
+     "completions": 368,
+     "avgScore": 743
+    },
+    {
+     "date": "2026-10-08",
+     "starts": 540,
+     "completions": 367,
+     "avgScore": 737
+    }
+   ],
+   "id": "case-003"
+  },
+  {
+   "caseId": "case-001",
+   "starts": 12840,
+   "completions": 8732,
+   "completionRate": 68,
+   "avgScore": 742,
+   "avgPlayMinutes": 43,
+   "evidenceDiscovery": [
+    {
+     "id": "ev-001",
+     "name": "Phone",
+     "rate": 97
+    },
+    {
+     "id": "ev-002",
+     "name": "Wine Glass",
+     "rate": 94
+    },
+    {
+     "id": "ev-003",
+     "name": "CCTV",
+     "rate": 81
+    },
+    {
+     "id": "ev-004",
+     "name": "Receipt",
+     "rate": 54
+    },
+    {
+     "id": "ev-005",
+     "name": "Fingerprint",
+     "rate": 76
+    },
+    {
+     "id": "ev-006",
+     "name": "Statement",
+     "rate": 61
+    },
+    {
+     "id": "ev-007",
+     "name": "Records",
+     "rate": 69
+    },
+    {
+     "id": "ev-008",
+     "name": "Parking",
+     "rate": 38
+    }
+   ],
+   "mostMissedClue": "CLU-012 — Man left via parking stairs",
+   "mostFailedInterview": "INT-002 — Michael Perera (CCTV not presented)",
+   "wrongSuspects": [
+    {
+     "name": "Sarah Fernando",
+     "count": 2210
+    },
+    {
+     "name": "Nuwan Silva",
+     "count": 640
+    }
+   ],
+   "dropOff": [
+    {
+     "step": "Briefing",
+     "players": 12840
+    },
+    {
+     "step": "Living Room",
+     "players": 12510
+    },
+    {
+     "step": "Sarah Interview",
+     "players": 11300
+    },
+    {
+     "step": "CCTV",
+     "players": 10420
+    },
+    {
+     "step": "Witness",
+     "players": 9380
+    },
+    {
+     "step": "Timeline",
+     "players": 9010
+    },
+    {
+     "step": "Accusation",
+     "players": 8732
+    }
+   ],
+   "hintUsage": [
+    {
+     "hint": "Hint 1",
+     "uses": 4120
+    },
+    {
+     "hint": "Hint 2",
+     "uses": 2380
+    },
+    {
+     "hint": "Hint 3",
+     "uses": 1270
+    }
+   ],
+   "timelineMistakes": [
+    {
+     "event": "22:04 Pharmacy",
+     "mistakes": 3120
+    },
+    {
+     "event": "21:42 CCTV",
+     "mistakes": 2140
+    },
+    {
+     "event": "22:21 Argument",
+     "mistakes": 1880
+    },
+    {
+     "event": "22:33 Car exit",
+     "mistakes": 1460
+    }
+   ],
+   "daily": [
+    {
+     "date": "2026-09-09",
+     "starts": 380,
+     "completions": 236,
+     "avgScore": 750
+    },
+    {
+     "date": "2026-09-10",
+     "starts": 406,
+     "completions": 258,
+     "avgScore": 749
+    },
+    {
+     "date": "2026-09-11",
+     "starts": 429,
+     "completions": 279,
+     "avgScore": 746
+    },
+    {
+     "date": "2026-09-12",
+     "starts": 448,
+     "completions": 298,
+     "avgScore": 742
+    },
+    {
+     "date": "2026-09-13",
+     "starts": 462,
+     "completions": 314,
+     "avgScore": 736
+    },
+    {
+     "date": "2026-09-14",
+     "starts": 590,
+     "completions": 366,
+     "avgScore": 729
+    },
+    {
+     "date": "2026-09-15",
+     "starts": 591,
+     "completions": 375,
+     "avgScore": 722
+    },
+    {
+     "date": "2026-09-16",
+     "starts": 465,
+     "completions": 302,
+     "avgScore": 715
+    },
+    {
+     "date": "2026-09-17",
+     "starts": 455,
+     "completions": 303,
+     "avgScore": 708
+    },
+    {
+     "date": "2026-09-18",
+     "starts": 442,
+     "completions": 301,
+     "avgScore": 701
+    },
+    {
+     "date": "2026-09-19",
+     "starts": 429,
+     "completions": 266,
+     "avgScore": 696
+    },
+    {
+     "date": "2026-09-20",
+     "starts": 416,
+     "completions": 264,
+     "avgScore": 692
+    },
+    {
+     "date": "2026-09-21",
+     "starts": 527,
+     "completions": 343,
+     "avgScore": 690
+    },
+    {
+     "date": "2026-09-22",
+     "starts": 522,
+     "completions": 347,
+     "avgScore": 690
+    },
+    {
+     "date": "2026-09-23",
+     "starts": 404,
+     "completions": 275,
+     "avgScore": 692
+    },
+    {
+     "date": "2026-09-24",
+     "starts": 412,
+     "completions": 255,
+     "avgScore": 695
+    },
+    {
+     "date": "2026-09-25",
+     "starts": 427,
+     "completions": 271,
+     "avgScore": 700
+    },
+    {
+     "date": "2026-09-26",
+     "starts": 447,
+     "completions": 291,
+     "avgScore": 707
+    },
+    {
+     "date": "2026-09-27",
+     "starts": 471,
+     "completions": 313,
+     "avgScore": 714
+    },
+    {
+     "date": "2026-09-28",
+     "starts": 617,
+     "completions": 420,
+     "avgScore": 721
+    },
+    {
+     "date": "2026-09-29",
+     "starts": 642,
+     "completions": 398,
+     "avgScore": 729
+    },
+    {
+     "date": "2026-09-30",
+     "starts": 545,
+     "completions": 346,
+     "avgScore": 735
+    },
+    {
+     "date": "2026-10-01",
+     "starts": 564,
+     "completions": 367,
+     "avgScore": 741
+    },
+    {
+     "date": "2026-10-02",
+     "starts": 577,
+     "completions": 384,
+     "avgScore": 746
+    },
+    {
+     "date": "2026-10-03",
+     "starts": 583,
+     "completions": 396,
+     "avgScore": 749
+    },
+    {
+     "date": "2026-10-04",
+     "starts": 583,
+     "completions": 361,
+     "avgScore": 750
+    },
+    {
+     "date": "2026-10-05",
+     "starts": 697,
+     "completions": 443,
+     "avgScore": 749
+    },
+    {
+     "date": "2026-10-06",
+     "starts": 687,
+     "completions": 447,
+     "avgScore": 747
+    },
+    {
+     "date": "2026-10-07",
+     "starts": 553,
+     "completions": 368,
+     "avgScore": 743
+    },
+    {
+     "date": "2026-10-08",
+     "starts": 540,
+     "completions": 367,
+     "avgScore": 737
+    }
+   ],
+   "id": "case-004"
+  },
+  {
+   "caseId": "case-001",
+   "starts": 12840,
+   "completions": 8732,
+   "completionRate": 68,
+   "avgScore": 742,
+   "avgPlayMinutes": 43,
+   "evidenceDiscovery": [
+    {
+     "id": "ev-001",
+     "name": "Phone",
+     "rate": 97
+    },
+    {
+     "id": "ev-002",
+     "name": "Wine Glass",
+     "rate": 94
+    },
+    {
+     "id": "ev-003",
+     "name": "CCTV",
+     "rate": 81
+    },
+    {
+     "id": "ev-004",
+     "name": "Receipt",
+     "rate": 54
+    },
+    {
+     "id": "ev-005",
+     "name": "Fingerprint",
+     "rate": 76
+    },
+    {
+     "id": "ev-006",
+     "name": "Statement",
+     "rate": 61
+    },
+    {
+     "id": "ev-007",
+     "name": "Records",
+     "rate": 69
+    },
+    {
+     "id": "ev-008",
+     "name": "Parking",
+     "rate": 38
+    }
+   ],
+   "mostMissedClue": "CLU-012 — Man left via parking stairs",
+   "mostFailedInterview": "INT-002 — Michael Perera (CCTV not presented)",
+   "wrongSuspects": [
+    {
+     "name": "Sarah Fernando",
+     "count": 2210
+    },
+    {
+     "name": "Nuwan Silva",
+     "count": 640
+    }
+   ],
+   "dropOff": [
+    {
+     "step": "Briefing",
+     "players": 12840
+    },
+    {
+     "step": "Living Room",
+     "players": 12510
+    },
+    {
+     "step": "Sarah Interview",
+     "players": 11300
+    },
+    {
+     "step": "CCTV",
+     "players": 10420
+    },
+    {
+     "step": "Witness",
+     "players": 9380
+    },
+    {
+     "step": "Timeline",
+     "players": 9010
+    },
+    {
+     "step": "Accusation",
+     "players": 8732
+    }
+   ],
+   "hintUsage": [
+    {
+     "hint": "Hint 1",
+     "uses": 4120
+    },
+    {
+     "hint": "Hint 2",
+     "uses": 2380
+    },
+    {
+     "hint": "Hint 3",
+     "uses": 1270
+    }
+   ],
+   "timelineMistakes": [
+    {
+     "event": "22:04 Pharmacy",
+     "mistakes": 3120
+    },
+    {
+     "event": "21:42 CCTV",
+     "mistakes": 2140
+    },
+    {
+     "event": "22:21 Argument",
+     "mistakes": 1880
+    },
+    {
+     "event": "22:33 Car exit",
+     "mistakes": 1460
+    }
+   ],
+   "daily": [
+    {
+     "date": "2026-09-09",
+     "starts": 380,
+     "completions": 236,
+     "avgScore": 750
+    },
+    {
+     "date": "2026-09-10",
+     "starts": 406,
+     "completions": 258,
+     "avgScore": 749
+    },
+    {
+     "date": "2026-09-11",
+     "starts": 429,
+     "completions": 279,
+     "avgScore": 746
+    },
+    {
+     "date": "2026-09-12",
+     "starts": 448,
+     "completions": 298,
+     "avgScore": 742
+    },
+    {
+     "date": "2026-09-13",
+     "starts": 462,
+     "completions": 314,
+     "avgScore": 736
+    },
+    {
+     "date": "2026-09-14",
+     "starts": 590,
+     "completions": 366,
+     "avgScore": 729
+    },
+    {
+     "date": "2026-09-15",
+     "starts": 591,
+     "completions": 375,
+     "avgScore": 722
+    },
+    {
+     "date": "2026-09-16",
+     "starts": 465,
+     "completions": 302,
+     "avgScore": 715
+    },
+    {
+     "date": "2026-09-17",
+     "starts": 455,
+     "completions": 303,
+     "avgScore": 708
+    },
+    {
+     "date": "2026-09-18",
+     "starts": 442,
+     "completions": 301,
+     "avgScore": 701
+    },
+    {
+     "date": "2026-09-19",
+     "starts": 429,
+     "completions": 266,
+     "avgScore": 696
+    },
+    {
+     "date": "2026-09-20",
+     "starts": 416,
+     "completions": 264,
+     "avgScore": 692
+    },
+    {
+     "date": "2026-09-21",
+     "starts": 527,
+     "completions": 343,
+     "avgScore": 690
+    },
+    {
+     "date": "2026-09-22",
+     "starts": 522,
+     "completions": 347,
+     "avgScore": 690
+    },
+    {
+     "date": "2026-09-23",
+     "starts": 404,
+     "completions": 275,
+     "avgScore": 692
+    },
+    {
+     "date": "2026-09-24",
+     "starts": 412,
+     "completions": 255,
+     "avgScore": 695
+    },
+    {
+     "date": "2026-09-25",
+     "starts": 427,
+     "completions": 271,
+     "avgScore": 700
+    },
+    {
+     "date": "2026-09-26",
+     "starts": 447,
+     "completions": 291,
+     "avgScore": 707
+    },
+    {
+     "date": "2026-09-27",
+     "starts": 471,
+     "completions": 313,
+     "avgScore": 714
+    },
+    {
+     "date": "2026-09-28",
+     "starts": 617,
+     "completions": 420,
+     "avgScore": 721
+    },
+    {
+     "date": "2026-09-29",
+     "starts": 642,
+     "completions": 398,
+     "avgScore": 729
+    },
+    {
+     "date": "2026-09-30",
+     "starts": 545,
+     "completions": 346,
+     "avgScore": 735
+    },
+    {
+     "date": "2026-10-01",
+     "starts": 564,
+     "completions": 367,
+     "avgScore": 741
+    },
+    {
+     "date": "2026-10-02",
+     "starts": 577,
+     "completions": 384,
+     "avgScore": 746
+    },
+    {
+     "date": "2026-10-03",
+     "starts": 583,
+     "completions": 396,
+     "avgScore": 749
+    },
+    {
+     "date": "2026-10-04",
+     "starts": 583,
+     "completions": 361,
+     "avgScore": 750
+    },
+    {
+     "date": "2026-10-05",
+     "starts": 697,
+     "completions": 443,
+     "avgScore": 749
+    },
+    {
+     "date": "2026-10-06",
+     "starts": 687,
+     "completions": 447,
+     "avgScore": 747
+    },
+    {
+     "date": "2026-10-07",
+     "starts": 553,
+     "completions": 368,
+     "avgScore": 743
+    },
+    {
+     "date": "2026-10-08",
+     "starts": 540,
+     "completions": 367,
+     "avgScore": 737
+    }
+   ],
+   "id": "case-005"
+  },
+  {
+   "caseId": "case-001",
+   "starts": 12840,
+   "completions": 8732,
+   "completionRate": 68,
+   "avgScore": 742,
+   "avgPlayMinutes": 43,
+   "evidenceDiscovery": [
+    {
+     "id": "ev-001",
+     "name": "Phone",
+     "rate": 97
+    },
+    {
+     "id": "ev-002",
+     "name": "Wine Glass",
+     "rate": 94
+    },
+    {
+     "id": "ev-003",
+     "name": "CCTV",
+     "rate": 81
+    },
+    {
+     "id": "ev-004",
+     "name": "Receipt",
+     "rate": 54
+    },
+    {
+     "id": "ev-005",
+     "name": "Fingerprint",
+     "rate": 76
+    },
+    {
+     "id": "ev-006",
+     "name": "Statement",
+     "rate": 61
+    },
+    {
+     "id": "ev-007",
+     "name": "Records",
+     "rate": 69
+    },
+    {
+     "id": "ev-008",
+     "name": "Parking",
+     "rate": 38
+    }
+   ],
+   "mostMissedClue": "CLU-012 — Man left via parking stairs",
+   "mostFailedInterview": "INT-002 — Michael Perera (CCTV not presented)",
+   "wrongSuspects": [
+    {
+     "name": "Sarah Fernando",
+     "count": 2210
+    },
+    {
+     "name": "Nuwan Silva",
+     "count": 640
+    }
+   ],
+   "dropOff": [
+    {
+     "step": "Briefing",
+     "players": 12840
+    },
+    {
+     "step": "Living Room",
+     "players": 12510
+    },
+    {
+     "step": "Sarah Interview",
+     "players": 11300
+    },
+    {
+     "step": "CCTV",
+     "players": 10420
+    },
+    {
+     "step": "Witness",
+     "players": 9380
+    },
+    {
+     "step": "Timeline",
+     "players": 9010
+    },
+    {
+     "step": "Accusation",
+     "players": 8732
+    }
+   ],
+   "hintUsage": [
+    {
+     "hint": "Hint 1",
+     "uses": 4120
+    },
+    {
+     "hint": "Hint 2",
+     "uses": 2380
+    },
+    {
+     "hint": "Hint 3",
+     "uses": 1270
+    }
+   ],
+   "timelineMistakes": [
+    {
+     "event": "22:04 Pharmacy",
+     "mistakes": 3120
+    },
+    {
+     "event": "21:42 CCTV",
+     "mistakes": 2140
+    },
+    {
+     "event": "22:21 Argument",
+     "mistakes": 1880
+    },
+    {
+     "event": "22:33 Car exit",
+     "mistakes": 1460
+    }
+   ],
+   "daily": [
+    {
+     "date": "2026-09-09",
+     "starts": 380,
+     "completions": 236,
+     "avgScore": 750
+    },
+    {
+     "date": "2026-09-10",
+     "starts": 406,
+     "completions": 258,
+     "avgScore": 749
+    },
+    {
+     "date": "2026-09-11",
+     "starts": 429,
+     "completions": 279,
+     "avgScore": 746
+    },
+    {
+     "date": "2026-09-12",
+     "starts": 448,
+     "completions": 298,
+     "avgScore": 742
+    },
+    {
+     "date": "2026-09-13",
+     "starts": 462,
+     "completions": 314,
+     "avgScore": 736
+    },
+    {
+     "date": "2026-09-14",
+     "starts": 590,
+     "completions": 366,
+     "avgScore": 729
+    },
+    {
+     "date": "2026-09-15",
+     "starts": 591,
+     "completions": 375,
+     "avgScore": 722
+    },
+    {
+     "date": "2026-09-16",
+     "starts": 465,
+     "completions": 302,
+     "avgScore": 715
+    },
+    {
+     "date": "2026-09-17",
+     "starts": 455,
+     "completions": 303,
+     "avgScore": 708
+    },
+    {
+     "date": "2026-09-18",
+     "starts": 442,
+     "completions": 301,
+     "avgScore": 701
+    },
+    {
+     "date": "2026-09-19",
+     "starts": 429,
+     "completions": 266,
+     "avgScore": 696
+    },
+    {
+     "date": "2026-09-20",
+     "starts": 416,
+     "completions": 264,
+     "avgScore": 692
+    },
+    {
+     "date": "2026-09-21",
+     "starts": 527,
+     "completions": 343,
+     "avgScore": 690
+    },
+    {
+     "date": "2026-09-22",
+     "starts": 522,
+     "completions": 347,
+     "avgScore": 690
+    },
+    {
+     "date": "2026-09-23",
+     "starts": 404,
+     "completions": 275,
+     "avgScore": 692
+    },
+    {
+     "date": "2026-09-24",
+     "starts": 412,
+     "completions": 255,
+     "avgScore": 695
+    },
+    {
+     "date": "2026-09-25",
+     "starts": 427,
+     "completions": 271,
+     "avgScore": 700
+    },
+    {
+     "date": "2026-09-26",
+     "starts": 447,
+     "completions": 291,
+     "avgScore": 707
+    },
+    {
+     "date": "2026-09-27",
+     "starts": 471,
+     "completions": 313,
+     "avgScore": 714
+    },
+    {
+     "date": "2026-09-28",
+     "starts": 617,
+     "completions": 420,
+     "avgScore": 721
+    },
+    {
+     "date": "2026-09-29",
+     "starts": 642,
+     "completions": 398,
+     "avgScore": 729
+    },
+    {
+     "date": "2026-09-30",
+     "starts": 545,
+     "completions": 346,
+     "avgScore": 735
+    },
+    {
+     "date": "2026-10-01",
+     "starts": 564,
+     "completions": 367,
+     "avgScore": 741
+    },
+    {
+     "date": "2026-10-02",
+     "starts": 577,
+     "completions": 384,
+     "avgScore": 746
+    },
+    {
+     "date": "2026-10-03",
+     "starts": 583,
+     "completions": 396,
+     "avgScore": 749
+    },
+    {
+     "date": "2026-10-04",
+     "starts": 583,
+     "completions": 361,
+     "avgScore": 750
+    },
+    {
+     "date": "2026-10-05",
+     "starts": 697,
+     "completions": 443,
+     "avgScore": 749
+    },
+    {
+     "date": "2026-10-06",
+     "starts": 687,
+     "completions": 447,
+     "avgScore": 747
+    },
+    {
+     "date": "2026-10-07",
+     "starts": 553,
+     "completions": 368,
+     "avgScore": 743
+    },
+    {
+     "date": "2026-10-08",
+     "starts": 540,
+     "completions": 367,
+     "avgScore": 737
+    }
+   ],
+   "id": "case-006"
+  }
+ ]
+}
