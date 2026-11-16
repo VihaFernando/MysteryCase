@@ -56,11 +56,11 @@ export function targetOptions(bundle: CaseBundle, kind: ConditionKind): Array<{ 
     case "evidence_discovered": return bundle.evidence.map((e) => ({ value: e.id, label: `${e.code} · ${e.name}` }));
     case "clue_discovered": return bundle.clues.map((c) => ({ value: c.id, label: `${c.code} · ${c.title}` }));
     case "interview_completed": return bundle.interviews.map((i) => ({ value: i.id, label: `${i.code} · ${i.title}` }));
-    case "question_answered": return bundle.interviews.flatMap((i) => i.nodes.filter((n) => n.type === "question").map((n) => ({ value: n.id, label: `${i.code} · ${n.text}` })));
+    case "question_answered": return bundle.interviews.flatMap((i) => (i.testimony?.length ? i.testimony.map((st) => ({ id: st.id, text: st.ask ?? st.text })) : i.nodes.filter((n) => n.type === "question")).map((n) => ({ value: n.id, label: `${i.code} · ${n.text}` })));
     case "location_visited": return bundle.locations.map((l) => ({ value: l.id, label: l.name }));
     case "suspect_interviewed": return bundle.suspects.map((s) => ({ value: s.id, label: s.name }));
     case "timeline_event_discovered": return bundle.timeline.map((t) => ({ value: t.id, label: `${t.time} · ${t.title}` }));
-    case "player_choice": return bundle.interviews.flatMap((i) => i.edges.filter((e) => e.label).map((e) => ({ value: e.id, label: `${i.code} · ${e.label}` })));
+    case "player_choice": return bundle.interviews.flatMap((i) => (i.testimony?.length ? i.testimony.flatMap((st) => st.choices ?? []) : i.edges.filter((e) => e.label)).map((e) => ({ value: e.id, label: `${i.code} · ${e.label}` })));
     case "case_progress": return [25, 50, 60, 75, 90].map((p) => ({ value: String(p), label: `${p}%` }));
   }
 }

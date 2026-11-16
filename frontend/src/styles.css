@@ -178,3 +178,8 @@
 .react-flow__attribution { display: none; }
 .react-flow__edge-text { fill: var(--foreground); font-size: 10px; }
 .react-flow__edge-textbg { fill: var(--card); }
+
+/* Interrogation: how a face moves while its owner talks. */
+@keyframes tell-nervous { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-2px) rotate(-0.5deg); } 55% { transform: translateX(2.5px) rotate(0.4deg); } 80% { transform: translateX(-1px); } }
+@keyframes tell-angry { 0%, 100% { transform: scale(1.06); } 50% { transform: scale(1.1); } }
+@keyframes tell-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.015); } }

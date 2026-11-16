@@ -39,7 +39,19 @@ export const del = async (kind: string, id: string) => void (await model(kind).d
 /** First run: load seed.json (exported from the frontend demo data) into an empty database. Reversed so list() keeps the seed's order. */
 export async function seedIfEmpty() {
   const meta = model("meta");
-  if (await meta.exists({ _id: "seeded" })) return;
+  if (await meta.exists({ _id: "seeded" })) {
+    // Install or upgrade the bundled story without touching authored cases or resetting the database.
+    const file = Bun.file(new URL("../../seed.json", import.meta.url));
+    if (await file.exists()) {
+      const seed = (await file.json()) as Record<string, Doc[]>;
+      for (const bundle of (seed.case ?? []).filter((b) => b.case?.id === "case-monsoon-ledger")) {
+        const have = await get("case", bundle.case.id);
+        // ponytail: version compare only; an edited copy of the bundled story is replaced when the bundle moves to a newer version
+        if (!have || Number(have.case?.version) < Number(bundle.case.version)) await put("case", bundle.case.id, bundle);
+      }
+    }
+    return;
+  }
   const file = Bun.file(new URL("../../seed.json", import.meta.url));
   if (!(await file.exists())) return console.warn("seed.json missing — starting with an empty database");
   const seed = (await file.json()) as Record<string, Doc[]>;

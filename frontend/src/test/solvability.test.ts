@@ -1,65 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { createDemoBundles } from "@/data/demo/cases";
-import {
-  applyTriggers, collectFromHotspot, completeStage, hotspotStatus, initialPreviewState, isInterviewOpen, isLocationOpen, unmetRequirements, walkDialogue,
-  type PreviewState,
-} from "@/services/previewEngine";
 import { validateCase } from "@/services/validation";
-import type { CaseBundle, Interview } from "@/types";
-
-/** Plays every interview to the end, taking every unlocked option, using only the evidence the player already holds. */
-function playInterview(b: CaseBundle, iv: Interview, input: PreviewState): PreviewState {
-  let s = input;
-  const go = (nodeId: string, resume: boolean, depth: number, menu?: string) => {
-    if (depth > 80) return;
-    const step = walkDialogue(b, iv, nodeId, s, resume, menu);
-    s = step.state;
-    if (step.stop.type === "choices") {
-      for (const o of step.stop.options) if (!o.locked && !o.asked) go(o.nodeId, false, depth + 1, step.stop.menuId); // topics loop back to the menu, so skip ones already asked
-    } else if (step.stop.type === "present" && (!step.stop.evidenceId || s.evidence.includes(step.stop.evidenceId))) {
-      go(step.stop.nodeId, true, depth + 1, step.stop.menuId);
-    }
-  };
-  const start = iv.nodes.find((n) => n.type === "start");
-  // questions unlock as earlier ones are asked, so keep replaying until nothing new turns up
-  for (let pass = 0; pass < 5 && start; pass++) go(start.id, false, 0);
-  return s;
-}
-
-/** A thorough player: visits every reachable scene, taps everything, inspects every stage, finishes every interview — until nothing new happens. */
-function playEverything(b: CaseBundle): PreviewState {
-  let s = applyTriggers(b, initialPreviewState()).state;
-  const snapshot = (x: PreviewState) => JSON.stringify([x.evidence, x.clues, x.locationsVisited, x.stagesDone, x.interviewsCompleted, x.questionsAnswered, x.unlocked, x.timelineDiscovered]);
-
-  for (let round = 0; round < 40; round++) {
-    const before = snapshot(s);
-
-    for (const scene of b.scenes) {
-      if (!isLocationOpen(b, scene.locationId, s)) continue;
-      s = { ...s, locationsVisited: s.locationsVisited.includes(scene.locationId) ? s.locationsVisited : [...s.locationsVisited, scene.locationId] };
-      for (const h of scene.hotspots) if (hotspotStatus(h, s) === "open") s = collectFromHotspot(b, s, h);
-      s = applyTriggers(b, s).state;
-    }
-
-    for (const ev of b.evidence.filter((e) => s.evidence.includes(e.id))) {
-      ev.inspections.forEach((stage, i) => {
-        if (s.stagesDone.includes(stage.id)) return;
-        // the player can always perform a "player action" requirement themselves
-        for (const { req, index } of unmetRequirements(ev, i, s)) if (req.kind === "player_action") s = { ...s, actionsDone: [...s.actionsDone, `${stage.id}:${index}`] };
-        if (unmetRequirements(ev, i, s).length === 0) s = completeStage(s, ev, i);
-      });
-      s = applyTriggers(b, s).state;
-    }
-
-    for (const iv of b.interviews) {
-      if (!isInterviewOpen(iv, s)) continue;
-      s = applyTriggers(b, playInterview(b, iv, s)).state;
-    }
-
-    if (snapshot(s) === before) break;
-  }
-  return s;
-}
+import { playEverything } from "./playthrough";
 
 describe("demo case solvability", () => {
   const bundle = createDemoBundles().find((x) => x.case.id === "case-001")!;

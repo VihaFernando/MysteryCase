@@ -1,5 +1,5 @@
 import { evaluate, type PlayerState } from "./conditionEngine";
-import type { CaseBundle, DialogueNode, Evidence, Hotspot, Interview, InspectionRequirement, Reaction } from "@/types";
+import type { CaseBundle, Deduction, DialogueNode, Evidence, Hotspot, Interview, InspectionRequirement, Reaction, Scene, SearchTool, Statement, StatementReply } from "@/types";
 
 /** Everything the player preview remembers about a play-through. */
 export interface PreviewState extends PlayerState {
@@ -13,11 +13,28 @@ export interface PreviewState extends PlayerState {
   firedTriggers: string[];
   hintsUsed: string[];
   startedAt: number;
+  /** Hotspots the player has noticed (they stay marked in the room). */
+  found: string[];
+  /** Containers opened, including ones whose lock was solved. */
+  opened: string[];
+  /** Evidence details, document lines ("evidenceId:line") and comparisons ("a+b") worked out. */
+  examined: string[];
+  /** Statements proven false. */
+  exposed: string[];
+  /** Linked deductions. */
+  deductions: string[];
+  /** Wrong challenges left per interview. */
+  patience: Record<string, number>;
+  /** Interview → how much the player knew when the person stopped answering challenges. */
+  lockout: Record<string, number>;
+  /** Wrong challenges, wrong links, wrong flags and room scans. Costs score. */
+  mistakes: number;
 }
 
 export const initialPreviewState = (): PreviewState => ({
   evidence: [], clues: [], interviewsCompleted: [], questionsAnswered: [], locationsVisited: [], suspectsInterviewed: [], timelineDiscovered: [], choices: [], progress: 0,
   unlocked: [], stagesDone: [], actionsDone: [], firedTriggers: [], hintsUsed: [], startedAt: Date.now(),
+  found: [], opened: [], examined: [], exposed: [], deductions: [], patience: {}, lockout: {}, mistakes: 0,
 });
 
 const add = (list: string[], ...ids: Array<string | undefined>) => {
@@ -239,4 +256,150 @@ export function unlockEverything(b: CaseBundle, s: PreviewState): PreviewState {
     unlocked: [...b.interviews.map((i) => i.id), ...b.locations.map((l) => l.id)],
     progress: 100,
   };
+}
+
+/* ───────────────────────── Searching rooms ───────────────────────── */
+
+export const isSceneOpen = (b: CaseBundle, sc: Scene, s: PreviewState) => isLocationOpen(b, sc.locationId, s) && evaluate(sc.unlockCondition, s);
+export const childrenOf = (sc: Scene, h: Hotspot, s: PreviewState) => sc.hotspots.filter((c) => c.parentId === h.id && hotspotStatus(c, s) !== "hidden");
+/** Everything in the room the player could still notice right now. */
+export const searchable = (sc: Scene, s: PreviewState) => sc.hotspots.filter((h) => hotspotStatus(h, s) !== "hidden" && (!h.parentId || s.opened.includes(h.parentId)));
+
+/** The spot under the player's finger, if the right tool is in hand. Coordinates are percentages; `aspect` is image height ÷ width. */
+export function hotspotAt<T extends { x: number; y: number; radius?: number; tool?: SearchTool | undefined }>(spots: T[], tool: SearchTool | undefined, x: number, y: number, aspect = 0.75): T | undefined {
+  return spots
+    .filter((h) => h.tool === tool)
+    .map((h) => ({ h, d: Math.hypot(h.x - x, (h.y - y) * aspect) }))
+    .filter(({ h, d }) => d <= Math.max(h.radius ?? 0, 8))
+    .sort((a, z) => a.d - z.d)[0]?.h;
+}
+
+export const hasLock = (h: Hotspot, s: PreviewState) => !!h.lock && !s.opened.includes(h.id);
+export const tryLock = (h: Hotspot, code: string) => !!h.lock && h.lock.code.replace(/\D/g, "") === code.replace(/\D/g, "");
+
+/** Noticing a spot: takes what is there and, for a container, opens it. Locked containers need `tryLock` first. */
+export function searchHotspot(b: CaseBundle, s: PreviewState, h: Hotspot): PreviewState {
+  if (hotspotStatus(h, s) !== "open") return s;
+  const noted = { ...s, found: add(s.found, h.id) };
+  return collectFromHotspot(b, { ...noted, opened: add(noted.opened, h.id) }, h);
+}
+
+/* ───────────────────────── Examining evidence ───────────────────────── */
+
+const clueList = (s: PreviewState, ids: string[] | undefined) => (ids ?? []).reduce(collectClue, s);
+export const evidenceLocked = (ev: Evidence, s: PreviewState) => !evaluate(ev.lockedUntil, s);
+
+export function findDetail(s: PreviewState, ev: Evidence, detailId: string): PreviewState {
+  const d = ev.details?.find((x) => x.id === detailId);
+  return d ? clueList({ ...s, examined: add(s.examined, d.id) }, d.clueIds) : s;
+}
+
+/** Flags a line of a document. A line that does not matter costs a mistake. */
+export function flagLine(s: PreviewState, ev: Evidence, line: number): { state: PreviewState; ok: boolean } {
+  const key = `${ev.id}:${line}`;
+  if (s.examined.includes(key)) return { state: s, ok: true };
+  const hit = ev.document?.key.find((k) => k.line === line);
+  const state = { ...s, examined: [...s.examined, key] };
+  return hit ? { state: clueList(state, hit.clueIds), ok: true } : { state: { ...state, mistakes: s.mistakes + 1 }, ok: false };
+}
+
+export const compareKey = (a: string, b: string) => [a, b].sort().join("+");
+export function compareEvidence(b: CaseBundle, s: PreviewState, aId: string, bId: string): { state: PreviewState; note?: string } {
+  const pair = b.evidence.flatMap((e) => (e.compare ?? []).map((c) => ({ c, key: compareKey(e.id, c.withEvidenceId) }))).find((x) => x.key === compareKey(aId, bId));
+  if (!pair) return { state: { ...s, mistakes: s.mistakes + 1 } };
+  return { state: clueList({ ...s, examined: add(s.examined, pair.key) }, pair.c.clueIds), note: pair.c.note };
+}
+
+/* ───────────────────────── Interrogation ───────────────────────── */
+
+export const knowledge = (s: PreviewState) => s.evidence.length + s.clues.length;
+export const statementsOf = (iv: Interview, s: PreviewState) => (iv.testimony ?? []).filter((st) => evaluate(st.condition, s));
+export const patienceOf = (iv: Interview, s: PreviewState) => s.patience[iv.id] ?? iv.patience ?? 3;
+/** Out of patience, and nothing new learned since. */
+export const refusesChallenges = (iv: Interview, s: PreviewState) => s.lockout[iv.id] === knowledge(s);
+export type Verdict = "truth" | "doubt" | "lie";
+/** The right call on a statement. */
+export const statementKind = (st: Statement): Verdict => (st.contradictedBy?.length ? "lie" : st.doubt ? "doubt" : "truth");
+export const statementResolved = (st: Statement, s: PreviewState) => (statementKind(st) === "truth" ? s.questionsAnswered.includes(st.id) : s.exposed.includes(st.id));
+
+/** Things still held back ÷ things held back, across the whole testimony. 0 means broken. */
+export function composure(iv: Interview, s: PreviewState) {
+  const lies = (iv.testimony ?? []).filter((st) => statementKind(st) !== "truth");
+  return { left: lies.filter((st) => !s.exposed.includes(st.id)).length, total: lies.length };
+}
+const reply = (s: PreviewState, r: StatementReply | undefined) => clueList(s, r?.clueIds);
+
+export function hearTestimony(iv: Interview, s: PreviewState): PreviewState {
+  return { ...s, interviewsCompleted: add(s.interviewsCompleted, iv.id), suspectsInterviewed: add(s.suspectsInterviewed, iv.suspectId) };
+}
+
+/** Taking a statement at face value: they go on talking. */
+export const pressStatement = (s: PreviewState, st: Statement): PreviewState => reply({ ...s, questionsAnswered: add(s.questionsAnswered, st.id) }, st.press);
+
+const misjudge = (iv: Interview, s: PreviewState): PreviewState => {
+  const left = Math.max(0, patienceOf(iv, s) - 1);
+  return { ...s, mistakes: s.mistakes + 1, patience: { ...s.patience, [iv.id]: left }, ...(left <= 0 && { lockout: { ...s.lockout, [iv.id]: knowledge(s) } }) };
+};
+
+/** Accusing them of holding back (`hit` says whether the accusation lands). A miss costs patience; running out stops accusations until the player learns something new. */
+function confront(iv: Interview, input: PreviewState, st: Statement, hit: boolean, r: StatementReply | undefined): { state: PreviewState; ok: boolean } {
+  let s = input;
+  if (s.lockout[iv.id] !== undefined && !refusesChallenges(iv, s)) { // came back with something new: a fresh start
+    const { [iv.id]: _l, ...lockout } = s.lockout;
+    const { [iv.id]: _p, ...patience } = s.patience;
+    s = { ...s, lockout, patience };
+  }
+  if (refusesChallenges(iv, s) || s.exposed.includes(st.id)) return { state: s, ok: false };
+  return hit ? { state: reply({ ...s, exposed: [...s.exposed, st.id] }, r), ok: true } : { state: misjudge(iv, s), ok: false };
+}
+
+/** "Lie": presents an item against a statement. */
+export const challengeStatement = (iv: Interview, s: PreviewState, st: Statement, itemId: string) => confront(iv, s, st, !!st.contradictedBy?.includes(itemId), st.exposed);
+
+/** The player's read of a statement: Truth, Doubt, or Lie with proof. */
+export function judgeStatement(iv: Interview, s: PreviewState, st: Statement, verdict: Verdict, itemId = ""): { state: PreviewState; ok: boolean } {
+  if (verdict === "lie") return challengeStatement(iv, s, st, itemId);
+  if (verdict === "doubt") return confront(iv, s, st, statementKind(st) === "doubt", st.doubt);
+  const heard = pressStatement(s, st);
+  return statementKind(st) === "truth" ? { state: heard, ok: true } : { state: misjudge(iv, heard), ok: false }; // believed a liar: they are happy to go on
+}
+
+/** Whether the statement's one-time decision is on the table. */
+export const choiceOpen = (st: Statement, s: PreviewState) =>
+  !!st.choices?.length && !st.choices.some((c) => s.choices.includes(c.id)) && (statementKind(st) !== "truth" ? s.exposed.includes(st.id) : s.questionsAnswered.includes(st.id));
+
+export function chooseApproach(s: PreviewState, st: Statement, choiceId: string): PreviewState {
+  const c = st.choices?.find((x) => x.id === choiceId);
+  return c && choiceOpen(st, s) ? reply({ ...s, choices: [...s.choices, c.id] }, c) : s;
+}
+
+/* ───────────────────────── Deduction board ───────────────────────── */
+
+export function tryDeduction(b: CaseBundle, s: PreviewState, clueIds: string[]): { state: PreviewState; deduction?: Deduction } {
+  const same = (d: Deduction) => d.clueIds.length === clueIds.length && d.clueIds.every((id) => clueIds.includes(id));
+  const deduction = (b.deductions ?? []).find((d) => !s.deductions.includes(d.id) && same(d));
+  if (!deduction) return { state: { ...s, mistakes: s.mistakes + 1 } };
+  return { state: collectClue({ ...s, deductions: [...s.deductions, deduction.id] }, deduction.conclusionClueId), deduction };
+}
+
+/* ───────────────────────── Tools in the player's hand ───────────────────────── */
+
+/** How far the lamp throws, as a share of the image width. */
+export const UV_BEAM = 20;
+export const TORCH_BEAM = 14;
+/** Brushing distance (in % of image width) needed to raise a print. A tap does nothing; it takes a few passes. */
+export const BRUSH_NEEDED = 50;
+
+type Pt = { x: number; y: number };
+const dist = (a: Pt, b: Pt, aspect: number) => Math.hypot(a.x - b.x, (a.y - b.y) * aspect);
+
+/** How brightly a UV stain shows (0–1) when the beam is centred on `at`. Nothing shows outside the beam. */
+export function beamStrength(spot: Pt, at: Pt | null, beam = UV_BEAM, aspect = 0.75): number {
+  if (!at) return 0;
+  return Math.max(0, Math.min(1, (beam - dist(spot, at, aspect)) / (beam * 0.6)));
+}
+
+/** How much of a brush stroke from `a` to `b` lands on a spot: the stroke's length, if it ends on the spot. */
+export function strokeOn(spot: Pt & { radius?: number }, a: Pt, b: Pt, aspect = 0.75): number {
+  return dist(spot, b, aspect) <= Math.max(spot.radius ?? 0, 9) ? dist(a, b, aspect) : 0;
 }

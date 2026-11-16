@@ -61,7 +61,15 @@ export interface Hotspot {
   discoveryState: DiscoveryState;
   audio?: string | undefined;
   extraImages: string[];
+  /** Search tool needed to notice this spot. Omitted = plain sight (or torchlight). */
+  tool?: SearchTool | undefined;
+  /** This spot is inside another hotspot (a drawer, a basket…) and only shows once that one is opened. */
+  parentId?: string | undefined;
+  /** Combination the player must enter before a container opens. */
+  lock?: { code: string; prompt: string } | undefined;
 }
+
+export type SearchTool = "uv" | "powder";
 
 export interface Scene {
   id: string;
@@ -72,6 +80,10 @@ export interface Scene {
   ambientAudio?: string | undefined;
   hotspots: Hotspot[];
   order: number;
+  /** Unlit room: the player searches by torchlight. */
+  dark?: boolean | undefined;
+  /** Room stays shut until this holds (the location itself may already be open). */
+  unlockCondition?: ConditionGroup | undefined;
 }
 
 export interface Location {
@@ -106,6 +118,16 @@ export interface Suspect extends Character {
   isRedHerring: boolean;
   personality: string;
   interviewIds: string[];
+  /** What this person answers when accused. The player must beat each objection with something from the case file. */
+  objections?: Objection[] | undefined;
+}
+
+export interface Objection {
+  text: string;
+  /** Evidence or clue IDs that defeat the objection. Empty = it cannot be beaten (a sound alibi). */
+  beatenBy: string[];
+  /** Shown when the player fails to beat it. */
+  fail: string;
 }
 
 export type EvidenceType = "physical" | "digital" | "document" | "forensic" | "testimony" | "footage";
@@ -141,8 +163,28 @@ export interface Evidence {
   relatedClueIds: string[];
   relatedTimelineIds: string[];
   inspections: EvidenceInspection[];
+  /** Spots on the item's image the player has to find for themselves. */
+  details?: EvidenceDetail[] | undefined;
+  /** A text the player reads; they must flag the lines that matter. */
+  document?: { lines: string[]; key: Array<{ line: number; note: string; clueIds: string[] }> } | undefined;
+  /** Other items this one can be compared against. */
+  compare?: Array<{ withEvidenceId: string; note: string; clueIds: string[] }> | undefined;
+  /** The item cannot be examined until this holds (a locked phone, a sealed file…). */
+  lockedUntil?: ConditionGroup | undefined;
+  lockedText?: string | undefined;
   isKey: boolean;
   isRedHerring: boolean;
+}
+
+export interface EvidenceDetail {
+  id: string;
+  /** Percentage 0–100 of the evidence image. */
+  x: number;
+  y: number;
+  label: string;
+  note: string;
+  clueIds: string[];
+  tool?: SearchTool | undefined;
 }
 
 export interface CaseDocument {
@@ -207,6 +249,62 @@ export interface Interview {
   unlockCondition?: ConditionGroup | undefined;
   nodes: DialogueNode[];
   edges: DialogueEdge[];
+  /** Interrogation: statements the player can press or challenge. When present it replaces the question menu. */
+  testimony?: Statement[] | undefined;
+  opening?: string | undefined;
+  /** Wrong challenges allowed before the person stops answering accusations (default 3). */
+  patience?: number | undefined;
+  /** What they say to a challenge that proves nothing. */
+  rebuff?: string | undefined;
+}
+
+export interface StatementReply {
+  text: string;
+  clueIds?: string[] | undefined;
+  emotion?: Reaction["emotion"] | undefined;
+}
+
+export interface StatementChoice extends StatementReply {
+  /** Recorded as a player choice, so conditions can branch on it. */
+  id: string;
+  label: string;
+}
+
+export interface Statement {
+  id: string;
+  /** The question in the detective's notebook that draws this statement out. */
+  ask?: string | undefined;
+  text: string;
+  /** How they look and behave while saying it. The player reads this before judging. */
+  tell?: { emotion: Reaction["emotion"]; text: string } | undefined;
+  /** They are holding something back that pressure alone will shake loose: "Doubt" is the right call. */
+  doubt?: StatementReply | undefined;
+  /** The statement is only made once this holds. */
+  condition?: ConditionGroup | undefined;
+  /** Asking for more detail. */
+  press?: (StatementReply & { question: string }) | undefined;
+  /** Evidence or clue IDs that prove this statement false: "Lie" is the right call, backed by one of these. */
+  contradictedBy?: string[] | undefined;
+  /** What they say once caught. */
+  exposed?: StatementReply | undefined;
+  /** A one-time decision offered after the statement is exposed (or pressed, if it cannot be exposed). */
+  choices?: StatementChoice[] | undefined;
+}
+
+/** A conclusion the player reaches by linking the right clues on the board. */
+export interface Deduction {
+  id: string;
+  question: string;
+  clueIds: string[];
+  conclusionClueId: string;
+}
+
+export interface StoryEnding {
+  id: string;
+  outcome: "solved" | "incomplete" | "incorrect";
+  title: string;
+  text: string;
+  condition?: ConditionGroup | undefined;
 }
 
 export type ClueCategory = "alibi" | "motive" | "method" | "opportunity" | "contradiction" | "red_herring" | "context";
@@ -329,6 +427,13 @@ export interface RevealScene {
 
 /** Full authoring aggregate for a single case. */
 export interface CaseBundle {
+  /** Optional authored outcomes for a supported solution, an unproven suspect, or a wrong accusation. */
+  endings?: Record<"solved" | "incomplete" | "incorrect", { title: string; text: string }>;
+  /** Branch-specific endings; the first whose outcome and condition match wins over `endings`. */
+  storyEndings?: StoryEnding[];
+  /** Extra closing lines appended to the ending when their condition holds. */
+  epilogues?: Array<{ condition: ConditionGroup; text: string }>;
+  deductions?: Deduction[];
   case: Case;
   locations: Location[];
   scenes: Scene[];

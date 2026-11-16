@@ -8,7 +8,7 @@ import { scoreAccusation, type ScoreBreakdown } from "@/services/scoring";
 import { ErrorState } from "@/components/common/Page";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
-import { EvidenceScreen, NotesScreen, PeopleScreen, SceneScreen, TimelineScreen, phoneBtn, phoneGhostBtn, type Ctx } from "./PhoneScreens";
+import { EvidenceScreen, FilePicker, NotesScreen, PeopleScreen, SceneScreen, TimelineScreen, phoneBtn, phoneGhostBtn, type Ctx } from "./PhoneScreens";
 import type { CaseBundle } from "@/types";
 
 type Tab = "scene" | "evidence" | "people" | "notes" | "timeline" | "accuse";
@@ -41,7 +41,43 @@ function AccuseScreen({ ctx, onSubmit }: { ctx: Ctx; onSubmit: (score: ScoreBrea
 
   const move = (i: number, d: -1 | 1) => setOrder((o) => { const n = o.slice(); const j = i + d; if (j < 0 || j >= n.length) return o; [n[i], n[j]] = [n[j]!, n[i]!]; return n; });
   const hintPenalty = bundle.hints.filter((h) => state.hintsUsed.includes(h.id)).reduce((t, h) => t + h.scorePenalty, 0);
-  const submit = () => onSubmit(scoreAccusation(bundle, { killerId, motive, method, evidenceIds, timelineOrder: order }, hintPenalty, Math.round((Date.now() - state.startedAt) / 60000)));
+  // When the accused can answer back, the player proves the case by beating objections instead of ticking evidence.
+  const objections = bundle.suspects.find((s) => s.id === killerId)?.objections ?? [];
+  const contested = bundle.suspects.some((s) => s.objections?.length);
+  const [round, setRound] = useState<{ index: number; won: number; strikes: number } | null>(null);
+  const [presenting, setPresenting] = useState(false);
+  const STRIKES = 2;
+  const finish = (rebuttals?: { won: number; total: number }, failText?: string) =>
+    onSubmit(scoreAccusation(bundle, { killerId, motive, method, evidenceIds, timelineOrder: order, rebuttals, mistakes: state.mistakes, failText }, hintPenalty, Math.round((Date.now() - state.startedAt) / 60000), state));
+  const submit = () => (objections.length ? setRound({ index: 0, won: 0, strikes: 0 }) : finish(contested ? { won: 0, total: 1 } : undefined));
+  const answer = (itemId: string) => {
+    setPresenting(false);
+    if (!round) return;
+    const o = objections[round.index]!;
+    if (o.beatenBy.includes(itemId)) {
+      const next = { ...round, index: round.index + 1, won: round.won + 1 };
+      return next.index >= objections.length ? finish({ won: next.won, total: objections.length }) : setRound(next);
+    }
+    const strikes = round.strikes + 1;
+    if (strikes >= STRIKES) return finish({ won: round.won, total: objections.length }, o.fail);
+    toast.error("That does not answer it. One more miss and the case collapses.");
+    setRound({ ...round, strikes });
+  };
+
+  if (round) {
+    const accused = bundle.suspects.find((s) => s.id === killerId)!;
+    return (
+      <div className="flex h-full flex-col justify-center gap-4 p-5">
+        <div className="flex items-center gap-3">
+          {accused.portrait && <img src={accused.portrait} alt="" className="size-16 rounded-xl object-cover" />}
+          <div><div className="text-[10px] uppercase tracking-wide text-white/40">{accused.name} objects</div><div className="text-xs text-white/50">Strikes {round.strikes}/{STRIKES}</div></div>
+        </div>
+        <p key={round.index} className="rounded-xl border border-red-400/40 bg-red-500/10 p-4 text-base animate-in fade-in slide-in-from-bottom-2 duration-300">"{objections[round.index]!.text}"</p>
+        <button className={phoneBtn} onClick={() => setPresenting(true)}>Answer from the case file</button>
+        {presenting && <FilePicker ctx={ctx} title="What answers this?" onPick={answer} onClose={() => setPresenting(false)} />}
+      </div>
+    );
+  }
 
   const Choice = ({ value, current, set, children }: { value: string; current: string; set: (v: string) => void; children: React.ReactNode }) => (
     <button onClick={() => set(value)} className={cn("w-full rounded-lg border px-3 py-2 text-left text-sm", current === value ? "border-amber-400 bg-amber-400/15" : "border-white/10 bg-white/5")}>{children}</button>
@@ -55,11 +91,11 @@ function AccuseScreen({ ctx, onSubmit }: { ctx: Ctx; onSubmit: (score: ScoreBrea
         <div className="space-y-1.5">{motives.map((m) => <Choice key={m} value={m} current={motive} set={setMotive}>{m}</Choice>)}</div></section>
       <section><h3 className="mb-1.5 text-[10px] uppercase tracking-wide text-white/40">How?</h3>
         <div className="space-y-1.5">{methods.map((m) => <Choice key={m} value={m} current={method} set={setMethod}>{m}</Choice>)}</div></section>
-      <section><h3 className="mb-1.5 text-[10px] uppercase tracking-wide text-white/40">Proof · {evidenceIds.length} selected</h3>
+      {!contested && <section><h3 className="mb-1.5 text-[10px] uppercase tracking-wide text-white/40">Proof · {evidenceIds.length} selected</h3>
         {evidence.length === 0 && <p className="text-xs text-white/40">You haven't found any evidence.</p>}
         <div className="space-y-1.5">{evidence.map((e) => (
           <label key={e.id} className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm"><input type="checkbox" checked={evidenceIds.includes(e.id)} onChange={() => setEvidenceIds((l) => (l.includes(e.id) ? l.filter((x) => x !== e.id) : [...l, e.id]))} />{e.name}</label>
-        ))}</div></section>
+        ))}</div></section>}
       <section><h3 className="mb-1.5 text-[10px] uppercase tracking-wide text-white/40">Put the events in order</h3>
         {order.length === 0 && <p className="text-xs text-white/40">No timeline events known yet.</p>}
         <ol className="space-y-1.5">{order.map((id, i) => {
@@ -73,6 +109,8 @@ function AccuseScreen({ ctx, onSubmit }: { ctx: Ctx; onSubmit: (score: ScoreBrea
           );
         })}</ol></section>
       <button className={cn(phoneBtn, "w-full")} disabled={!killerId} onClick={submit}>Make accusation</button>
+      {contested && <p className="text-center text-[11px] text-white/40">The accused will answer back. Be ready to prove it.</p>}
+      {state.mistakes > 0 && <p className="text-center text-[11px] text-white/40">Missteps so far: −{state.mistakes * 10} points</p>}
       {hintPenalty > 0 && <p className="text-center text-[11px] text-white/40">Hints used: −{hintPenalty} points</p>}
     </div>
   );
@@ -200,18 +238,20 @@ function Preview({ bundle }: { bundle: CaseBundle }) {
             </div>
           )}
           {phase === "result" && result && (
-            <div className="flex h-full flex-col justify-center gap-4 overflow-y-auto p-5">
+            <div className="flex h-full flex-col gap-4 overflow-y-auto p-5 pt-10">
               <div className="text-center">
                 <Trophy className={cn("mx-auto size-9", result.correct ? "text-amber-400" : "text-white/30")} />
-                <h2 className="mt-2 text-xl font-semibold">{result.correct ? "You solved it!" : "Not quite…"}</h2>
+                <h2 className="mt-2 text-xl font-semibold">{result.ending?.title ?? (result.correct ? "You solved it!" : "Not quite…")}</h2>
                 <div className="mt-1 text-4xl font-bold tabular-nums">{result.total}<span className="text-base font-normal text-white/40"> / {result.max}</span></div>
               </div>
+              {result.ending && <p className="whitespace-pre-line text-sm text-white/75">{result.ending.text}</p>}
               <ul className="space-y-1 rounded-xl border border-white/10 bg-white/5 p-3 text-sm">
                 {result.lines.map((l, i) => <li key={i} className="flex justify-between"><span className="text-white/70">{l.label}</span><span className={cn("font-mono", l.points < 0 ? "text-red-400" : "text-emerald-400")}>{l.points > 0 ? "+" : ""}{l.points}</span></li>)}
               </ul>
               {result.correct
                 ? <button className={phoneBtn} onClick={() => setPhase("reveal")}>See what really happened</button>
                 : <button className={phoneBtn} onClick={() => { setPhase("play"); setTab("notes"); }}>Keep investigating</button>}
+              {result.correct && result.ending && <button className={phoneGhostBtn} onClick={() => { setPhase("play"); setTab("notes"); }}>Return to the investigation</button>}
             </div>
           )}
           {phase === "reveal" && <RevealScreen bundle={bundle} onDone={() => { setPhase("briefing"); restart(); }} />}
@@ -243,6 +283,8 @@ function Preview({ bundle }: { bundle: CaseBundle }) {
             <dt>Clues</dt><dd className="text-right text-foreground">{state.clues.length}/{bundle.clues.length}</dd>
             <dt>Interviews</dt><dd className="text-right text-foreground">{state.interviewsCompleted.length}/{bundle.interviews.length}</dd>
             <dt>Triggers fired</dt><dd className="text-right text-foreground">{state.firedTriggers.length}/{bundle.triggers.length}</dd>
+            <dt>Lies exposed</dt><dd className="text-right text-foreground">{state.exposed.length}</dd>
+            <dt>Missteps</dt><dd className="text-right text-foreground">{state.mistakes}</dd>
             <dt>Hints used</dt><dd className="text-right text-foreground">{state.hintsUsed.length}</dd>
           </dl>
           <Link to="/cases/$caseId" params={{ caseId }} className="flex items-center gap-1.5 text-xs text-info hover:underline"><ArrowLeft className="size-3.5" />Exit to editor</Link>

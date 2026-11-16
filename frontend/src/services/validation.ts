@@ -53,7 +53,7 @@ export function validateCase(b: CaseBundle): ValidationResult[] {
   const brokenHotspots = b.scenes.flatMap((s) => s.hotspots.filter((h) => h.evidenceId && !ev.has(h.evidenceId)).map((h) => `Hotspot "${h.name}" links to missing evidence`));
   out.push(result("evidence", "Evidence", "Missing evidence",
     [...(b.evidence.length === 0 ? ["No evidence defined"] : []), ...brokenHotspots],
-    b.evidence.filter((e) => e.inspections.length === 0).map((e) => `${e.code} has no inspection stages`), "evidence"));
+    b.evidence.filter((e) => e.inspections.length === 0 && !e.details?.length && !e.document && !e.compare?.length).map((e) => `${e.code} has no inspection stages`), "evidence"));
 
   // Evidence only enters the player's hands through a hotspot, so anything not on one can never be found.
   const onHotspot = new Set(b.scenes.flatMap((sc) => sc.hotspots.map((h) => h.evidenceId).filter(Boolean)));
@@ -112,6 +112,9 @@ export function validateCase(b: CaseBundle): ValidationResult[] {
     ...b.interviews.flatMap((i) => i.nodes.map((n) => n.clueId ?? "")),
     ...b.evidence.flatMap((e) => e.inspections.map((x) => x.revealsClueId ?? "")),
     ...b.triggers.flatMap((t) => t.actions.map((a) => a.targetId)),
+    ...b.evidence.flatMap((e) => [...(e.details ?? []), ...(e.document?.key ?? []), ...(e.compare ?? [])].flatMap((x) => x.clueIds)),
+    ...b.interviews.flatMap((i) => (i.testimony ?? []).flatMap((st) => [st.press, st.exposed, st.doubt, ...(st.choices ?? [])].flatMap((r) => r?.clueIds ?? []))),
+    ...(b.deductions ?? []).map((d) => d.conclusionClueId),
   ]);
   out.push(result("unused", "Clues", "Unused clues", [], [...clues].filter((c) => !usedClues.has(c)).map((c) => `${b.clues.find((x) => x.id === c)?.code} is never discovered by any hotspot, dialogue or inspection`), "clues"));
 

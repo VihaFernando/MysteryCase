@@ -8,6 +8,7 @@ import { demoClueConnections, demoClues, demoTriggers } from "./clues";
 import { demoTimeline } from "./timeline";
 import { demoFlowEdges, demoFlowNodes } from "./investigationFlow";
 import { demoHints, demoReveal, demoSolution, demoTheories } from "./solutions";
+import { monsoonLedger } from "./monsoonLedger";
 
 const lastCall: Case = {
   id: "case-001",
@@ -70,5 +71,6 @@ export function createDemoBundles(): CaseBundle[] {
     shell(meta({ id: "case-004", code: "CASE-004", title: "The Galle Fort Ledger", tagline: "A forged deed. A dead notary.", description: "A notary is found in the archive room the morning before a property hearing.", type: "Fraud", difficulty: "medium", status: "published", version: "2.0", coverImage: IMG.sceneEntrance, location: "Galle, Sri Lanka", incidentDate: "2026-05-10", tags: ["fraud", "heritage"], createdBy: "Admin", createdAt: "2026-04-01T09:00:00Z", updatedAt: "2026-10-04T09:10:00Z", publishedAt: "2026-06-01T09:00:00Z", stats: { players: 9410, completions: 5270, completionRate: 56, avgScore: 688, rating: 4.4 } })),
     shell(meta({ id: "case-005", code: "CASE-005", title: "Kitchen Fire at No. 9", tagline: "An accident — or a perfect alibi?", description: "A restaurant owner dies in a kitchen fire hours before selling the business.", type: "Murder Mystery", difficulty: "easy", status: "draft", version: "0.3", coverImage: IMG.sceneKitchen, location: "Kandy, Sri Lanka", incidentDate: "2026-08-21", tags: ["fire", "restaurant"], createdBy: "Ravi D.", createdAt: "2026-09-25T09:00:00Z", updatedAt: "2026-10-07T13:55:00Z", stats: { players: 0, completions: 0, completionRate: 0, avgScore: 0, rating: 0 } })),
     shell(meta({ id: "case-006", code: "CASE-006", title: "The Pettah Exchange", tagline: "Missing gems. Three brothers. One key.", description: "A gem shop vault is emptied overnight with no signs of entry.", type: "Theft", difficulty: "medium", status: "archived", version: "1.4", coverImage: IMG.evRecords, location: "Colombo, Sri Lanka", incidentDate: "2025-12-02", tags: ["heist"], createdBy: "Admin", createdAt: "2025-11-01T09:00:00Z", updatedAt: "2026-06-30T09:00:00Z", publishedAt: "2026-01-10T09:00:00Z", stats: { players: 6120, completions: 4410, completionRate: 72, avgScore: 801, rating: 4.2 } })),
+    structuredClone(monsoonLedger),
   ];
 }
